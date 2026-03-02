@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════
+   CUSTOM FONT
+   ═══════════════════════════════════════════════════════ */
+@font-face {
+  font-family: "NostalgicWhispers";
+  src: url("/assets/NostalgicWhispers-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ═══════════════════════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════════════════════ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: #f8f5f0;
+  color: #191a1e;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════════════════════
+   TYPOGRAPHY UTILITIES
+   ═══════════════════════════════════════════════════════ */
+.font-display {
+  font-family: "NostalgicWhispers";
+}
+
+.font-serif {
+  font-family: "NostalgicWhispers", "Cormorant Garamond", Georgia, serif;
+}
+
+.font-mono {
+  font-family: "DM Mono", monospace;
+}
+
+/* ═══════════════════════════════════════════════════════
+   HERO OVERRIDES
+   ═══════════════════════════════════════════════════════ */
+.hero-headline {
+  font-family: "NostalgicWhispers";
+}
+
+.hero-headline em.italic {
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: linear-gradient(
+    90deg,
+    rgba(207, 166, 76, 0.9) 0%,
+    rgba(240, 207, 138, 1) 100%
+  );
+  color: transparent;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SCROLLBAR HIDE
+   ═══════════════════════════════════════════════════════ */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ═══════════════════════════════════════════════════════
+   FOCUS STATES
+   ═══════════════════════════════════════════════════════ */
+:focus-visible {
+  outline: 2px solid #1494a3;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SELECT OPTIONS (dark bg for dark sections)
+   ═══════════════════════════════════════════════════════ */
+select option {
+  background: #191a1e;
+  color: #f8f5f0;
+}
+
+/* ═══════════════════════════════════════════════════════
+   KEYFRAMES
+   ═══════════════════════════════════════════════════════ */
+@keyframes waBounce {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scrollPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(0.7);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   CUSTOM THEME (Tailwind v4)
+   ═══════════════════════════════════════════════════════ */
+@theme {
+  --color-base: #f8f5f0;
+  --color-base-dark: #ede9e2;
+  --color-dark: #191a1e;
+  --color-text-mid: #5c5750;
+  --color-text-light: #7a756f;
+  --color-lihele: #1494a3;
+  --color-lihele-pale: #d0f0f4;
+  --color-likele: #1e5aa8;
+  --color-likele-pale: #d4e4f7;
+  --color-gold: #cfa64c;
+  --color-gold-pale: #f7f0e0;
+  --color-wa: #25d366;
+  --color-wa-dark: #1da851;
+  --color-border: #e2ddd6;
+}
