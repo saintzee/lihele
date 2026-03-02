@@ -67,13 +67,9 @@
 /* ============================================================
    DESIGN TOKENS
    ============================================================ */
-   @font-face {
-  font-family: 'NostalgicWhispers';
-  src: url('assets/fonts/NostalgicWhispers-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+/* Custom font file was referenced here, but it isn't present in the repo build output.
+   If you want to use it, add the file at `public/assets/fonts/NostalgicWhispers-Regular.ttf`
+   and restore an @font-face that points to `/assets/fonts/NostalgicWhispers-Regular.ttf`. */
 h1, h2, h3, h4 {
   font-family: var(--font-display);
 }
@@ -1003,7 +999,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
 <nav id="navbar" role="navigation" aria-label="Navigazione principale">
   <div class="nav-inner">
     <a href="#hero" class="nav-logo">
-  <img src="assets/lihele.svg" alt="Lihele · Likele — Torna all'inizio" class="nav-logo-img">
+  <img src="/assets/Lihele.svg" alt="Lihele · Likele — Torna all'inizio" class="nav-logo-img">
 </a>
     <ul class="nav-links">
       <li><a href="#strutture" data-lang="it">Le Strutture</a><a href="#strutture" data-lang="en">The Properties</a></li>
@@ -1049,15 +1045,12 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
      ============================================================ -->
 <section id="hero">
     <div class="hero-bg">
-      <video
-  src="assets/hero.mp4"
-  autoplay
-  muted
-  loop
-  playsinline
-  style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;"
->
-</video>
+      <img
+        src="/assets/hero.svg"
+        alt=""
+        role="presentation"
+        style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;"
+      >
     </div>
   
     <!-- leave your existing hero-content and hero-scroll exactly as they are -->
@@ -1095,7 +1088,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
     <div class="awards-inner">
       <div class="awards-brand">
         <img
-  src="assets/bookingcom.svg"
+  src="/assets/bookingcom.svg"
   alt="Booking.com"
   class="booking-logo-text"
   style="height: 24px;"
@@ -1170,7 +1163,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
             <span class="prop-tag" data-lang="it">Casa Vacanze Intera</span>
             <span class="prop-tag" data-lang="en">Entire Apartment</span>
           </div>
-          <div class="prop-name"><img src="assets/Lihele.svg" alt="Lihele" style="height: 1.9rem; width: auto; display: block;"></div>
+          <div class="prop-name"><img src="/assets/Lihele.svg" alt="Lihele" style="height: 1.9rem; width: auto; display: block;"></div>
           <p class="prop-pitch" data-lang="it">Luce, spazio e mare — tutta per voi.</p>
           <p class="prop-pitch" data-lang="en">Light, space and sea — all yours.</p>
           <div class="prop-facts">
@@ -1207,7 +1200,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
             <span class="prop-tag" data-lang="it">Camera Privata</span>
             <span class="prop-tag" data-lang="en">Private Room</span>
           </div>
-          <div class="prop-name"><img src="assets/Likele.svg" alt="Likele" style="height: 1.9rem; width: auto; display: block;"></div>
+          <div class="prop-name"><img src="/assets/Likele.svg" alt="Likele" style="height: 1.9rem; width: auto; display: block;"></div>
           <p class="prop-pitch" data-lang="it">Intima, accogliente, affacciata sul mare.</p>
           <p class="prop-pitch" data-lang="en">Intimate, welcoming, facing the sea.</p>
           <div class="prop-facts">
@@ -1241,14 +1234,14 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
     <div class="detail-grid">
       <div class="detail-visual fade-up">
         <div class="detail-main-img">
-          <img src="assets/images/lihele2.jpeg" alt="Lihele — Terrazza / Soggiorno" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <img src="/assets/hero.svg" alt="Lihele — Terrazza / Soggiorno" style="width:100%;height:100%;object-fit:cover;display:block;">
         </div>
         <div class="detail-award-pill">
           <span class="star" style="color:var(--gold)">★</span>
           <span class="score">9.8</span>
           <div>
             <img
-            src="assets/bookingcom.svg"
+            src="/assets/bookingcom.svg"
             alt="Booking.com"
             class="booking-logo-text"
             style="height: 12px;"
@@ -1263,7 +1256,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
           <span data-lang="it">Casa Vacanze Intera</span>
           <span data-lang="en">Entire Holiday Apartment</span>
         </div>
-        <h2 class="detail-name"><img src="assets/Lihele.svg" alt="Lihele" style="height: 2.4rem; width: auto; display: block;"></h2>
+        <h2 class="detail-name"><img src="/assets/Lihele.svg" alt="Lihele" style="height: 2.4rem; width: auto; display: block;"></h2>
         <p class="detail-desc" data-lang="it">Un appartamento luminoso affacciato sul mare di Castelsardo. Tre camere da letto per un massimo di cinque ospiti, balcone con vista diretta, cucina attrezzata, area giochi per i bambini. La luce del mattino qui è qualcosa di speciale.</p>
         <p class="detail-desc" data-lang="en">A bright apartment overlooking the sea at Castelsardo. Three bedrooms for up to five guests, a balcony with direct sea views, fully equipped kitchen, and a children's play area. The morning light here is something special.</p>
         <div class="detail-note">
@@ -1338,7 +1331,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
           <div>
             <div>
               <img
-              src="assets/bookingcom.svg"
+              src="/assets/bookingcom.svg"
               alt="Booking.com"
               class="booking-logo-text"
               style="height: 12px;"
@@ -1354,7 +1347,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
           <span data-lang="it">Camera con Bagno Privato</span>
           <span data-lang="en">Private Room & Bathroom</span>
         </div>
-        <h2 class="detail-name"><img src="assets/Likele.svg" alt="Likele" style="height: 2.4rem; width: auto; display: block;"></h2>
+        <h2 class="detail-name"><img src="/assets/Likele.svg" alt="Likele" style="height: 2.4rem; width: auto; display: block;"></h2>
         <p class="detail-desc" data-lang="it">Una camera intima con terrazza affacciata sul mare, bagno privato, aria condizionata e colazione servita in camera. A cinquecento metri dalla spiaggia, nel cuore di Castelsardo.</p>
         <p class="detail-desc" data-lang="en">An intimate room with a private sea-view terrace, en-suite bathroom, air conditioning and breakfast in-room. Five hundred metres from the beach, in the heart of Castelsardo.</p>
         <div class="detail-note">
@@ -1430,8 +1423,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
     <div class="gallery-grid">
       <div class="gallery-item">
         <div class="gallery-placeholder tall" style="position:relative; overflow:hidden;">
-          <img src="assets/images/lihele2.jpeg" alt="Lihele — Terrazza" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter: brightness(0.8);">
-          <img src="assets/Lihele-wh.svg" class="gallery-placeholder-logo" alt="" role="presentation">
+          <img src="/assets/hero.svg" alt="Lihele — Terrazza" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter: brightness(0.8);">
+          <img src="/assets/Lihele-wh.svg" class="gallery-placeholder-logo" alt="" role="presentation">
           <span style="position:relative; z-index:1;">Lihele — Terrazza</span>
         </div>
       </div>
@@ -1999,8 +1992,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
   <div class="container">
     <div class="footer-inner">
       <div class="footer-logo">
-        <img src="assets/Lihele-wh.svg" alt="Lihele">
-        <img src="assets/Likele-wh.svg" alt="Likele">
+        <img src="/assets/Lihele-wh.svg" alt="Lihele">
+        <img src="/assets/Likele-wh.svg" alt="Likele">
       </div>
       <div class="footer-links">
         <a href="#" data-lang="it">Privacy Policy</a>

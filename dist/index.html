@@ -1,0 +1,2459 @@
+<!DOCTYPE html>
+<!--
+  ═══════════════════════════════════════════════════════
+  LIHELE · LIKELE — Castelsardo, Sardegna
+  ═══════════════════════════════════════════════════════
+
+  HOW TO EDIT CONTENT
+  ───────────────────
+  Editable content lives in /content/content.json
+  Edit directly in GitHub → commit → Netlify auto-deploys.
+  - reviews: add/remove objects in the "reviews" array
+  - faq: add/remove Q&A in the "faq" array
+  - whatsapp: update number or message templates
+  - All text supports IT/EN: { "it": "…", "en": "…" }
+  If content.json fails to load, the page uses its own
+  hardcoded content as fallback. Nothing breaks.
+
+  HOW TO DEPLOY ON NETLIFY
+  ────────────────────────
+  1. Push repo to GitHub
+  2. Netlify → New site → Import from Git → select repo
+  3. Build command: (leave empty)
+  4. Publish directory: / (or .)
+  5. Deploy. Done.
+  Form submissions: Netlify Dashboard → Forms → "contact"
+
+  HOW TO TEST LOCALLY
+  ───────────────────
+  npx serve .        (or python3 -m http.server 8000)
+  Open http://localhost:5000
+  Form submit will fail locally (expected — Netlify processes it).
+  ═══════════════════════════════════════════════════════
+-->
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lihele · Likele — Casa Vacanze e Affittacamere a Castelsardo, Sardegna</title>
+<meta name="description" content="Due strutture a Castelsardo con vista mare. Lihele: appartamento intero fino a 5 ospiti. Likele: camera privata con colazione. Booking.com Award 9.8 e 9.7. Prenota direttamente su WhatsApp." />
+<meta property="og:title" content="Lihele · Likele — Casa Vacanze e Affittacamere a Castelsardo" />
+<meta property="og:description" content="Due strutture con vista mare a Castelsardo, Sardegna. Appartamento intero o camera privata. Booking.com Award 9.8 e 9.7." />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="it_IT" />
+<meta property="og:locale:alternate" content="en_GB" />
+<!-- <meta property="og:image" content="https://yourdomain.com/images/og-image.jpg" /> -->
+<!-- <meta property="og:url" content="https://yourdomain.com" /> -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Lihele · Likele — Castelsardo, Sardegna" />
+<meta name="twitter:description" content="Appartamento vista mare o camera privata con colazione. Booking.com Award 9.8 e 9.7." />
+<!-- Open Graph -->
+<meta property="og:title" content="Lihele · Likele — Castelsardo, Sardegna">
+<meta property="og:description" content="Due strutture con vista mare a Castelsardo. Booking.com Award 9.8 e 9.7. Prenota direttamente.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta property="og:locale:alternate" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+[{"@context":"https://schema.org","@type":"LodgingBusiness","name":"Lihele — Casa Vacanze","description":"Appartamento intero con vista mare a Castelsardo, fino a 5 ospiti.","address":{"@type":"PostalAddress","streetAddress":"Via Colle di Frigiano 35","addressLocality":"Castelsardo","postalCode":"07031","addressRegion":"SS","addressCountry":"IT"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"9.8","bestRating":"10","ratingCount":"53"},"telephone":"+393385037171"},{"@context":"https://schema.org","@type":"LodgingBusiness","name":"Likele — Affittacamere","description":"Camera con bagno privato, terrazza mare e colazione a Castelsardo.","address":{"@type":"PostalAddress","streetAddress":"Via Tibula 4","addressLocality":"Castelsardo","postalCode":"07031","addressRegion":"SS","addressCountry":"IT"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"9.7","bestRating":"10","ratingCount":"66"},"telephone":"+393385037171"}]
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+/* Custom font file was referenced here, but it isn't present in the repo build output.
+   If you want to use it, add the file at `public/assets/fonts/NostalgicWhispers-Regular.ttf`
+   and restore an @font-face that points to `/assets/fonts/NostalgicWhispers-Regular.ttf`. */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+   :root {
+  --base:        #F8F5F0;
+  --base-dark:   #EDE9E2;
+  --text:        #191A1E;
+  --text-mid:    #5C5750;
+  --text-light:  #7A756F;
+  --lihele:      #1494A3;
+  --lihele-pale: #D0F0F4;
+  --likele:      #354387;
+  --likele-pale: #D5D8EC;
+  --gold:        #CFA64C;
+  --gold-pale:   #F7F0E0;
+  --wa:          #25D366;
+  --wa-dark:     #1DA851;
+  --booking:     #003580;
+  --border:      #E2DDD6;
+
+  --font-display: 'NostalgicWhispers', 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+
+  --r:   12px;
+  --r-sm: 8px;
+  --max: 1120px;
+  --nav-h: 68px;
+}
+
+/* ============================================================
+   RESET + BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  background: var(--base);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* ============================================================
+   TYPOGRAPHY SCALE
+   ============================================================ */
+.display { font-family: var(--font-display); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
+.display-xl { font-size: clamp(2.8rem, 7vw, 5.5rem); }
+.display-lg { font-size: clamp(2rem, 4vw, 3.2rem); }
+.display-md { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+.label { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.section-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.15; }
+
+/* ============================================================
+   LAYOUT HELPERS
+   ============================================================ */
+.container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+.section { padding: 88px 0; }
+.section--sm { padding: 56px 0; }
+.section--dark { background: var(--text); color: var(--base); }
+.section--warm { background: var(--base-dark); }
+.section--lihele { background: var(--lihele-pale); }
+.section--likele { background: var(--likele-pale); }
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-h);
+  display: flex; align-items: center;
+  transition: background 0.35s ease, box-shadow 0.35s ease;
+  padding: 0 24px;
+}
+#navbar.scrolled {
+  background: rgba(248, 245, 240, 0.97);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 0 var(--border);
+}
+.nav-inner {
+  max-width: var(--max); margin: 0 auto; width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.nav-logo-img {
+  height: 36px;     /* adjust as needed */
+  width: auto;
+  display: block;
+}
+#navbar.scrolled .nav-logo { color: var(--text); }
+.nav-links {
+  display: flex; gap: 28px; list-style: none;
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.04em;
+}
+.nav-links a {
+  color: rgba(248,245,240,0.85); transition: color 0.2s;
+  white-space: nowrap;
+}
+#navbar.scrolled .nav-links a { color: var(--text-mid); }
+.nav-links a:hover { color: var(--base) !important; }
+#navbar.scrolled .nav-links a:hover { color: var(--text) !important; }
+.nav-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.lang-toggle {
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em;
+  color: rgba(248,245,240,0.7); transition: color 0.35s; cursor: pointer;
+  background: none; border: none; padding: 4px 8px;
+}
+#navbar.scrolled .lang-toggle { color: var(--text-light); }
+.lang-toggle span.active { color: var(--base); font-weight: 500; }
+#navbar.scrolled .lang-toggle span.active { color: var(--text); }
+.nav-wa {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--wa); color: #fff; font-size: 0.78rem; font-weight: 500;
+  padding: 9px 16px; border-radius: 50px; white-space: nowrap;
+  transition: background 0.2s, transform 0.15s;
+}
+.nav-wa:hover { background: var(--wa-dark); transform: scale(1.02); }
+.nav-wa svg { flex-shrink: 0; }
+.hamburger { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+.hamburger span { display: block; width: 22px; height: 1.5px; background: var(--base); border-radius: 2px; transition: all 0.3s; }
+#navbar.scrolled .hamburger span { background: var(--text); }
+/* Mobile nav drawer */
+#mobile-nav {
+  display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
+  background: var(--base); z-index: 99; padding: 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  flex-direction: column; gap: 0;
+  border-top: 1px solid var(--border);
+}
+#mobile-nav.open { display: flex; }
+.mobile-nav-links { list-style: none; display: flex; flex-direction: column; }
+.mobile-nav-links li a {
+  display: block; padding: 14px 0;
+  font-size: 0.9rem; font-weight: 500; color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+.mobile-wa {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--wa); color: #fff; font-size: 0.85rem; font-weight: 500;
+  padding: 14px; border-radius: var(--r); margin-top: 20px;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+#hero {
+  height: 100svh; min-height: 600px;
+  position: relative; display: flex; align-items: flex-end;
+  overflow: hidden;
+}
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+  to top,
+  rgba(27, 32, 51, 0.9) 0%,
+  rgba(27, 32, 51, 0) 90%
+);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 1;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, #1494A3 0%, #0e6872 35%, #162838 65%, #0d1218 100%);
+}
+/* Decorative texture overlay */
+.hero-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(184,151,74,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 20% 70%, rgba(20,148,163,0.3) 0%, transparent 60%);
+}
+/* Placeholder for actual photo — remove this div and use <img> in production */
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 0 24px 64px;
+  max-width: var(--max); margin: 0 auto; width: 100%;
+}
+.hero-tag {
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em;
+  color: rgba(184,151,74,0.9); text-transform: uppercase; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-tag::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
+.hero-headline {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(2.6rem, 7vw, 5.2rem);
+  line-height: 1.08; letter-spacing: -0.01em;
+  color: #fff; margin-bottom: 20px; max-width: 820px;
+}
+.hero-headline em { font-style: italic; color: rgba(184,151,74,0.9); }
+.hero-sub {
+  font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.72);
+  margin-bottom: 40px; max-width: 480px; line-height: 1.65;
+}
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 40px;
+}
+.btn-wa {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: var(--wa); color: #fff; font-size: 0.9rem; font-weight: 500;
+  padding: 14px 26px; border-radius: 50px;
+  transition: background 0.2s, transform 0.15s; white-space: nowrap;
+}
+.btn-wa:hover { background: var(--wa-dark); transform: translateY(-1px); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: rgba(255,255,255,0.75); font-size: 0.88rem; font-weight: 400;
+  padding: 14px 4px; border-bottom: 1px solid rgba(255,255,255,0.3);
+  transition: color 0.2s, border-color 0.2s;
+}
+.btn-ghost:hover { color: #fff; border-color: rgba(255,255,255,0.7); }
+/* Hero scroll indicator */
+.hero-scroll {
+  position: absolute; bottom: 28px; right: 28px; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.hero-scroll span { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.14em; color: rgba(255,255,255,0.4); writing-mode: vertical-rl; }
+.hero-scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.4)); animation: scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%,100%{opacity:0.4; transform:scaleY(1)} 50%{opacity:1; transform:scaleY(0.7)} }
+
+/* ============================================================
+   AWARDS BAR
+   ============================================================ */
+#awards {
+  background: var(--text); padding: 36px 0;
+  border-bottom: 3px solid var(--gold);
+}
+.awards-inner {
+  display: flex; align-items: center; justify-content: center;
+  gap: 48px; flex-wrap: wrap;
+}
+.awards-brand {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.14em;
+  color: rgba(248,245,240,0.5); text-transform: uppercase; text-align: center;
+}
+.booking-logo-text {
+  font-family: var(--font-body); font-size: 1rem; font-weight: 500;
+  color: #5B9BD5; letter-spacing: 0;
+}
+.awards-divider { width: 1px; height: 48px; background: rgba(248,245,240,0.15); }
+.award-card {
+  display: flex; align-items: center; gap: 16px;
+  padding: 20px 28px; border-radius: var(--r);
+  text-decoration: none; color: inherit;
+  transition: filter 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+}
+.award-card:hover {
+  filter: brightness(1.05);
+  background: rgba(255,255,255,0.06);
+}
+.award-score {
+  font-family: var(--font-mono); font-size: 2.4rem; font-weight: 500;
+  color: var(--gold); line-height: 1;
+}
+.award-info { display: flex; flex-direction: column; gap: 2px; }
+.award-name {
+  font-family: var(--font-display); font-size: 1.1rem; font-weight: 400;
+  color: #fff; letter-spacing: 0.04em;
+}
+.award-type { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; color: rgba(248,245,240,0.45); text-transform: uppercase; }
+.award-stars { display: flex; gap: 2px; margin-top: 4px; }
+.award-stars span { color: var(--gold); font-size: 0.7rem; }
+.award-reviews { font-family: var(--font-mono); font-size: 0.6rem; color: rgba(248,245,240,0.35); letter-spacing: 0.08em; margin-top: 2px; }
+
+/* ============================================================
+   PROPERTIES SECTION
+   ============================================================ */
+#strutture { padding: 96px 0 80px; }
+.strutture-header { text-align: center; margin-bottom: 56px; }
+.strutture-header .section-title { margin-bottom: 12px; }
+.strutture-header p { color: var(--text-mid); font-size: 1rem; font-weight: 300; }
+.properties-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+}
+.prop-card {
+  border-radius: var(--r); overflow: hidden;
+  border: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #fff;
+}
+.prop-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,0.1); }
+.prop-card--lihele { border-top: 3px solid var(--lihele); }
+.prop-card--likele { border-top: 3px solid var(--likele); }
+.prop-card-img {
+  aspect-ratio: 4/3; position: relative; overflow: hidden;
+}
+.prop-card-img-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.12em; color: rgba(255,255,255,0.5);
+  text-transform: uppercase; text-align: center;
+}
+.prop-card--lihele .prop-card-img-placeholder { background: linear-gradient(135deg, #1494A3, #0c6d78); }
+.prop-card--likele .prop-card-img-placeholder { background: linear-gradient(135deg, #354387, #222d5c); }
+.prop-award-badge {
+  position: absolute; top: 14px; right: 14px;
+  background: rgba(15,20,18,0.8); backdrop-filter: blur(8px);
+  border: 1px solid rgba(184,151,74,0.4);
+  padding: 6px 10px; border-radius: var(--r-sm);
+  display: flex; align-items: center; gap: 5px;
+}
+.prop-award-badge .score {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--gold); 
+}
+.prop-award-badge .star { color: var(--gold); font-size: 0.7rem; }
+.prop-body { padding: 28px; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+.prop-tag-row { display: flex; align-items: center; gap: 10px; }
+.prop-tag { font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border-radius: 50px; }
+.prop-card--lihele .prop-tag { background: var(--lihele-pale); color: var(--lihele); }
+.prop-card--likele .prop-tag { background: var(--likele-pale); color: var(--likele); }
+.prop-name { font-family: var(--font-display); font-size: 1.9rem; font-weight: 400; line-height: 1; }
+.prop-card--lihele .prop-name { color: var(--lihele); }
+.prop-card--likele .prop-name { color: var(--likele); }
+.prop-pitch { font-size: 0.9rem; color: var(--text-mid); font-weight: 300; line-height: 1.6; font-style: italic; }
+.prop-facts { display: flex; flex-wrap: wrap; gap: 8px; }
+.prop-fact { display: flex; align-items: center; gap: 5px; font-size: 0.78rem; color: var(--text-mid); background: var(--base); padding: 5px 10px; border-radius: 50px; border: 1px solid var(--border); }
+.prop-card-ctas { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 8px; }
+.btn-primary {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 13px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: 500;
+  transition: all 0.2s; text-align: center;
+}
+.btn-primary--lihele { background: var(--lihele); color: #fff; }
+.btn-primary--lihele:hover { background: #0e7a88; transform: translateY(-1px); }
+.btn-primary--likele { background: var(--likele); color: #fff; }
+.btn-primary--likele:hover { background: #283872; transform: translateY(-1px); }
+.btn-booking {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  font-size: 0.75rem; color: var(--text-light); padding: 8px;
+  transition: color 0.2s;
+}
+.btn-booking:hover { color: var(--booking); }
+
+/* ============================================================
+   LIHELE DETAIL
+   ============================================================ */
+#lihele { padding: 96px 0; background: var(--base); }
+#likele { padding: 96px 0; background: var(--base-dark); }
+.detail-grid {
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center;
+}
+.detail-grid.reverse { grid-template-columns: 1fr 1.1fr; }
+.detail-grid.reverse .detail-visual { order: 2; }
+.detail-grid.reverse .detail-content { order: 1; }
+.detail-visual { position: relative; }
+.detail-main-img {
+  width: 100%; aspect-ratio: 4/5; border-radius: var(--r);
+  overflow: hidden; position: relative;
+}
+.detail-main-img-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.12em; color: rgba(255,255,255,0.4);
+  text-transform: uppercase; text-align: center; line-height: 2;
+}
+#lihele .detail-main-img-placeholder { background: linear-gradient(160deg, #1494A3 0%, #0c6d78 100%); }
+#likele .detail-main-img-placeholder { background: linear-gradient(160deg, #354387 0%, #222d5c 100%); }
+.detail-award-pill {
+  position: absolute; bottom: -16px; right: 20px;
+  background: var(--text); color: var(--gold);
+  padding: 10px 18px; border-radius: 50px;
+  display: flex; align-items: center; gap: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+.detail-award-pill .score {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.detail-award-pill .label-text { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: rgba(248,245,240,0.5); text-transform: uppercase; }
+.detail-content { padding-bottom: 16px; }
+.detail-prop-tag { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+.detail-prop-tag .line { width: 24px; height: 1px; }
+#lihele .detail-prop-tag .line { background: var(--lihele); }
+#likele .detail-prop-tag .line { background: var(--likele); }
+.detail-prop-tag span { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; }
+#lihele .detail-prop-tag span { color: var(--lihele); }
+#likele .detail-prop-tag span { color: var(--likele); }
+.detail-name { font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 300; line-height: 1; margin-bottom: 8px; }
+#lihele .detail-name { color: var(--lihele); }
+#likele .detail-name { color: var(--likele); }
+.detail-desc-it, .detail-desc-en { display: none; }
+.detail-desc-it.visible, .detail-desc-en.visible { display: block; }
+.detail-desc-it.visible { font-size: 0.95rem; color: var(--text-mid); line-height: 1.75; margin: 16px 0 28px; font-weight: 300; }
+.detail-desc-en.visible { font-size: 0.95rem; color: var(--text-mid); line-height: 1.75; margin: 16px 0 28px; font-weight: 300; }
+.detail-desc { font-size: 0.95rem; color: var(--text-mid); line-height: 1.75; margin: 16px 0 28px; font-weight: 300; }
+.detail-facts-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 32px;
+}
+.detail-fact {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--base); padding: 10px 14px; border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+}
+.detail-fact-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+.detail-fact-text { font-size: 0.8rem; color: var(--text-mid); line-height: 1.4;   display: block; display: flex; flex-direction: column; gap: 4px;}
+.detail-fact-text strong { display: block; font-size: 0.72rem; font-weight: 500; color: var(--text); font-family: var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1px; }
+.detail-ctas { display: flex; flex-direction: column; gap: 10px; }
+.detail-wa {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: var(--wa); color: #fff; font-size: 0.9rem; font-weight: 500;
+  padding: 15px 28px; border-radius: 50px;
+  transition: background 0.2s, transform 0.15s;
+}
+.detail-wa:hover { background: var(--wa-dark); transform: translateY(-1px); }
+.detail-booking-link {
+  text-align: center; font-size: 0.78rem; color: var(--text-light);
+  padding: 6px 0; transition: color 0.2s; display: flex; align-items: center; justify-content: center; gap: 4px;
+}
+.detail-booking-link:hover { color: var(--booking); }
+/* Note box */
+.detail-note {
+  background: var(--gold-pale); border-left: 3px solid var(--gold);
+  padding: 12px 16px; border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  margin-bottom: 24px; font-size: 0.82rem; color: var(--text-mid); line-height: 1.6;
+}
+.detail-note strong { color: var(--text); font-weight: 500; }
+
+/* ============================================================
+   GALLERY
+   ============================================================ */
+#gallery { padding: 96px 0; background: var(--base); }
+.gallery-header { text-align: center; margin-bottom: 48px; }
+.gallery-grid {
+  columns: 3; column-gap: 16px;
+}
+.gallery-item {
+  break-inside: avoid; margin-bottom: 16px; border-radius: var(--r-sm); overflow: hidden;
+  cursor: pointer; transition: opacity 0.2s, transform 0.2s;
+  position: relative;
+}
+.gallery-item:hover { opacity: 0.88; transform: scale(0.995); }
+.gallery-placeholder {
+  width: 100%; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.4);
+  text-transform: uppercase; text-align: center;
+}
+.gallery-placeholder.tall { height: 280px; }
+.gallery-placeholder.med { height: 200px; }
+.gallery-placeholder.short { height: 160px; }
+.gallery-placeholder-logo {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  height: 24px;
+  width: auto;
+  z-index: 2;
+}
+.gallery-cta { text-align: center; margin-top: 48px; }
+.gallery-cta p { color: var(--text-mid); font-style: italic; margin-bottom: 16px; font-size: 0.95rem; }
+
+/* ============================================================
+   REVIEWS
+   ============================================================ */
+#reviews { padding: 96px 0; background: var(--text); }
+.reviews-header { text-align: center; margin-bottom: 16px; }
+.reviews-header .section-title { color: #fff; }
+.reviews-aggregate {
+  display: flex; align-items: center; justify-content: center; gap: 32px;
+  margin-bottom: 56px; flex-wrap: wrap;
+}
+.rev-score-block { text-align: center; }
+.rev-score-num { font-family: var(--font-display); font-size: 2.2rem; font-weight: 500; }
+.rev-score-num--lihele { color: #48D4E0; }
+.rev-score-num--likele { color: #8F9EDB; }
+.rev-score-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.12em; color: rgba(248,245,240,0.4); text-transform: uppercase; margin-top: 2px; }
+.rev-award-text { font-size: 0.72rem; color: rgba(248,245,240,0.35); font-family: var(--font-mono); letter-spacing: 0.08em; text-align: center; }
+.reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.review-card {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+  padding: 28px; border-radius: var(--r); display: flex; flex-direction: column; gap: 14px;
+}
+.review-card:hover {
+  background-color: rgba(248, 245, 240, 0.06); /* slightly lighter */
+  transform: translateY(-2px);                 /* optional subtle lift */
+}
+.review-stars { display: flex; gap: 3px; }
+.review-stars span { color: var(--gold); font-size: 0.8rem; }
+.review-quote { font-family: var(--font-display); font-size: 1.05rem; font-weight: 300; font-style: italic; color: rgba(248,245,240,0.88); line-height: 1.65; flex: 1; }
+.review-author { display: flex; align-items: center; gap: 10px; }
+.review-author-name { font-size: 0.8rem; font-weight: 500; color: rgba(248,245,240,0.6); }
+.review-prop { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; margin-left: auto; }
+.review-prop--lihele { color: #48D4E0; }
+.review-prop--likele { color: #8F9EDB; }
+.review-source { font-family: var(--font-mono); font-size: 0.58rem; color: rgba(248,245,240,0.25); letter-spacing: 0.08em; margin-top: auto; }
+
+/* ============================================================
+   LOCATION
+   ============================================================ */
+#location { padding: 96px 0; background: var(--base-dark); }
+.location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.map-container {
+  border-radius: var(--r); overflow: hidden; aspect-ratio: 4/3.5;
+  border: 1px solid var(--border); background: #d0ccc5;
+  position: relative;
+}
+.map-container {
+  border-radius: var(--r);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #d0ccc5;
+  position: relative;
+  aspect-ratio: auto;
+  height: 100%;        /* or 100vh */
+}
+.map-loading {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: var(--base); font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--text-light);
+}
+.location-content { padding-top: 8px; }
+.location-title { font-family: var(--font-display); font-size: 2.4rem; font-weight: 300; margin-bottom: 6px; }
+.location-subtitle { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; color: var(--text-light); text-transform: uppercase; margin-bottom: 20px; }
+.location-desc { font-size: 0.93rem; color: var(--text-mid); line-height: 1.75; font-weight: 300; margin-bottom: 32px; }
+.distances { display: flex; flex-direction: column; gap: 0; margin-bottom: 28px; border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; }
+.distance-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 18px; border-bottom: 1px solid var(--border); background: #fff;
+}
+.distance-item:last-child { border-bottom: none; }
+.distance-icon { font-size: 1.1rem; flex-shrink: 0; }
+.distance-text { flex: 1; font-size: 0.85rem; color: var(--text); }
+.distance-val { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-light); white-space: nowrap; }
+.parking-note {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--lihele-pale); border: 1px solid rgba(20,148,163,0.15);
+  padding: 12px 16px; border-radius: var(--r-sm); margin-bottom: 24px;
+  font-size: 0.82rem; color: var(--text-mid);
+}
+.btn-directions {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--text); color: var(--base); font-size: 0.85rem; font-weight: 500;
+  padding: 13px 24px; border-radius: 50px; transition: background 0.2s, transform 0.15s;
+}
+.btn-directions:hover { background: #2d2d2b; transform: translateY(-1px); }
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+#faq { padding: 96px 0; background: var(--base); }
+.faq-header { text-align: center; margin-bottom: 56px; }
+.faq-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; }
+.faq-nav { position: sticky; top: calc(var(--nav-h) + 24px); }
+.faq-nav-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+.faq-nav-item a {
+  display: block; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-light); padding: 8px 12px; border-radius: var(--r-sm);
+  transition: all 0.2s; border-left: 2px solid transparent;
+}
+.faq-nav-item a:hover, .faq-nav-item a.active { color: var(--text); border-left-color: var(--lihele); background: var(--lihele-pale); }
+.faq-group { margin-bottom: 40px; }
+.faq-group-title { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-light); margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-q {
+  width: 100%; text-align: left; padding: 18px 0;
+  font-size: 0.9rem; font-weight: 500; color: var(--text);
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  cursor: pointer; transition: color 0.2s; background: none;
+}
+.faq-q:hover { color: var(--lihele); }
+.faq-q-icon { flex-shrink: 0; font-size: 1.1rem; color: var(--text-light); transition: transform 0.25s; font-style: normal; }
+.faq-item.open .faq-q-icon { transform: rotate(45deg); color: var(--text); }
+.faq-a {
+  max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.25s ease;
+  font-size: 0.88rem; color: var(--text-mid); line-height: 1.72; font-weight: 300;
+}
+.faq-item.open .faq-a { max-height: 400px; padding-bottom: 20px; }
+.faq-cta { text-align: center; margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--border); }
+.faq-cta p { color: var(--text-mid); margin-bottom: 16px; font-size: 0.93rem; }
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+#contatti { padding: 96px 0; background: var(--text); }
+.contact-inner { max-width: 620px; margin: 0 auto; text-align: center; }
+.contact-tag { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(248,245,240,0.4); margin-bottom: 16px; }
+.contact-title { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 300; color: #fff; margin-bottom: 10px; }
+.contact-sub { font-size: 0.9rem; color: rgba(248,245,240,0.55); margin-bottom: 36px; font-weight: 300; line-height: 1.65; }
+.contact-wa-main {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  background: var(--wa); color: #fff; font-size: 1rem; font-weight: 500;
+  padding: 18px 36px; border-radius: 50px; margin: 0 auto 32px;
+  transition: background 0.2s, transform 0.2s; width: fit-content;
+}
+.contact-wa-main:hover { background: var(--wa-dark); transform: translateY(-2px); }
+.contact-wa-main svg { width: 22px; height: 22px; }
+.divider-text {
+  display: flex; align-items: center; gap: 16px; color: rgba(248,245,240,0.25);
+  font-size: 0.75rem; font-family: var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 32px;
+}
+.divider-text::before, .divider-text::after { content: ''; flex: 1; height: 1px; background: rgba(248,245,240,0.1); }
+.contact-form { display: flex; flex-direction: column; gap: 12px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-field { display: flex; flex-direction: column; gap: 5px; text-align: left; }
+.form-field label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(248,245,240,0.45); }
+.form-field input, .form-field select, .form-field textarea {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r-sm); padding: 12px 14px;
+  font-family: var(--font-body); font-size: 0.88rem; color: rgba(248,245,240,0.9);
+  transition: border-color 0.2s; outline: none; width: 100%;
+}
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: rgba(255,255,255,0.3); }
+.form-field input::placeholder, .form-field textarea::placeholder { color: rgba(248,245,240,0.25); }
+.form-field select option { background: #1A1916; color: #F8F5F0; }
+.form-field textarea { resize: vertical; min-height: 100px; }
+.form-submit {
+  background: var(--gold); color: var(--text); font-size: 0.9rem; font-weight: 500;
+  padding: 14px; border-radius: 50px; transition: background 0.2s, transform 0.15s;
+  margin-top: 4px;
+}
+.form-submit:hover { background: #a6832e; transform: translateY(-1px); }
+.form-privacy { font-size: 0.72rem; color: rgba(248,245,240,0.3); margin-top: 8px; line-height: 1.6; }
+.form-privacy a { color: rgba(248,245,240,0.5); text-decoration: underline; }
+/* Form validation */
+.form-error { font-size: 0.72rem; color: #e74c3c; min-height: 1em; transition: opacity 0.2s; }
+.form-field input[aria-invalid="true"],
+.form-field textarea[aria-invalid="true"] { border-color: #e74c3c; box-shadow: 0 0 0 2px rgba(231,76,60,0.2); }
+#formStatus:not(:empty) { padding: 10px 14px; margin-bottom: 10px; border-radius: 8px; }
+#formStatus.is-error { background: rgba(231,76,60,0.15); color: #e74c3c; }
+#formStatus.is-success { background: rgba(37,211,102,0.15); color: #25D366; }
+.form-submit .btn-sending { display: none; }
+.form-submit.is-sending .btn-text { display: none; }
+.form-submit.is-sending .btn-sending { display: inline; }
+.form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: #0d1009; color: rgba(248,245,240,0.45);
+  padding: 36px 0; border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap;
+}
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.footer-logo img { height: 20px; width: auto; display: block; }
+.footer-links { display: flex; gap: 24px; font-size: 0.75rem; }
+.footer-links a { color: rgba(248,245,240,0.4); transition: color 0.2s; }
+.footer-links a:hover { color: rgba(248,245,240,0.7); }
+.footer-copy { font-size: 0.72rem; font-family: var(--font-mono); letter-spacing: 0.06em; }
+
+/* ============================================================
+   FLOATING WHATSAPP
+   ============================================================ */
+#float-wa {
+  position: fixed; bottom: 28px; right: 28px; z-index: 200;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--wa); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  animation: waBounce 0.6s cubic-bezier(0.34,1.56,0.64,1) 1s both;
+}
+#float-wa:hover { background: var(--wa-dark); transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.5); }
+#float-wa svg { width: 26px; height: 26px; }
+@keyframes waBounce { 0%{opacity:0;transform:scale(0.5)} 100%{opacity:1;transform:scale(1)} }
+
+/* ============================================================
+   LANGUAGE TOGGLE LOGIC
+   ============================================================ */
+[data-lang="en"] { display: none !important; }
+html.lang-en [data-lang="it"] { display: none !important; }
+html.lang-en [data-lang="en"] { display: initial !important; }
+html.lang-en .hero-tag[data-lang="en"] {
+  display: flex !important;
+}
+
+/* ============================================================
+   FOCUS STATES — ACCESSIBILITY
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--lihele);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.section--dark :focus-visible,
+#reviews :focus-visible,
+#contatti :focus-visible {
+  outline-color: var(--gold);
+}
+a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
+
+/* ============================================================
+   REVIEWS CAROUSEL (replaces static grid)
+   ============================================================ */
+.reviews-carousel-wrap { position: relative; overflow: hidden; }
+.reviews-carousel {
+  display: flex; gap: 20px;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none; -ms-overflow-style: none;
+  padding: 8px 24px 20px; cursor: grab;
+  -webkit-overflow-scrolling: touch;
+}
+.reviews-carousel::-webkit-scrollbar { display: none; }
+.reviews-carousel:active { cursor: grabbing; }
+.reviews-carousel .review-card {
+  flex: 0 0 340px; scroll-snap-align: start;
+  user-select: none;
+}
+.carousel-nav {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; margin-top: 20px;
+}
+.carousel-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.6);
+  font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s ease; cursor: pointer;
+}
+.carousel-btn:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.25); }
+.carousel-dots { display: flex; gap: 6px; margin: 0 8px; }
+.carousel-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.15); transition: all 0.3s ease;
+}
+.carousel-dot.active { background: var(--gold); width: 20px; border-radius: 3px; }
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+#lightbox {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(10,12,14,0.92); backdrop-filter: blur(16px);
+  display: none; align-items: center; justify-content: center;
+  cursor: zoom-out;
+}
+#lightbox.open { display: flex; animation: lbIn 0.25s ease; }
+@keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
+#lightbox .lb-img {
+  max-width: 90vw; max-height: 85vh; border-radius: 10px;
+  object-fit: contain;
+}
+#lightbox .lb-close {
+  position: absolute; top: 20px; right: 20px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.1); color: #fff; font-size: 1.3rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; border: none; transition: background 0.2s;
+}
+#lightbox .lb-close:hover { background: rgba(255,255,255,0.2); }
+#lightbox .lb-prev,
+#lightbox .lb-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s;
+}
+#lightbox .lb-prev:hover,
+#lightbox .lb-next:hover { background: rgba(255,255,255,0.2); }
+#lightbox .lb-prev { left: 24px; }
+#lightbox .lb-next { right: 24px; }
+#lightbox .lb-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 90vw;
+}
+#lightbox .lb-caption {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+.fade-up {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.fade-up:nth-child(2) { transition-delay: 0.1s; }
+.fade-up:nth-child(3) { transition-delay: 0.2s; }
+.fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .nav-wa { display: none; }
+  .properties-grid { grid-template-columns: 1fr; }
+  .detail-grid, .detail-grid.reverse { grid-template-columns: 1fr; gap: 40px; }
+  .detail-grid.reverse .detail-visual { order: 1; }
+  .detail-grid.reverse .detail-content { order: 2; }
+  .location-grid { grid-template-columns: 1fr; gap: 40px; }
+  .faq-layout { grid-template-columns: 1fr; }
+  .faq-nav { display: none; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .reviews-carousel .review-card { flex: 0 0 280px; }
+  .gallery-grid { columns: 2; }
+  .detail-facts-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .section { padding: 64px 0; }
+  .awards-inner { gap: 24px; }
+  .awards-divider { display: none; }
+  .gallery-grid { columns: 2; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-links { justify-content: center; }
+  #float-wa { bottom: 20px; right: 20px; width: 50px; height: 50px; }
+}
+</style>
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    "name": "Lihele — Casa Vacanze Castelsardo",
+    "description": "Appartamento intero con vista mare a Castelsardo. 3 camere, fino a 5 ospiti, balcone vista mare, cucina attrezzata.",
+    "url": "https://yourdomain.com/#lihele",
+    "telephone": "+393385037171",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Via Colle di Frigiano 35",
+      "addressLocality": "Castelsardo",
+      "postalCode": "07031",
+      "addressRegion": "SS",
+      "addressCountry": "IT"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 40.9133,
+      "longitude": 8.6822
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "9.8",
+      "bestRating": "10",
+      "reviewCount": "53",
+      "ratingCount": "53"
+    },
+    "numberOfRooms": 3,
+    "petsAllowed": false,
+    "checkinTime": "15:00",
+    "checkoutTime": "10:00"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    "name": "Likele — Affittacamere Castelsardo",
+    "description": "Camera privata con bagno en-suite, terrazza vista mare e colazione italiana a Castelsardo.",
+    "url": "https://yourdomain.com/#likele",
+    "telephone": "+393385037171",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Via Tibula 4",
+      "addressLocality": "Castelsardo",
+      "postalCode": "07031",
+      "addressRegion": "SS",
+      "addressCountry": "IT"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 40.9133,
+      "longitude": 8.6822
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "9.7",
+      "bestRating": "10",
+      "reviewCount": "66",
+      "ratingCount": "66"
+    },
+    "amenityFeature": [
+      {"@type": "LocationFeatureSpecification", "name": "Breakfast included", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Private bathroom", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Sea view terrace", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Air conditioning", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Free WiFi", "value": true}
+    ]
+  }
+]
+</script>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<nav id="navbar" role="navigation" aria-label="Navigazione principale">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">
+  <img src="/assets/Lihele.svg" alt="Lihele · Likele — Torna all'inizio" class="nav-logo-img">
+</a>
+    <ul class="nav-links">
+      <li><a href="#strutture" data-lang="it">Le Strutture</a><a href="#strutture" data-lang="en">The Properties</a></li>
+      <li><a href="#awards" data-lang="it">Riconoscimenti</a><a href="#awards" data-lang="en">Awards</a></li>
+      <li><a href="#gallery" data-lang="it">Galleria</a><a href="#gallery" data-lang="en">Gallery</a></li>
+      <li><a href="#location" data-lang="it">Dove Siamo</a><a href="#location" data-lang="en">Location</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contatti" data-lang="it">Contatti</a><a href="#contatti" data-lang="en">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="lang-toggle" id="langToggle" aria-label="Cambia lingua">
+        <span id="lt-it" class="active">IT</span> | <span id="lt-en">EN</span>
+      </button>
+      <a href="https://wa.me/393385037171?text=Ciao!%20Ho%20visto%20il%20vostro%20sito%20e%20vorrei%20informazioni." class="nav-wa" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <span data-lang="it">Scrivici</span><span data-lang="en">WhatsApp</span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div id="mobile-nav">
+  <ul class="mobile-nav-links">
+    <li><a href="#strutture" data-lang="it">Le Strutture</a><a href="#strutture" data-lang="en">The Properties</a></li>
+    <li><a href="#awards" data-lang="it">Riconoscimenti</a><a href="#awards" data-lang="en">Awards</a></li>
+    <li><a href="#gallery" data-lang="it">Galleria</a><a href="#gallery" data-lang="en">Gallery</a></li>
+    <li><a href="#location" data-lang="it">Dove Siamo</a><a href="#location" data-lang="en">Location</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contatti" data-lang="it">Contatti</a><a href="#contatti" data-lang="en">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/393385037171?text=Ciao!%20Ho%20visto%20il%20vostro%20sito%20e%20vorrei%20informazioni." class="mobile-wa" target="_blank" rel="noopener">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span data-lang="it">Scrivici su WhatsApp</span><span data-lang="en">Message us on WhatsApp</span>
+  </a>
+</div>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section id="hero">
+    <div class="hero-bg">
+      <img
+        src="/assets/hero.svg"
+        alt=""
+        role="presentation"
+        style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;"
+      >
+    </div>
+  
+    <!-- leave your existing hero-content and hero-scroll exactly as they are -->
+  <div class="hero-content container">
+    <div class="hero-tag" data-lang="it">Castelsardo, Sardegna</div>
+    <div class="hero-tag" data-lang="en">Castelsardo, Sardinia</div>
+    <h1 class="hero-headline display">
+      <span data-lang="it">Castelsardo dall'alto,<br><em>il mare sotto.</em></span>
+      <span data-lang="en">Castelsardo from above,<br><em>the sea below.</em></span>
+    </h1>
+    <p class="hero-sub" data-lang="it">Un appartamento intero o una camera privata — due strutture con vista mare, stesso stabile, esperienze diverse.</p>
+    <p class="hero-sub" data-lang="en">Entire apartment or private room — two spaces with sea views, same building, different experiences.</p>
+    <div class="hero-ctas">
+      <a href="https://wa.me/393385037171?text=Ciao!%20Ho%20visto%20il%20vostro%20sito%20e%20vorrei%20informazioni." class="btn-wa" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <span data-lang="it">Scrivici su WhatsApp</span><span data-lang="en">Message us on WhatsApp</span>
+      </a>
+      <a href="#strutture" class="btn-ghost">
+        <span data-lang="it">Scopri le strutture ↓</span>
+        <span data-lang="en">Explore the properties ↓</span>
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     AWARDS BAR
+     ============================================================ -->
+<section id="awards">
+  <div class="container">
+    <div class="awards-inner">
+      <div class="awards-brand">
+        <img
+  src="/assets/bookingcom.svg"
+  alt="Booking.com"
+  class="booking-logo-text"
+  style="height: 24px;"
+>
+        <span data-lang="it">Traveller Review Awards 2026</span>
+        <span data-lang="en">Traveller Review Awards 2026</span>
+      </div>
+      <div class="awards-divider"></div>
+      <a href="https://www.booking.com/hotel/it/casa-vacanza-lihele-locazione-turistica-castelsardo.it.html" class="award-card" target="_blank" rel="noopener" aria-label="Lihele on Booking.com">
+        <div class="award-score">9.8</div>
+        <div class="award-info">
+          <div class="award-name">Lihele</div>
+          <div class="award-type" data-lang="it">Casa Vacanze</div>
+          <div class="award-type" data-lang="en">Holiday Apartment</div>
+          <div class="award-stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <div class="award-reviews" data-lang="it">53 recensioni verificate</div>
+          <div class="award-reviews" data-lang="en">53 verified reviews</div>
+        </div>
+      </a>
+      <div class="awards-divider"></div>
+      <a href="https://www.booking.com/hotel/it/affittacamere-likele.it.html" class="award-card" target="_blank" rel="noopener" aria-label="Likele on Booking.com">
+        <div class="award-score">9.7</div>
+        <div class="award-info">
+          <div class="award-name">Likele</div>
+          <div class="award-type" data-lang="it">Affittacamere</div>
+          <div class="award-type" data-lang="en">Guest Room</div>
+          <div class="award-stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <div class="award-reviews" data-lang="it">66 recensioni verificate</div>
+          <div class="award-reviews" data-lang="en">66 verified reviews</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LE STRUTTURE
+     ============================================================ -->
+<section id="strutture" class="section">
+  <div class="container">
+    <div class="strutture-header fade-up">
+      <p class="label" style="color:var(--text-light);margin-bottom:10px;">
+        <span data-lang="it">Castelsardo, Sardegna</span>
+        <span data-lang="en">Castelsardo, Sardinia</span>
+      </p>
+      <h2 class="section-title">
+        <span data-lang="it">Due strutture, un'unica anima</span>
+        <span data-lang="en">Two spaces, one soul</span>
+      </h2>
+      <p style="margin-top:10px;">
+        <span data-lang="it">Stesso stabile, stessa vista — scegli la tua.</span>
+        <span data-lang="en">Same building, same view — choose yours.</span>
+      </p>
+    </div>
+    <div class="properties-grid">
+      <!-- LIHELE CARD -->
+      <div class="prop-card prop-card--lihele fade-up">
+        <div class="prop-card-img">
+          <div class="prop-card-img-placeholder">LIHELE<br>Photo</div>
+          <!-- Replace with: <img src="images/lihele-card.jpg" alt="Lihele - appartamento vista mare Castelsardo"> -->
+          <div class="prop-award-badge">
+            <span class="star">★</span>
+            <span class="score">9.8</span>
+          </div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-tag-row">
+            <span class="prop-tag" data-lang="it">Casa Vacanze Intera</span>
+            <span class="prop-tag" data-lang="en">Entire Apartment</span>
+          </div>
+          <div class="prop-name"><img src="/assets/Lihele.svg" alt="Lihele" style="height: 1.9rem; width: auto; display: block;"></div>
+          <p class="prop-pitch" data-lang="it">Luce, spazio e mare — tutta per voi.</p>
+          <p class="prop-pitch" data-lang="en">Light, space and sea — all yours.</p>
+          <div class="prop-facts">
+            <span class="prop-fact">👥 <span data-lang="it">Fino a 5 ospiti</span><span data-lang="en">Up to 5 guests</span></span>
+            <span class="prop-fact">🛏 <span data-lang="it">3 camere</span><span data-lang="en">3 bedrooms</span></span>
+            <span class="prop-fact">🌊 <span data-lang="it">Vista mare</span><span data-lang="en">Sea view</span></span>
+            <span class="prop-fact">🍳 <span data-lang="it">Cucina</span><span data-lang="en">Kitchen</span></span>
+          </div>
+          <div class="prop-card-ctas">
+            <a href="https://wa.me/393385037171?text=Ciao!%20Vorrei%20informazioni%20su%20Lihele." class="btn-primary btn-primary--lihele" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              <span data-lang="it">Contattaci per Lihele</span>
+              <span data-lang="en">Enquire about Lihele</span>
+            </a>
+            <a href="#lihele" class="btn-booking">
+              <span data-lang="it">↓ Scopri di più</span>
+              <span data-lang="en">↓ Learn more</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- LIKELE CARD -->
+      <div class="prop-card prop-card--likele fade-up">
+        <div class="prop-card-img">
+          <div class="prop-card-img-placeholder" style="background:linear-gradient(135deg,#354387,#222d5c)">LIKELE<br>Photo</div>
+          <!-- Replace with: <img src="images/likele-card.jpg" alt="Likele - camera vista mare Castelsardo"> -->
+          <div class="prop-award-badge">
+            <span class="star">★</span>
+            <span class="score">9.7</span>
+          </div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-tag-row">
+            <span class="prop-tag" data-lang="it">Camera Privata</span>
+            <span class="prop-tag" data-lang="en">Private Room</span>
+          </div>
+          <div class="prop-name"><img src="/assets/Likele.svg" alt="Likele" style="height: 1.9rem; width: auto; display: block;"></div>
+          <p class="prop-pitch" data-lang="it">Intima, accogliente, affacciata sul mare.</p>
+          <p class="prop-pitch" data-lang="en">Intimate, welcoming, facing the sea.</p>
+          <div class="prop-facts">
+            <span class="prop-fact">👥 1–2 <span data-lang="it">ospiti</span><span data-lang="en">guests</span></span>
+            <span class="prop-fact">🛁 <span data-lang="it">Bagno privato</span><span data-lang="en">Private bath</span></span>
+            <span class="prop-fact">🌅 <span data-lang="it">Terrazza mare</span><span data-lang="en">Sea terrace</span></span>
+            <span class="prop-fact">☕ <span data-lang="it">Colazione</span><span data-lang="en">Breakfast</span></span>
+          </div>
+          <div class="prop-card-ctas">
+            <a href="https://wa.me/393385037171?text=Ciao!%20Vorrei%20informazioni%20su%20Likele." class="btn-primary btn-primary--likele" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              <span data-lang="it">Contattaci per Likele</span>
+              <span data-lang="en">Enquire about Likele</span>
+            </a>
+            <a href="#likele" class="btn-booking">
+              <span data-lang="it">↓ Scopri di più</span>
+              <span data-lang="en">↓ Learn more</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LIHELE DETAIL
+     ============================================================ -->
+<section id="lihele" class="section section--lihele">
+  <div class="container">
+    <div class="detail-grid">
+      <div class="detail-visual fade-up">
+        <div class="detail-main-img">
+          <img src="/assets/hero.svg" alt="Lihele — Terrazza / Soggiorno" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div class="detail-award-pill">
+          <span class="star" style="color:var(--gold)">★</span>
+          <span class="score">9.8</span>
+          <div>
+            <img
+            src="/assets/bookingcom.svg"
+            alt="Booking.com"
+            class="booking-logo-text"
+            style="height: 12px;"
+          >
+            <div class="label-text">Award 2026</div>
+          </div>
+        </div>
+      </div>
+      <div class="detail-content fade-up">
+        <div class="detail-prop-tag">
+          <span class="line"></span>
+          <span data-lang="it">Casa Vacanze Intera</span>
+          <span data-lang="en">Entire Holiday Apartment</span>
+        </div>
+        <h2 class="detail-name"><img src="/assets/Lihele.svg" alt="Lihele" style="height: 2.4rem; width: auto; display: block;"></h2>
+        <p class="detail-desc" data-lang="it">Un appartamento luminoso affacciato sul mare di Castelsardo. Tre camere da letto per un massimo di cinque ospiti, balcone con vista diretta, cucina attrezzata, area giochi per i bambini. La luce del mattino qui è qualcosa di speciale.</p>
+        <p class="detail-desc" data-lang="en">A bright apartment overlooking the sea at Castelsardo. Three bedrooms for up to five guests, a balcony with direct sea views, fully equipped kitchen, and a children's play area. The morning light here is something special.</p>
+        <div class="detail-note">
+          <strong data-lang="it">☕ Colazione italiana in camera —</strong>
+          <strong data-lang="en">☕ Italian breakfast in-room —</strong>
+          <span data-lang="it"> macchina Dolce Gusto, tè e tisane, brioche, biscotti, yogurt e succhi di frutta.</span>
+          <span data-lang="en"> Dolce Gusto machine, teas, brioches, biscuits, yogurt and fruit juices.</span>
+        </div>
+        <div class="detail-facts-grid">
+          <div class="detail-fact">
+            <span class="detail-fact-icon">👥</span>
+            <div class="detail-fact-text"><strong data-lang="it">Ospiti</strong><strong data-lang="en">Guests</strong><span data-lang="it">Fino a 5</span><span data-lang="en">Up to 5</span></div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">🛏</span>
+            <div class="detail-fact-text"><strong data-lang="it">Camere</strong><strong data-lang="en">Bedrooms</strong>3</div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">🌊</span>
+            <div class="detail-fact-text"><strong data-lang="it">Vista</strong><strong data-lang="en">View</strong><span data-lang="it">Balcone mare</span><span data-lang="en">Sea balcony</span></div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">🍳</span>
+            <div class="detail-fact-text"><strong data-lang="it">Cucina</strong><strong data-lang="en">Kitchen</strong><span data-lang="it">Attrezzata</span><span data-lang="en">Fully equipped</span></div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">📺</span>
+            <div class="detail-fact-text"><strong>TV</strong><span data-lang="it">Satellitare</span><span data-lang="en">Satellite</span></div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">🎠</span>
+            <div class="detail-fact-text"><strong data-lang="it">Per famiglie</strong><strong data-lang="en">Families</strong><span data-lang="it">Area giochi</span><span data-lang="en">Play area</span></div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">🛁</span>
+            <div class="detail-fact-text"><strong data-lang="it">Bagno</strong><strong data-lang="en">Bathroom</strong>1</div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">📶</span>
+            <div class="detail-fact-text"><strong>WiFi</strong><span data-lang="it">Incluso</span><span data-lang="en">Free</span></div>
+          </div>
+        </div>
+        <div class="detail-ctas">
+          <a href="https://wa.me/393385037171?text=Ciao!%20Vorrei%20informazioni%20su%20Lihele%20(appartamento)." class="detail-wa" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span data-lang="it">Contattaci su WhatsApp</span>
+            <span data-lang="en">Message us on WhatsApp</span>
+          </a>
+          <a href="https://www.booking.com" class="detail-booking-link" target="_blank" rel="noopener">
+            <span data-lang="it">Oppure prenota su Booking.com →</span>
+            <span data-lang="en">Or book on Booking.com →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LIKELE DETAIL
+     ============================================================ -->
+<section id="likele" class="section section--likele">
+  <div class="container">
+    <div class="detail-grid reverse">
+      <div class="detail-visual fade-up">
+        <div class="detail-main-img">
+          <div class="detail-main-img-placeholder">LIKELE<br>Main Photo<br>Room / Terrace</div>
+        </div>
+        <div class="detail-award-pill">
+          <span class="star" style="color:var(--gold)">★</span>
+          <span class="score">9.7</span>
+          <div>
+            <div>
+              <img
+              src="/assets/bookingcom.svg"
+              alt="Booking.com"
+              class="booking-logo-text"
+              style="height: 12px;"
+            >
+          </div>
+            <div class="label-text">Award 2026</div>
+          </div>
+        </div>
+      </div>
+      <div class="detail-content fade-up">
+        <div class="detail-prop-tag">
+          <span class="line"></span>
+          <span data-lang="it">Camera con Bagno Privato</span>
+          <span data-lang="en">Private Room & Bathroom</span>
+        </div>
+        <h2 class="detail-name"><img src="/assets/Likele.svg" alt="Likele" style="height: 2.4rem; width: auto; display: block;"></h2>
+        <p class="detail-desc" data-lang="it">Una camera intima con terrazza affacciata sul mare, bagno privato, aria condizionata e colazione servita in camera. A cinquecento metri dalla spiaggia, nel cuore di Castelsardo.</p>
+        <p class="detail-desc" data-lang="en">An intimate room with a private sea-view terrace, en-suite bathroom, air conditioning and breakfast in-room. Five hundred metres from the beach, in the heart of Castelsardo.</p>
+        <div class="detail-note">
+          <strong data-lang="it">☕ Colazione italiana in camera —</strong>
+          <strong data-lang="en">☕ Italian breakfast in-room —</strong>
+          <span data-lang="it"> macchina Dolce Gusto, tè e tisane, brioche, biscotti, yogurt e succhi di frutta.</span>
+          <span data-lang="en"> Dolce Gusto machine, teas, brioches, biscuits, yogurt and fruit juices.</span>
+        </div>
+        <div class="detail-facts-grid">
+          <div class="detail-fact">
+            <span class="detail-fact-icon">👥</span>
+            <div class="detail-fact-text"><strong data-lang="it">Ospiti</strong><strong data-lang="en">Guests</strong>1–2</div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">🛁</span>
+            <div class="detail-fact-text"><strong data-lang="it">Bagno</strong><strong data-lang="en">Bathroom</strong><span data-lang="it">Privato</span><span data-lang="en">Private</span></div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">🌅</span>
+            <div class="detail-fact-text"><strong data-lang="it">Terrazza</strong><strong data-lang="en">Terrace</strong><span data-lang="it">Vista mare</span><span data-lang="en">Sea view</span></div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">❄️</span>
+            <div class="detail-fact-text"><strong data-lang="it">Clima</strong><strong data-lang="en">A/C</strong><span data-lang="it">Incluso</span><span data-lang="en">Included</span></div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">🏖</span>
+            <div class="detail-fact-text"><strong data-lang="it">Spiaggia</strong><strong data-lang="en">Beach</strong>500m</div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">📶</span>
+            <div class="detail-fact-text"><strong>WiFi</strong><span data-lang="it">Incluso</span><span data-lang="en">Free</span></div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">🕐</span>
+            <div class="detail-fact-text"><strong>Reception</strong>24h</div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">✈️</span>
+            <div class="detail-fact-text"><strong data-lang="it">Aeroporto</strong><strong data-lang="en">Airport</strong><span data-lang="it">Transfer su richiesta</span><span data-lang="en">Transfer on request</span></div>
+          </div>
+        </div>
+        <div class="detail-ctas">
+          <a href="https://wa.me/393385037171?text=Ciao!%20Vorrei%20informazioni%20su%20Likele%20(camera)." class="detail-wa" style="background:var(--wa)" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span data-lang="it">Contattaci su WhatsApp</span>
+            <span data-lang="en">Message us on WhatsApp</span>
+          </a>
+          <a href="https://www.booking.com" class="detail-booking-link" target="_blank" rel="noopener">
+            <span data-lang="it">Oppure prenota su Booking.com →</span>
+            <span data-lang="en">Or book on Booking.com →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     GALLERY
+     ============================================================ -->
+<section id="gallery" class="section">
+  <div class="container">
+    <div class="gallery-header fade-up">
+      <p class="label" style="color:var(--text-light);margin-bottom:10px;">
+        <span data-lang="it">Galleria</span><span data-lang="en">Gallery</span>
+      </p>
+      <h2 class="section-title">
+        <span data-lang="it">Lihele · Likele · Castelsardo</span>
+        <span data-lang="en">Lihele · Likele · Castelsardo</span>
+      </h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <div class="gallery-placeholder tall" style="position:relative; overflow:hidden;">
+          <img src="/assets/hero.svg" alt="Lihele — Terrazza" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter: brightness(0.8);">
+          <img src="/assets/Lihele-wh.svg" class="gallery-placeholder-logo" alt="" role="presentation">
+          <span style="position:relative; z-index:1;">Lihele — Terrazza</span>
+        </div>
+      </div>
+      <div class="gallery-item"><div class="gallery-placeholder med" style="background:linear-gradient(160deg,#354387,#222d5c)">Likele — Camera</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder short" style="background:linear-gradient(160deg,#1aabbf,#0e7a88)">Castelsardo — Vista</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder med" style="background:linear-gradient(160deg,#1494A3,#0E7A87)">Lihele — Soggiorno</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder tall" style="background:linear-gradient(160deg,#4a5aa0,#2d3870)">Likele — Terrazza</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder short" style="background:linear-gradient(160deg,#10808e,#084a55)">Lihele — Cucina</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder med" style="background:linear-gradient(160deg,#3d5078,#263458)">Likele — Bagno</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder short" style="background:linear-gradient(160deg,#1494A3,#0c6d78)">Lihele — Camera</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder med" style="background:linear-gradient(160deg,#2a7a8a,#1a5a66)">Castelsardo — Borgo</div></div>
+    </div>
+    <!-- Replace placeholders with real images. Each .gallery-item should contain:
+         <img src="images/gallery-01.jpg" alt="descrizione" loading="lazy"> -->
+    <div class="gallery-cta fade-up">
+      <p data-lang="it" style="font-style:italic;color:var(--text-mid)">Quello che vedi ti convince? Scrivici.</p>
+      <p data-lang="en" style="font-style:italic;color:var(--text-mid)">Like what you see? Get in touch.</p>
+      <a href="https://wa.me/393385037171?text=Ciao!%20Ho%20visto%20le%20foto%20e%20vorrei%20informazioni." class="btn-wa" style="margin:0 auto;display:inline-flex" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <span data-lang="it">Scrivici su WhatsApp</span>
+        <span data-lang="en">Message us on WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     REVIEWS
+     ============================================================ -->
+<section id="reviews" class="section section--dark">
+  <div class="container">
+    <div class="reviews-header fade-up">
+      <h2 class="section-title" style="color:#fff;margin-bottom:8px;">
+        <span data-lang="it">Cosa dicono i nostri ospiti</span>
+        <span data-lang="en">What our guests say</span>
+      </h2>
+    </div>
+    <div class="reviews-aggregate fade-up">
+      <div class="rev-score-block">
+        <div class="rev-score-num rev-score-num--lihele">9.8</div>
+        <div class="rev-score-label">Lihele</div>
+      </div>
+      <div style="color:rgba(248,245,240,0.15);font-size:2rem">·</div>
+      <div style="text-align:center">
+        <div class="rev-award-text" data-lang="it">Booking.com Traveller Review Awards 2026</div>
+        <div class="rev-award-text" data-lang="en">Booking.com Traveller Review Awards 2026</div>
+        <div class="rev-award-text" style="margin-top:4px;" data-lang="it">53 + 66 recensioni verificate</div>
+        <div class="rev-award-text" style="margin-top:4px;" data-lang="en">53 + 66 verified reviews</div>
+      </div>
+      <div style="color:rgba(248,245,240,0.15);font-size:2rem">·</div>
+      <div class="rev-score-block">
+        <div class="rev-score-num rev-score-num--likele">9.7</div>
+        <div class="rev-score-label">Likele</div>
+      </div>
+    </div>
+    <div class="reviews-carousel-wrap">
+      <div class="reviews-carousel" id="reviewsCarousel">
+        <a class="review-card" href="https://share.google/PHwmJrSrwGIiTIjRR" target="_blank" rel="noopener">
+  <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+  <p class="review-quote" data-lang="it">"Una settimana in questa residenza è come essere stati da un familiare caro, che ci ha ospitato a casa sua nel migliore dei modi con attenzioni, premure, consigli e un garbo infinito. Luciano è un host straordinario, che con discrezione e disponibilità ti fa vivere una vacanza indimenticabile nella sua bella casa sarda, posta nella meravigliosa Castelsardo, un gioiello tutto da scoprire sia per il borgo incantato che per il bellissimo mare a metà strada fra Stintino e Santa Teresa di Gallura. Siamo stati davvero bene in questo luogo e in questa comodissima casa su due livelli, fornita di tutto, anche di tanti prodotti e vari e di buona qualità per la colazione. Siamo andati via solo da pochi giorni e già sentiamo la nostalgia di questa vacanza, che ci è rimasta nel cuore. Grazie infinite. In tutti noi rimane il bel ricordo e la speranza di essere di nuovo a Castelsardo in questo buen retiro."</p>
+  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+  <div class="review-author">
+    <span class="review-author-name">Margherita I. 🇮🇹</span>
+    <span class="review-prop review-prop--lihele">Lihele</span>
+  </div>
+  <div class="review-source">via Google</div>
+</a>
+        <a class="review-card"
+        href="https://share.google/qmX1OqVisJENs9UJI"
+        target="_blank"
+        rel="noopener">
+       <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+       <p class="review-quote" data-lang="it">"Castelsardo è un luogo incantevole per posizione e storia e questa casa, molto comoda e super accessoriata, permette di vivere pienamente il posto e il mare vicinissimo. Si sta proprio bene perché gli ambienti, ampi, pulitissimi e ben arredati, ti fanno sentire a casa. Un valore aggiunto è dato dall'ospitalità garbata, disponibile e discreta di Luciano, un super host che fa di tutto per rendere il soggiorno dei clienti un momento da ricordare."</p>
+       <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+       <div class="review-author">
+         <span class="review-author-name">Mara L. 🇮🇹</span>
+         <span class="review-prop review-prop--lihele">Lihele</span>
+       </div>
+       <div class="review-source">via Booking.com</div>
+     </a>
+    </a>
+    <a class="review-card"
+    href="https://www.booking.com/hotel/it/affittacamere-likele.it.html?chal_t=1772211859557&force_referer=https%3A%2F%2Fwww.google.com%2F"
+    target="_blank"
+    rel="noopener">
+   <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+   <p class="review-quote" data-lang="it">"La camera è esattamente come si vede nella foto: nuova, pulita, decorata con gusto e nei dettagli. Così pure il bagno. Luciano, il proprietario, è una persona gentilissima e disponibile. La casa è in una zona molto tranquilla. Se dovessi tornare a Castelsardo non esiterei a tornare direttamente qui! Assolutame te consigliatissimo!"</p>
+   <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+   <div class="review-author">
+     <span class="review-author-name">Marina 🇩🇪</span>
+     <span class="review-prop review-prop--likele">Likele</span>
+   </div>
+   <div class="review-source">via Booking.com</div>
+ </a>
+  <a class="review-card"
+   href="https://www.booking.com/your-real-review-url-1"
+   target="_blank"
+   rel="noopener">
+  <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+  <p class="review-quote" data-lang="it">"Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente."</p>
+  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+  <div class="review-author">
+    <span class="review-author-name">Marco R. 🇮🇹</span>
+    <span class="review-prop review-prop--lihele">Lihele</span>
+  </div>
+  <div class="review-source">via Booking.com</div>
+</a>
+<a class="review-card"
+   href="https://www.booking.com/your-real-review-url-1"
+   target="_blank"
+   rel="noopener">
+  <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+  <p class="review-quote" data-lang="it">"Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente."</p>
+  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+  <div class="review-author">
+    <span class="review-author-name">Marco R. 🇮🇹</span>
+    <span class="review-prop review-prop--lihele">Lihele</span>
+  </div>
+  <div class="review-source">via Booking.com</div>
+</a>
+<a class="review-card"
+   href="https://www.booking.com/your-real-review-url-1"
+   target="_blank"
+   rel="noopener">
+  <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+  <p class="review-quote" data-lang="it">"Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente."</p>
+  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+  <div class="review-author">
+    <span class="review-author-name">Marco R. 🇮🇹</span>
+    <span class="review-prop review-prop--lihele">Lihele</span>
+  </div>
+  <div class="review-source">via Booking.com</div>
+</a>
+<a class="review-card"
+   href="https://www.booking.com/your-real-review-url-1"
+   target="_blank"
+   rel="noopener">
+  <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+  <p class="review-quote" data-lang="it">"Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente."</p>
+  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+  <div class="review-author">
+    <span class="review-author-name">Marco R. 🇮🇹</span>
+    <span class="review-prop review-prop--lihele">Lihele</span>
+  </div>
+  <div class="review-source">via Booking.com</div>
+</a>
+<a class="review-card"
+   href="https://www.booking.com/your-real-review-url-1"
+   target="_blank"
+   rel="noopener">
+  <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+  <p class="review-quote" data-lang="it">"Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente."</p>
+  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+  <div class="review-author">
+    <span class="review-author-name">Marco R. 🇮🇹</span>
+    <span class="review-prop review-prop--lihele">Lihele</span>
+  </div>
+  <div class="review-source">via Booking.com</div>
+</a>
+<a class="review-card"
+   href="https://www.booking.com/your-real-review-url-1"
+   target="_blank"
+   rel="noopener">
+  <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+  <p class="review-quote" data-lang="it">"Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente."</p>
+  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+  <div class="review-author">
+    <span class="review-author-name">Marco R. 🇮🇹</span>
+    <span class="review-prop review-prop--lihele">Lihele</span>
+  </div>
+  <div class="review-source">via Booking.com</div>
+</a>
+<a class="review-card"
+   href="https://www.booking.com/your-real-review-url-1"
+   target="_blank"
+   rel="noopener">
+  <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+  <p class="review-quote" data-lang="it">"Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente."</p>
+  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+  <div class="review-author">
+    <span class="review-author-name">Marco R. 🇮🇹</span>
+    <span class="review-prop review-prop--lihele">Lihele</span>
+  </div>
+  <div class="review-source">via Booking.com</div>
+</a>
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-btn" id="carPrev" aria-label="Recensione precedente">←</button>
+        <div class="carousel-dots" id="carouselDots"></div>
+        <button class="carousel-btn" id="carNext" aria-label="Recensione successiva">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LOCATION
+     ============================================================ -->
+<section id="location" class="section section--warm">
+  <div class="container">
+    <div class="location-grid">
+      <div class="map-container fade-up">
+        <div class="map-loading" id="mapLoading" data-lang="it">Caricamento mappa…</div>
+        <!-- Map loads on scroll via IntersectionObserver in script.js -->
+        <div id="mapEmbed" style="width:100%;height:100%;display:none;">
+          <!-- iframe injected by JS on scroll -->
+        </div>
+      </div>
+      <div class="location-content fade-up">
+        <h2 class="location-title">Castelsardo</h2>
+        <p class="location-subtitle" data-lang="it">Sardegna, Italia</p>
+        <p class="location-subtitle" data-lang="en">Sardinia, Italy</p>
+        <p class="location-desc" data-lang="it">Uno dei borghi medievali più belli d'Italia, arroccato su una roccia a picco sul mar Mediterraneo. Vicoli in pietra, panorami infiniti, spiagge raggiungibili a piedi.</p>
+        <p class="location-desc" data-lang="en">One of Italy's most beautiful medieval villages, perched on a cliff over the Mediterranean. Stone alleyways, endless views, beaches you can walk to.</p>
+        <div class="distances">
+          <div class="distance-item">
+            <span class="distance-icon">🏖</span>
+            <span class="distance-text" data-lang="it">Spiaggia di Castelsardo</span>
+            <span class="distance-text" data-lang="en">Castelsardo Beach</span>
+            <span class="distance-val">500m</span>
+          </div>
+          <div class="distance-item">
+            <span class="distance-icon">🏛</span>
+            <span class="distance-text" data-lang="it">Centro storico</span>
+            <span class="distance-text" data-lang="en">Historic old town</span>
+            <span class="distance-val" data-lang="it">10 min a piedi</span>
+            <span class="distance-val" data-lang="en">10 min walk</span>
+          </div>
+          <div class="distance-item">
+            <span class="distance-icon">✈️</span>
+            <span class="distance-text" data-lang="it">Aeroporto di Alghero</span>
+            <span class="distance-text" data-lang="en">Alghero Airport</span>
+            <span class="distance-val">57 km</span>
+          </div>
+          <div class="distance-item">
+            <span class="distance-icon">🚗</span>
+            <span class="distance-text">Sassari</span>
+            <span class="distance-val">30 km</span>
+          </div>
+          <div class="distance-item">
+            <span class="distance-icon">✈️</span>
+            <span class="distance-text" data-lang="it">Aeroporto di Olbia</span>
+            <span class="distance-text" data-lang="en">Olbia Airport</span>
+            <span class="distance-val">~90 km</span>
+          </div>
+        </div>
+        <div class="parking-note">
+          🅿️ <span data-lang="it"><strong>Parcheggio</strong> — disponibile in strada nelle vicinanze, solitamente libero.</span>
+          <span data-lang="en"><strong>Parking</strong> — available on the street nearby, usually free.</span>
+        </div>
+        <a href="https://maps.google.com/?q=4+Via+Tibula,+Castelsardo" class="btn-directions" target="_blank" rel="noopener">
+          <span data-lang="it">Ottieni indicazioni →</span>
+          <span data-lang="en">Get directions →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ
+     ============================================================ -->
+<section id="faq" class="section">
+  <div class="container">
+    <div class="faq-header fade-up">
+      <p class="label" style="color:var(--text-light);margin-bottom:10px;">FAQ</p>
+      <h2 class="section-title">
+        <span data-lang="it">Domande frequenti</span>
+        <span data-lang="en">Frequently asked questions</span>
+      </h2>
+    </div>
+    <div class="faq-layout">
+      <nav class="faq-nav">
+        <ul class="faq-nav-list">
+          <li class="faq-nav-item"><a href="#faq-prenotazione" data-lang="it">Prenotazione</a><a href="#faq-prenotazione" data-lang="en">Booking</a></li>
+          <li class="faq-nav-item"><a href="#faq-strutture" data-lang="it">Le Strutture</a><a href="#faq-strutture" data-lang="en">The Properties</a></li>
+          <li class="faq-nav-item"><a href="#faq-soggiorno" data-lang="it">Il Soggiorno</a><a href="#faq-soggiorno" data-lang="en">Your Stay</a></li>
+          <li class="faq-nav-item"><a href="#faq-posizione" data-lang="it">Posizione</a><a href="#faq-posizione" data-lang="en">Location</a></li>
+        </ul>
+      </nav>
+      <div class="faq-content" id="faqGroups">
+
+        <div class="faq-group" id="faq-prenotazione">
+          <div class="faq-group-title" data-lang="it">Prenotazione</div>
+          <div class="faq-group-title" data-lang="en">Booking</div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">Come si prenota direttamente?</span>
+              <span data-lang="en">How do I book directly?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Scrivici su WhatsApp — è il modo più rapido. Rispondiamo entro poche ore, confermiamo disponibilità e prezzi e organizziamo tutto direttamente con voi.</span>
+              <span data-lang="en">Message us on WhatsApp — it's the fastest way. We reply within a few hours, confirm availability and rates, and arrange everything directly with you.</span>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">Conviene prenotare direttamente?</span>
+              <span data-lang="en">Is it better to book direct?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Sì — prenotando direttamente evitate le commissioni delle piattaforme, avete comunicazione diretta con noi e possiamo essere più flessibili su richieste particolari.</span>
+              <span data-lang="en">Yes — by booking direct you avoid platform fees, have direct communication with us, and we can be more flexible with special requests.</span>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">Quali metodi di pagamento accettate?</span>
+              <span data-lang="en">What payment methods do you accept?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Da definire — vi informiamo al momento della prenotazione.</span>
+              <span data-lang="en">To be confirmed — we'll let you know at time of booking.</span>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">Qual è la politica di cancellazione?</span>
+              <span data-lang="en">What is the cancellation policy?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Da definire — vi comunichiamo le condizioni complete al momento della prenotazione.</span>
+              <span data-lang="en">To be confirmed — we'll share full terms at time of booking.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-group" id="faq-strutture">
+          <div class="faq-group-title" data-lang="it">Le Strutture</div>
+          <div class="faq-group-title" data-lang="en">The Properties</div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">Qual è la differenza tra Lihele e Likele?</span>
+              <span data-lang="en">What's the difference between Lihele and Likele?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Lihele è l'appartamento intero: 3 camere, fino a 5 ospiti, cucina completa, balcone vista mare — ideale per famiglie e gruppi. Likele è una camera privata con bagno privato, terrazza vista mare e colazione — perfetta per 1 o 2 persone. Sono nello stesso stabile, con ingressi su strade diverse.</span>
+              <span data-lang="en">Lihele is the entire apartment: 3 bedrooms, up to 5 guests, full kitchen, sea-view balcony — ideal for families and groups. Likele is a private room with en-suite bathroom, sea-view terrace and breakfast — perfect for 1 or 2 people. They're in the same building, with entrances on different streets.</span>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">Posso affittare entrambe le strutture?</span>
+              <span data-lang="en">Can I rent both properties together?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Sì, scriveteci e organizziamo tutto.</span>
+              <span data-lang="en">Yes, just get in touch and we'll arrange everything.</span>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">C'è parcheggio?</span>
+              <span data-lang="en">Is parking available?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Il parcheggio è disponibile in strada nelle vicinanze, solitamente libero e accessibile facilmente.</span>
+              <span data-lang="en">Parking is available on the street nearby, usually free and easy to find.</span>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">Sono ammessi animali?</span>
+              <span data-lang="en">Are pets allowed?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Da definire — contattateci direttamente per verificare.</span>
+              <span data-lang="en">To be confirmed — please contact us directly to check.</span>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">La colazione è inclusa a Likele?</span>
+              <span data-lang="en">Is breakfast included at Likele?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Sì — in camera troverete una colazione italiana autogestita: macchina Dolce Gusto, tè e tisane, brioche confezionate, biscotti, yogurt e succhi di frutta.</span>
+              <span data-lang="en">Yes — you'll find a self-serve Italian breakfast in your room: Dolce Gusto machine, teas, packaged brioches, biscuits, yogurt and fruit juices.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-group" id="faq-soggiorno">
+          <div class="faq-group-title" data-lang="it">Il Soggiorno</div>
+          <div class="faq-group-title" data-lang="en">Your Stay</div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">A che ora è il check-in e check-out?</span>
+              <span data-lang="en">What are check-in and check-out times?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Da definire — vi comunichiamo gli orari alla conferma della prenotazione.</span>
+              <span data-lang="en">To be confirmed — we'll let you know at time of booking confirmation.</span>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">C'è l'aria condizionata?</span>
+              <span data-lang="en">Is there air conditioning?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Sì, in entrambe le strutture.</span>
+              <span data-lang="en">Yes, in both properties.</span>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">Il WiFi è incluso?</span>
+              <span data-lang="en">Is WiFi included?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Sì, WiFi gratuito disponibile in tutta la struttura.</span>
+              <span data-lang="en">Yes, free WiFi available throughout both properties.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-group" id="faq-posizione">
+          <div class="faq-group-title" data-lang="it">Posizione</div>
+          <div class="faq-group-title" data-lang="en">Location</div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">È necessaria la macchina?</span>
+              <span data-lang="en">Do I need a car?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Per raggiungere la struttura sì, ma una volta a Castelsardo la spiaggia e il centro storico sono a piedi. Per escursioni nella zona, un'auto è consigliata.</span>
+              <span data-lang="en">To reach the property yes, but once in Castelsardo the beach and old town are walkable. For exploring the surrounding area, a car is recommended.</span>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">È adatta per i bambini?</span>
+              <span data-lang="en">Is it suitable for children?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Sì — Lihele dispone di un'area giochi per bambini ed è ideale per famiglie con figli.</span>
+              <span data-lang="en">Yes — Lihele has a children's play area and is ideal for families with kids.</span>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">
+              <span data-lang="it">Lihele e Likele sono nello stesso posto?</span>
+              <span data-lang="en">Are Lihele and Likele in the same place?</span>
+              <i class="faq-q-icon">+</i>
+            </button>
+            <div class="faq-a">
+              <span data-lang="it">Sì — sono nello stesso stabile ma con ingressi su strade diverse. Lihele è in Via Colle di Frigiano 35, Likele in Via Tibula 4.</span>
+              <span data-lang="en">Yes — same building, different street entrances. Lihele is at Via Colle di Frigiano 35, Likele at Via Tibula 4.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-cta fade-up">
+          <p data-lang="it">Altre domande? Siamo qui.</p>
+          <p data-lang="en">More questions? We're here.</p>
+          <a href="https://wa.me/393385037171?text=Ciao!%20Ho%20una%20domanda." class="btn-wa" style="display:inline-flex;margin:0 auto" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span data-lang="it">Scrivici su WhatsApp</span>
+            <span data-lang="en">Message us on WhatsApp</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<section id="contatti" class="section section--dark">
+  <div class="container">
+    <div class="contact-inner">
+      <p class="contact-tag" data-lang="it">Contatti</p>
+      <p class="contact-tag" data-lang="en">Contact</p>
+      <h2 class="contact-title">
+        <span data-lang="it">Scriveteci, siamo qui.</span>
+        <span data-lang="en">Get in touch, we're here.</span>
+      </h2>
+      <p class="contact-sub" data-lang="it">Di solito rispondiamo entro poche ore. Scrivici su WhatsApp per il modo più rapido, o usa il modulo qui sotto.</p>
+      <p class="contact-sub" data-lang="en">We usually reply within a few hours. WhatsApp is the fastest way to reach us, or use the form below.</p>
+      <a href="https://wa.me/393385037171?text=Ciao!%20Vorrei%20informazioni%20su%20Lihele%20o%20Likele." class="contact-wa-main" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <span data-lang="it">💬 Scrivici su WhatsApp</span>
+        <span data-lang="en">💬 Message us on WhatsApp</span>
+      </a>
+      <div class="divider-text" data-lang="it">oppure usa il modulo</div>
+      <div class="divider-text" data-lang="en">or use the form</div>
+      <form class="contact-form" id="contactForm"
+            name="contact" method="POST" data-netlify="true"
+            netlify-honeypot="bot-field" action="/thanks/" novalidate>
+        <input type="hidden" name="form-name" value="contact">
+        <p style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0" aria-hidden="true">
+          <label>Non compilare: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+        </p>
+        <div id="formStatus" role="status" aria-live="polite" style="font-size:0.85rem;text-align:center;border-radius:8px;transition:all 0.3s"></div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="f-name" data-lang="it">Nome</label>
+            <label for="f-name" data-lang="en">Name</label>
+            <input type="text" id="f-name" name="name" required autocomplete="name" placeholder="Il tuo nome" data-placeholder-it="Il tuo nome" data-placeholder-en="Your name" />
+            <span class="form-error" id="err-name" aria-live="polite"></span>
+          </div>
+          <div class="form-field">
+            <label for="f-email">Email</label>
+            <input type="email" id="f-email" name="email" required autocomplete="email" placeholder="la@tua.email" />
+            <span class="form-error" id="err-email" aria-live="polite"></span>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="f-property" data-lang="it">Struttura</label>
+          <label for="f-property" data-lang="en">Property</label>
+          <select name="property" id="f-property">
+            <option value="">—</option>
+            <option value="lihele">Lihele — Casa Vacanze</option>
+            <option value="likele">Likele — Camera Privata</option>
+            <option value="entrambe">Entrambe / Both</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label data-lang="it">Date (arrivo – partenza)</label>
+          <label data-lang="en">Dates (arrival – departure)</label>
+          <input type="text" name="dates" placeholder="es. 10 luglio – 17 luglio 2026" data-placeholder-it="es. 10 luglio – 17 luglio 2026" data-placeholder-en="e.g. 10 July – 17 July 2026" />
+        </div>
+        <div class="form-field">
+          <label data-lang="it">Messaggio</label>
+          <label data-lang="en">Message</label>
+          <textarea name="message" placeholder="Numero di ospiti, richieste particolari…" data-placeholder-it="Numero di ospiti, richieste particolari…" data-placeholder-en="Number of guests, special requests…"></textarea>
+        </div>
+        <button type="submit" class="form-submit" id="formSubmitBtn">
+          <span class="btn-text" data-lang="it">Invia richiesta</span>
+          <span class="btn-text" data-lang="en">Send enquiry</span>
+          <span class="btn-sending" hidden>
+            <span data-lang="it">Invio in corso…</span>
+            <span data-lang="en">Sending…</span>
+          </span>
+        </button>
+        <p class="form-privacy">
+          <span data-lang="it">I tuoi dati sono usati solo per rispondere alla tua richiesta. <a href="#">Privacy Policy</a>.</span>
+          <span data-lang="en">Your data is only used to respond to your enquiry. <a href="#">Privacy Policy</a>.</span>
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="/assets/Lihele-wh.svg" alt="Lihele">
+        <img src="/assets/Likele-wh.svg" alt="Likele">
+      </div>
+      <div class="footer-links">
+        <a href="#" data-lang="it">Privacy Policy</a>
+        <a href="#" data-lang="en">Privacy Policy</a>
+        <a href="#" data-lang="it">Cookie Policy</a>
+        <a href="#" data-lang="en">Cookie Policy</a>
+      </div>
+      <div class="footer-copy">
+        Castelsardo, Sardegna · © 2026
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     LIGHTBOX
+     ============================================================ -->
+     <div id="lightbox" role="dialog" aria-label="Image lightbox">
+      <button class="lb-close" aria-label="Chiudi">✕</button>
+      <button class="lb-prev" aria-label="Previous">‹</button>
+      <button class="lb-next" aria-label="Next">›</button>
+      <div class="lb-content"></div>
+    </div>
+
+<!-- ============================================================
+     FLOATING WHATSAPP
+     ============================================================ -->
+<a id="float-wa" href="https://wa.me/393385037171?text=Ciao!%20Ho%20visto%20il%20vostro%20sito%20e%20vorrei%20informazioni." target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+// ---- NAVBAR SCROLL ----
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+// ---- HAMBURGER MENU ----
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
+hamburger.addEventListener('click', () => {
+  const isOpen = mobileNav.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', isOpen);
+});
+mobileNav.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    mobileNav.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  });
+});
+
+// ---- LANGUAGE TOGGLE ----
+const langToggle = document.getElementById('langToggle');
+const ltIt = document.getElementById('lt-it');
+const ltEn = document.getElementById('lt-en');
+let currentLang = 'it';
+
+langToggle.addEventListener('click', () => {
+  currentLang = currentLang === 'it' ? 'en' : 'it';
+  document.documentElement.classList.toggle('lang-en', currentLang === 'en');
+  ltIt.classList.toggle('active', currentLang === 'it');
+  ltEn.classList.toggle('active', currentLang === 'en');
+  // Update placeholders
+  document.querySelectorAll('[data-placeholder-' + currentLang + ']').forEach(el => {
+    el.placeholder = el.dataset['placeholder' + currentLang.charAt(0).toUpperCase() + currentLang.slice(1)];
+  });
+  // Fix select elements — JS-driven for cross-browser compat
+  document.querySelectorAll('select option[data-lang]').forEach(opt => {
+    if (opt.dataset.lang === currentLang) {
+      opt.style.display = '';
+      opt.hidden = false;
+    } else {
+      opt.style.display = 'none';
+      opt.hidden = true;
+    }
+  });
+});
+
+// ---- FAQ ACCORDION ----
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.setAttribute('aria-expanded', 'false');
+  const answer = btn.nextElementSibling;
+  if (answer) answer.setAttribute('role', 'region');
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
+// ---- SCROLL ANIMATIONS ----
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ---- LAZY MAP LOAD ----
+const mapSection = document.getElementById('location');
+const mapObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    const mapEmbed = document.getElementById('mapEmbed');
+    const mapLoading = document.getElementById('mapLoading');
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://maps.google.com/maps?q=4+Via+Tibula,+07031+Castelsardo&z=15&output=embed';
+    iframe.style.cssText = 'width:100%;height:100%;border:none;';
+    iframe.loading = 'lazy';
+    iframe.title = 'Mappa — Via Tibula 4, Castelsardo';
+    mapEmbed.appendChild(iframe);
+    mapEmbed.style.display = 'block';
+    if (mapLoading) mapLoading.style.display = 'none';
+    mapObserver.disconnect();
+  }
+}, { threshold: 0.1 });
+if (mapSection) mapObserver.observe(mapSection);
+
+// ---- REVIEWS CAROUSEL ----
+(function() {
+  const carousel = document.getElementById('reviewsCarousel');
+  if (!carousel) return;
+  const cards = carousel.querySelectorAll('.review-card');
+const dotsWrap = document.getElementById('carouselDots');
+const prevBtn = document.getElementById('carPrev');
+const nextBtn = document.getElementById('carNext');
+const visiblePerView = 3; // you show 3 cards at once
+const maxIdx = Math.max(0, cards.length - visiblePerView);
+let currentIdx = 0;
+
+  // Create dots
+  for (let i = 0; i <= maxIdx; i++) {
+  const dot = document.createElement('div');
+  dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+  dot.addEventListener('click', () => scrollToIdx(i));
+  dotsWrap.appendChild(dot);
+}
+const dots = dotsWrap.querySelectorAll('.carousel-dot');
+
+  function updateDots() {
+    dots.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
+  }
+
+  function scrollToIdx(idx) {
+  idx = Math.max(0, Math.min(idx, maxIdx));
+  currentIdx = idx;
+  const card = cards[idx];
+  carousel.scrollTo({ left: card.offsetLeft - carousel.offsetLeft, behavior: 'smooth' });
+  updateDots();
+}
+
+  prevBtn.addEventListener('click', () => scrollToIdx(currentIdx - 1));
+  nextBtn.addEventListener('click', () => scrollToIdx(currentIdx + 1));
+
+  // Drag to scroll
+  let isDown = false, startX, scrollLeft;
+  carousel.addEventListener('mousedown', (e) => {
+    isDown = true; startX = e.pageX - carousel.offsetLeft;
+    scrollLeft = carousel.scrollLeft;
+  });
+  carousel.addEventListener('mouseleave', () => isDown = false);
+  carousel.addEventListener('mouseup', () => isDown = false);
+  carousel.addEventListener('mousemove', (e) => {
+    if (!isDown) return; e.preventDefault();
+    carousel.scrollLeft = scrollLeft - (e.pageX - carousel.offsetLeft - startX) * 1.3;
+  });
+
+  // Sync dots on scroll
+  let scrollTimer;
+  carousel.addEventListener('scroll', () => {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      let closest = 0, minDist = Infinity;
+      cards.forEach((card, i) => {
+        const dist = Math.abs(card.offsetLeft - carousel.offsetLeft - carousel.scrollLeft);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      currentIdx = closest;
+      updateDots();
+    }, 80);
+  }, { passive: true });
+
+  // Keyboard nav
+  carousel.setAttribute('tabindex', '0');
+  carousel.setAttribute('role', 'region');
+  carousel.setAttribute('aria-label', 'Recensioni ospiti');
+  carousel.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') scrollToIdx(currentIdx + 1);
+    if (e.key === 'ArrowLeft') scrollToIdx(currentIdx - 1);
+  });
+})();
+
+// ---- GALLERY LIGHTBOX ----
+// ---- GALLERY LIGHTBOX ----
+(function() {
+  const lightbox = document.getElementById('lightbox');
+  if (!lightbox) return;
+  const lbContent = lightbox.querySelector('.lb-content');
+  const lbClose = lightbox.querySelector('.lb-close');
+  const lbPrev = lightbox.querySelector('.lb-prev');
+  const lbNext = lightbox.querySelector('.lb-next');
+  const items = Array.from(document.querySelectorAll('.gallery-item'));
+  let currentIdx = 0;
+
+  function showItem(idx) {
+    currentIdx = ((idx % items.length) + items.length) % items.length;
+    const item = items[currentIdx];
+    const img = item.querySelector('img');
+    const placeholder = item.querySelector('.gallery-placeholder');
+    let caption = '';
+
+    if (img) {
+      caption = img.alt || '';
+      lbContent.innerHTML = '<img class="lb-img" src="' + img.src + '" alt="' + (img.alt || '') + '"><div class="lb-caption">' + caption + '</div>';
+    } else if (placeholder) {
+      caption = placeholder.textContent.trim();
+      lbContent.innerHTML = '<div style="width:70vw;max-width:600px;height:50vh;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:0.8rem;letter-spacing:0.1em;color:rgba(255,255,255,0.4);text-transform:uppercase;background:' + (placeholder.style.background || 'linear-gradient(160deg,#333,#111)') + '"></div><div class="lb-caption">' + caption + '</div>';
+    }
+  }
+
+  function openLb(idx) {
+    currentIdx = idx;
+    showItem(currentIdx);
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lbClose.focus();
+  }
+
+  function closeLb() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    lbContent.innerHTML = '';
+  }
+
+  items.forEach((item, i) => {
+    item.setAttribute('tabindex', '0');
+    item.setAttribute('role', 'button');
+    item.setAttribute('aria-label', 'Apri immagine');
+    item.addEventListener('click', () => openLb(i));
+    item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(i); } });
+  });
+
+  lbPrev.addEventListener('click', e => {
+    e.stopPropagation();
+    showItem(currentIdx - 1);
+  });
+  lbNext.addEventListener('click', e => {
+    e.stopPropagation();
+    showItem(currentIdx + 1);
+  });
+  lbClose.addEventListener('click', e => { e.stopPropagation(); closeLb(); });
+  lightbox.addEventListener('click', closeLb);
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLb();
+    if (e.key === 'ArrowLeft') { e.preventDefault(); showItem(currentIdx - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); showItem(currentIdx + 1); }
+  });
+})();
+
+// ──────────────────────────────────────────────────
+// CONTACT FORM — VALIDATION + NETLIFY SUBMIT
+// ──────────────────────────────────────────────────
+(function() {
+  var form = document.getElementById('contactForm');
+  if (!form) return;
+  var nameF = document.getElementById('f-name');
+  var emailF = document.getElementById('f-email');
+  var btn = document.getElementById('formSubmitBtn');
+  var status = document.getElementById('formStatus');
+  var currentLang = document.documentElement.lang === 'en' ? 'en' : 'it';
+
+  var rules = {
+    'f-name':  { test: function(v){ return v.trim().length >= 2; }, msg: { it:'Inserisci il tuo nome (min 2 caratteri).', en:'Please enter your name (at least 2 characters).' } },
+    'f-email': { test: function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }, msg: { it:'Inserisci un indirizzo email valido.', en:'Please enter a valid email address.' } }
+  };
+
+  function validate(field) {
+    var rule = rules[field.id];
+    if (!rule) return true;
+    var errEl = document.getElementById('err-' + field.id.replace('f-',''));
+    var ok = rule.test(field.value);
+    field.setAttribute('aria-invalid', ok ? 'false' : 'true');
+    if (errEl) { errEl.textContent = ok ? '' : (rule.msg[currentLang] || rule.msg.it); }
+    return ok;
+  }
+
+  [nameF, emailF].forEach(function(f) {
+    if (!f) return;
+    f.addEventListener('blur', function(){ validate(f); });
+    f.addEventListener('input', function(){ if (f.getAttribute('aria-invalid') === 'true') validate(f); });
+  });
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var ok = true;
+    [nameF, emailF].forEach(function(f){ if (f && !validate(f)) ok = false; });
+    if (!ok) { var first = form.querySelector('[aria-invalid="true"]'); if (first) first.focus(); return; }
+
+    btn.disabled = true;
+    btn.classList.add('is-sending');
+    status.textContent = '';
+    status.className = '';
+
+    var data = new URLSearchParams(new FormData(form)).toString();
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: data
+    }).then(function(resp) {
+      if (resp.ok) {
+        window.location.href = '/thanks/';
+      } else {
+        throw new Error(resp.status);
+      }
+    }).catch(function() {
+      status.textContent = currentLang === 'en'
+        ? 'Sending failed. Please try again or message us on WhatsApp.'
+        : "Errore nell'invio. Riprova o scrivici su WhatsApp.";
+      status.className = 'is-error';
+      btn.disabled = false;
+      btn.classList.remove('is-sending');
+    });
+  });
+
+  // Sync lang with toggle
+  var langObs = new MutationObserver(function() {
+    currentLang = document.documentElement.lang === 'en' ? 'en' : 'it';
+  });
+  langObs.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+})();
+
+// ──────────────────────────────────────────────────
+// CMS HYDRATION — load content.json, re-render reviews + FAQ
+// Falls back gracefully if content.json is missing.
+// ──────────────────────────────────────────────────
+(function() {
+  function getLang() { return document.documentElement.lang === 'en' ? 'en' : 'it'; }
+  function txt(obj) {
+    if (!obj) return '';
+    if (typeof obj === 'string') return obj;
+    return obj[getLang()] || obj.it || obj.en || '';
+  }
+
+  fetch('/content/content.json').then(function(r) {
+    if (!r.ok) throw new Error(r.status);
+    return r.json();
+  }).then(function(cms) {
+
+    // ── Reviews ──
+    if (cms.reviews && cms.reviews.length) {
+      var carousel = document.getElementById('reviewsCarousel');
+      if (carousel) {
+        var html = cms.reviews.map(function(r, i) {
+          var isL = r.property === 'lihele';
+          var propClass = isL ? 'review-prop--lihele' : 'review-prop--likele';
+          var tag = r.url ? 'a' : 'div';
+          var hrefAttr = r.url ? ' href="' + r.url + '" target="_blank" rel="noopener"' : '';
+          return '<' + tag + hrefAttr + ' class="review-card">' +
+            '<div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>' +
+            '<p class="review-quote">' + txt(r.quote) + '</p>' +
+            '<div class="review-author"><span class="review-author-name">' + r.author + '</span>' +
+            '<span class="review-prop ' + propClass + '">' + (isL ? 'Lihele' : 'Likele') + '</span></div>' +
+            '<div class="review-source">' + r.source + '</div>' +
+            '</' + tag + '>';
+        }).join('');
+        carousel.innerHTML = html;
+
+        // Re-init carousel dots
+        var dotsWrap = document.getElementById('carouselDots');
+        if (dotsWrap) {
+          dotsWrap.innerHTML = '';
+          var cards = carousel.querySelectorAll('.review-card');
+          var maxI = Math.max(0, cards.length - 1);
+          for (var i = 0; i <= maxI; i++) {
+            var dot = document.createElement('div');
+            dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+            (function(idx) { dot.addEventListener('click', function() {
+              var c = cards[idx];
+              if (c) carousel.scrollTo({ left: c.offsetLeft - carousel.offsetLeft, behavior: 'smooth' });
+            }); })(i);
+            dotsWrap.appendChild(dot);
+          }
+          // Re-sync dots on scroll
+          var timer;
+          carousel.addEventListener('scroll', function() {
+            clearTimeout(timer);
+            timer = setTimeout(function() {
+              var dots = dotsWrap.querySelectorAll('.carousel-dot');
+              var scrollLeft = carousel.scrollLeft;
+              var closest = 0, minDist = Infinity;
+              cards.forEach(function(card, j) {
+                var dist = Math.abs(card.offsetLeft - carousel.offsetLeft - scrollLeft);
+                if (dist < minDist) { minDist = dist; closest = j; }
+              });
+              dots.forEach(function(d, j) { d.classList.toggle('active', j === closest); });
+            }, 80);
+          }, { passive: true });
+        }
+      }
+    }
+
+    // ── FAQ ──
+    if (cms.faq && cms.faq.length) {
+      var faqContainer = document.getElementById('faqGroups');
+      if (faqContainer) {
+        var gIdx = 0;
+        faqContainer.innerHTML = cms.faq.map(function(g) {
+          var itemsHtml = g.items.map(function(item) {
+            var idx = gIdx++;
+            return '<div class="faq-item" data-faq="' + idx + '">' +
+              '<button class="faq-q" aria-expanded="false" aria-controls="faq-a-' + idx + '">' +
+                '<span>' + txt(item.q) + '</span>' +
+                '<em class="faq-q-icon">+</em>' +
+              '</button>' +
+              '<div class="faq-a" id="faq-a-' + idx + '" role="region">' +
+                '<p>' + txt(item.a) + '</p>' +
+              '</div></div>';
+          }).join('');
+          return '<div class="faq-group">' +
+            '<h3 class="faq-group-title">' + txt(g.title) + '</h3>' +
+            itemsHtml + '</div>';
+        }).join('');
+
+        // Re-bind accordion
+        faqContainer.addEventListener('click', function(e) {
+          var btn = e.target.closest('.faq-q');
+          if (!btn) return;
+          var item = btn.closest('.faq-item');
+          var wasOpen = item.classList.contains('open');
+          faqContainer.querySelectorAll('.faq-item.open').forEach(function(el) {
+            el.classList.remove('open');
+            el.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+          });
+          if (!wasOpen) {
+            item.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      }
+    }
+
+  }).catch(function(e) {
+    // Graceful degradation — page uses existing hardcoded content
+    console.info('[CMS] content.json not loaded, using hardcoded fallback.', e.message || e);
+  });
+})();
+</script>
+</body>
+</html>
