@@ -98,7 +98,7 @@
     {
       "title": { "it": "Le Strutture", "en": "The Properties" },
       "items": [
-        { "q": { "it": "Qual è la differenza tra Lihele e Likele?", "en": "What's the difference between Lihele and Likele?" }, "a": { "it": "Lihele è l'appartamento intero: 3 camere, fino a 5 ospiti, cucina completa, balcone vista mare. Likele è una camera privata con bagno privato, terrazza vista mare e colazione. Sono nello stesso stabile, con ingressi su strade diverse.", "en": "Lihele is the entire apartment: 3 bedrooms, up to 5 guests, full kitchen, sea-view balcony. Likele is a private room with en-suite bathroom, sea-view terrace and breakfast. Same building, different street entrances." } },
+        { "q": { "it": "Qual è la differenza tra Lihele e Likele?", "en": "What's the difference between Lihele and Likele?" }, "a": { "it": "Lihele è l'appartamento intero: 3 camere, 2 bagni, fino a 5 ospiti, cucina attrezzata, TV, aria condizionata, balcone vista mare, biancheria e asciugamani inclusi, area giochi per bambini. Likele è una camera privata con bagno privato, terrazza vista mare e colazione inclusa, perfetta per 1 o 2 persone. Sono nello stesso stabile, con ingressi su strade diverse.", "en": "Lihele is the entire apartment: 3 bedrooms, 2 bathrooms, up to 5 guests, fully equipped kitchen, TV, A/C, sea-view balcony, linen and towels included, children's play area. Likele is a private room with en-suite bathroom, sea-view terrace and breakfast included, perfect for 1 or 2 people. Same building, different street entrances." } },
         { "q": { "it": "La colazione è inclusa a Likele?", "en": "Is breakfast included at Likele?" }, "a": { "it": "Sì, macchina Dolce Gusto, tè e tisane, brioche confezionate, biscotti, yogurt e succhi di frutta.", "en": "Yes, Dolce Gusto machine, teas, packaged brioches, biscuits, yogurt and fruit juices." } },
         { "q": { "it": "Sono ammessi animali?", "en": "Are pets allowed?" }, "a": { "it": "Da definire. Contattateci direttamente.", "en": "To be confirmed. Please contact us directly." } }
       ]
@@ -106,6 +106,7 @@
     {
       "title": { "it": "Il Soggiorno", "en": "Your Stay" },
       "items": [
+        { "q": { "it": "A che ora è il check-in e check-out?", "en": "What are check-in and check-out times?" }, "a": { "it": "Check-in dalle 17:00 alle 22:00. Check-out dalle 08:30 alle 09:30.", "en": "Check-in from 5:00 PM to 10:00 PM. Check-out from 8:30 AM to 9:30 AM." } },
         { "q": { "it": "C'è l'aria condizionata?", "en": "Is there air conditioning?" }, "a": { "it": "Sì, in entrambe le strutture.", "en": "Yes, in both properties." } },
         { "q": { "it": "Il WiFi è incluso?", "en": "Is WiFi included?" }, "a": { "it": "Sì, WiFi gratuito disponibile in tutta la struttura.", "en": "Yes, free WiFi throughout both properties." } }
       ]
@@ -113,7 +114,7 @@
     {
       "title": { "it": "Posizione", "en": "Location" },
       "items": [
-        { "q": { "it": "È necessaria la macchina?", "en": "Do I need a car?" }, "a": { "it": "Per raggiungere la struttura sì, ma una volta a Castelsardo la spiaggia e il centro storico sono a piedi.", "en": "To reach the property yes, but once in Castelsardo the beach and old town are walkable." } },
+        { "q": { "it": "È necessaria la macchina?", "en": "Do I need a car?" }, "a": { "it": "Per raggiungere la struttura sì, ma una volta a Castelsardo la spiaggia è a soli 500 m e il centro storico è a piedi. L'aeroporto più vicino è Alghero, a 57 km. Per escursioni nella zona, un'auto è consigliata.", "en": "To reach the property yes, but once in Castelsardo the beach is just 500 m away and the old town is walkable. The nearest airport is Alghero, 57 km away. For exploring the area, a car is recommended." } },
         { "q": { "it": "È adatta per i bambini?", "en": "Is it suitable for children?" }, "a": { "it": "Sì, Lihele dispone di un'area giochi per bambini.", "en": "Yes, Lihele has a children's play area." } },
         { "q": { "it": "Lihele e Likele sono nello stesso posto?", "en": "Are Lihele and Likele in the same place?" }, "a": { "it": "Sì, stesso stabile, ingressi su strade diverse. Lihele: Via Colle di Frigiano 35. Likele: Via Tibula 4.", "en": "Yes, same building, different entrances. Lihele: Via Colle di Frigiano 35. Likele: Via Tibula 4." } }
       ]
