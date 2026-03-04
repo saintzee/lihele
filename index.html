@@ -35,9 +35,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lihele · Likele — Casa Vacanze e Affittacamere a Castelsardo, Sardegna</title>
+<title>Lihele · Likele · Casa Vacanze e Affittacamere a Castelsardo, Sardegna</title>
 <meta name="description" content="Due strutture a Castelsardo con vista mare. Lihele: appartamento intero fino a 5 ospiti. Likele: camera privata con colazione. Booking.com Award 9.8 e 9.7. Prenota direttamente su WhatsApp." />
-<meta property="og:title" content="Lihele · Likele — Casa Vacanze e Affittacamere a Castelsardo" />
+<meta property="og:title" content="Lihele · Likele · Casa Vacanze e Affittacamere a Castelsardo" />
 <meta property="og:description" content="Due strutture con vista mare a Castelsardo, Sardegna. Appartamento intero o camera privata. Booking.com Award 9.8 e 9.7." />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="it_IT" />
@@ -45,10 +45,10 @@
 <!-- <meta property="og:image" content="https://yourdomain.com/images/og-image.jpg" /> -->
 <!-- <meta property="og:url" content="https://yourdomain.com" /> -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Lihele · Likele — Castelsardo, Sardegna" />
+<meta name="twitter:title" content="Lihele · Likele · Castelsardo, Sardegna" />
 <meta name="twitter:description" content="Appartamento vista mare o camera privata con colazione. Booking.com Award 9.8 e 9.7." />
 <!-- Open Graph -->
-<meta property="og:title" content="Lihele · Likele — Castelsardo, Sardegna">
+<meta property="og:title" content="Lihele · Likele · Castelsardo, Sardegna">
 <meta property="og:description" content="Due strutture con vista mare a Castelsardo. Booking.com Award 9.8 e 9.7. Prenota direttamente.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="it_IT">
@@ -57,7 +57,7 @@
 
 <!-- JSON-LD Structured Data -->
 <script type="application/ld+json">
-[{"@context":"https://schema.org","@type":"LodgingBusiness","name":"Lihele — Casa Vacanze","description":"Appartamento intero con vista mare a Castelsardo, fino a 5 ospiti.","address":{"@type":"PostalAddress","streetAddress":"Via Colle di Frigiano 35","addressLocality":"Castelsardo","postalCode":"07031","addressRegion":"SS","addressCountry":"IT"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"9.8","bestRating":"10","ratingCount":"53"},"telephone":"+393385037171"},{"@context":"https://schema.org","@type":"LodgingBusiness","name":"Likele — Affittacamere","description":"Camera con bagno privato, terrazza mare e colazione a Castelsardo.","address":{"@type":"PostalAddress","streetAddress":"Via Tibula 4","addressLocality":"Castelsardo","postalCode":"07031","addressRegion":"SS","addressCountry":"IT"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"9.7","bestRating":"10","ratingCount":"66"},"telephone":"+393385037171"}]
+[{"@context":"https://schema.org","@type":"LodgingBusiness","name":"Lihele · Casa Vacanze","description":"Appartamento intero con vista mare a Castelsardo, fino a 5 ospiti.","address":{"@type":"PostalAddress","streetAddress":"Via Colle di Frigiano 35","addressLocality":"Castelsardo","postalCode":"07031","addressRegion":"SS","addressCountry":"IT"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"9.8","bestRating":"10","ratingCount":"53"},"telephone":"+393385037171"},{"@context":"https://schema.org","@type":"LodgingBusiness","name":"Likele · Affittacamere","description":"Camera con bagno privato, terrazza mare e colazione a Castelsardo.","address":{"@type":"PostalAddress","streetAddress":"Via Tibula 4","addressLocality":"Castelsardo","postalCode":"07031","addressRegion":"SS","addressCountry":"IT"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"9.7","bestRating":"10","ratingCount":"66"},"telephone":"+393385037171"}]
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -171,6 +171,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   width: auto;
   display: block;
 }
+/* White logo at top (over hero), colored logo when navbar has light bg */
+.nav-logo-img--colored { display: none; }
+#navbar.scrolled .nav-logo-img--white { display: none; }
+#navbar.scrolled .nav-logo-img--colored { display: block; }
 #navbar.scrolled .nav-logo { color: var(--text); }
 .nav-links {
   display: flex; gap: 28px; list-style: none;
@@ -453,6 +457,52 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 #lihele .detail-main-img-placeholder { background: linear-gradient(160deg, #1494A3 0%, #0c6d78 100%); }
 #likele .detail-main-img-placeholder { background: linear-gradient(160deg, #354387 0%, #222d5c 100%); }
+/* Detail section: crossfade image gallery + floating dots */
+#lihele .detail-main-img,
+#likele .detail-main-img { overflow: hidden; position: relative; }
+#lihele .detail-gallery-scroll,
+#likele .detail-gallery-scroll {
+  position: absolute; inset: 0;
+  cursor: grab;
+}
+#lihele .detail-gallery-scroll:active,
+#likele .detail-gallery-scroll:active { cursor: grabbing; }
+#lihele .detail-gallery-scroll-inner,
+#likele .detail-gallery-scroll-inner {
+  position: relative; width: 100%; height: 100%;
+}
+#lihele .detail-gallery-scroll-inner img,
+#likele .detail-gallery-scroll-inner img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  display: block; pointer-events: none; user-select: none; -webkit-user-drag: none;
+  opacity: 0; transition: opacity 0.7s ease;
+}
+#lihele .detail-gallery-scroll-inner img.active,
+#likele .detail-gallery-scroll-inner img.active {
+  opacity: 1;
+}
+#lihele .detail-gallery-gradient,
+#likele .detail-gallery-gradient {
+  position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background: linear-gradient(to top right, rgba(0,0,0,0.78) 0%, transparent 55%);
+}
+.detail-gallery-dots {
+  display: flex; justify-content: center; align-items: center; gap: 8px;
+}
+#lihele .detail-gallery-dots,
+#likele .detail-gallery-dots {
+  position: absolute; bottom: 18px; left: 0; right: 0;
+  padding: 0; background: none; border-radius: 0; z-index: 2;
+}
+.detail-gallery-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  border: none; cursor: pointer; padding: 0;
+  transition: background 0.25s ease-out, transform 0.2s ease-out;
+}
+.detail-gallery-dot:hover { background: rgba(255,255,255,0.7); }
+.detail-gallery-dot.active { background: #fff; transform: scale(1.35); }
 .detail-award-pill {
   position: absolute; bottom: -16px; right: 20px;
   background: var(--text); color: var(--gold);
@@ -532,6 +582,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   width: 100%; display: flex; align-items: center; justify-content: center;
   font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.4);
   text-transform: uppercase; text-align: center;
+  position: relative; overflow: hidden;
 }
 .gallery-placeholder.tall { height: 280px; }
 .gallery-placeholder.med { height: 200px; }
@@ -543,6 +594,15 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   height: 24px;
   width: auto;
   z-index: 2;
+}
+.gallery-logo {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  height: 18px;
+  width: auto;
+  z-index: 2;
+  opacity: 0.85;
 }
 .gallery-cta { text-align: center; margin-top: 48px; }
 .gallery-cta p { color: var(--text-mid); font-style: italic; margin-bottom: 16px; font-size: 0.95rem; }
@@ -567,14 +627,15 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .review-card {
   background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
   padding: 28px; border-radius: var(--r); display: flex; flex-direction: column; gap: 14px;
+  height: 346px; width: 340px;
 }
 .review-card:hover {
-  background-color: rgba(248, 245, 240, 0.06); /* slightly lighter */
-  transform: translateY(-2px);                 /* optional subtle lift */
+  background-color: rgba(248, 245, 240, 0.06);
+  transform: translateY(-2px);
 }
 .review-stars { display: flex; gap: 3px; }
 .review-stars span { color: var(--gold); font-size: 0.8rem; }
-.review-quote { font-family: var(--font-display); font-size: 1.05rem; font-weight: 300; font-style: italic; color: rgba(248,245,240,0.88); line-height: 1.65; flex: 1; }
+.review-quote { font-family: var(--font-display); font-size: 1.05rem; font-weight: 300; font-style: italic; color: rgba(248,245,240,0.88); line-height: 1.65; flex: 1; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 9; -webkit-box-orient: vertical; }
 .review-author { display: flex; align-items: center; gap: 10px; }
 .review-author-name { font-size: 0.8rem; font-weight: 500; color: rgba(248,245,240,0.6); }
 .review-prop { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; margin-left: auto; }
@@ -726,22 +787,34 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
    ============================================================ */
 footer {
   background: #0d1009; color: rgba(248,245,240,0.45);
-  padding: 36px 0; border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 72px 0 36px; border-top: 1px solid rgba(255,255,255,0.06);
 }
-.footer-inner {
+.footer-grid {
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 48px; margin-bottom: 56px;
+}
+.footer-brand img { height: 22px; width: auto; display: block; margin-bottom: 16px; }
+.footer-brand p { font-size: 0.82rem; line-height: 1.7; color: rgba(248,245,240,0.35); max-width: 280px; }
+.footer-col-title {
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(248,245,240,0.25); margin-bottom: 18px;
+}
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-col li { margin-bottom: 10px; }
+.footer-col a, .footer-col span {
+  font-size: 0.82rem; color: rgba(248,245,240,0.5); transition: color 0.2s;
+  text-decoration: none;
+}
+.footer-col a:hover { color: rgba(248,245,240,0.85); }
+.footer-bottom {
   display: flex; align-items: center; justify-content: space-between;
+  padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06);
   gap: 24px; flex-wrap: wrap;
 }
-.footer-logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.footer-logo img { height: 20px; width: auto; display: block; }
-.footer-links { display: flex; gap: 24px; font-size: 0.75rem; }
-.footer-links a { color: rgba(248,245,240,0.4); transition: color 0.2s; }
-.footer-links a:hover { color: rgba(248,245,240,0.7); }
-.footer-copy { font-size: 0.72rem; font-family: var(--font-mono); letter-spacing: 0.06em; }
+.footer-copy { font-size: 0.68rem; font-family: var(--font-mono); letter-spacing: 0.06em; color: rgba(248,245,240,0.25); }
+.footer-legal { display: flex; gap: 20px; }
+.footer-legal a { font-size: 0.72rem; color: rgba(248,245,240,0.3); transition: color 0.2s; }
+.footer-legal a:hover { color: rgba(248,245,240,0.6); }
 
 /* ============================================================
    FLOATING WHATSAPP
@@ -909,7 +982,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
   .faq-layout { grid-template-columns: 1fr; }
   .faq-nav { display: none; }
   .reviews-grid { grid-template-columns: 1fr; }
-  .reviews-carousel .review-card { flex: 0 0 280px; }
+  .reviews-carousel .review-card { flex: 0 0 300px; width: 300px; height: 300px; }
+  .review-quote { -webkit-line-clamp: 7; }
   .gallery-grid { columns: 2; }
   .detail-facts-grid { grid-template-columns: 1fr; }
 }
@@ -919,8 +993,9 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
   .awards-divider { display: none; }
   .gallery-grid { columns: 2; }
   .form-row { grid-template-columns: 1fr; }
-  .footer-inner { flex-direction: column; text-align: center; }
-  .footer-links { justify-content: center; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .footer-legal { justify-content: center; }
   #float-wa { bottom: 20px; right: 20px; width: 50px; height: 50px; }
 }
 </style>
@@ -929,7 +1004,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
   {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
-    "name": "Lihele — Casa Vacanze Castelsardo",
+    "name": "Lihele · Casa Vacanze Castelsardo",
     "description": "Appartamento intero con vista mare a Castelsardo. 3 camere, fino a 5 ospiti, balcone vista mare, cucina attrezzata.",
     "url": "https://yourdomain.com/#lihele",
     "telephone": "+393385037171",
@@ -961,7 +1036,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
   {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
-    "name": "Likele — Affittacamere Castelsardo",
+    "name": "Likele · Affittacamere Castelsardo",
     "description": "Camera privata con bagno en-suite, terrazza vista mare e colazione italiana a Castelsardo.",
     "url": "https://yourdomain.com/#likele",
     "telephone": "+393385037171",
@@ -1004,8 +1079,9 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
 <nav id="navbar" role="navigation" aria-label="Navigazione principale">
   <div class="nav-inner">
     <a href="#hero" class="nav-logo">
-  <img src="/assets/Lihele.svg" alt="Lihele · Likele — Torna all'inizio" class="nav-logo-img">
-</a>
+      <img src="/assets/Lihele-wh.svg" alt="Lihele · Likele — Torna all'inizio" class="nav-logo-img nav-logo-img--white">
+      <img src="/assets/Lihele.svg" alt="Lihele · Likele — Torna all'inizio" class="nav-logo-img nav-logo-img--colored">
+    </a>
     <ul class="nav-links">
       <li><a href="#strutture" data-lang="it">Le Strutture</a><a href="#strutture" data-lang="en">The Properties</a></li>
       <li><a href="#awards" data-lang="it">Riconoscimenti</a><a href="#awards" data-lang="en">Awards</a></li>
@@ -1050,12 +1126,12 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
      ============================================================ -->
 <section id="hero">
     <div class="hero-bg">
-      <img
-        src="/assets/hero.svg"
-        alt=""
+      <video
+        src="/assets/images/video-orizzontale-.mp4"
+        autoplay muted loop playsinline
         role="presentation"
         style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;"
-      >
+      ></video>
     </div>
   
     <!-- leave your existing hero-content and hero-scroll exactly as they are -->
@@ -1063,19 +1139,19 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
     <div class="hero-tag" data-lang="it">Castelsardo, Sardegna</div>
     <div class="hero-tag" data-lang="en">Castelsardo, Sardinia</div>
     <h1 class="hero-headline display">
-      <span data-lang="it">Castelsardo dall'alto,<br><em>il mare sotto.</em></span>
-      <span data-lang="en">Castelsardo from above,<br><em>the sea below.</em></span>
+      <span data-lang="it">Dove il borgo<br><em>incontra il mare.</em></span>
+      <span data-lang="en">Where the village<br><em>meets the sea.</em></span>
     </h1>
-    <p class="hero-sub" data-lang="it">Un appartamento intero o una camera privata — due strutture con vista mare, stesso stabile, esperienze diverse.</p>
-    <p class="hero-sub" data-lang="en">Entire apartment or private room — two spaces with sea views, same building, different experiences.</p>
+    <p class="hero-sub" data-lang="it">Un appartamento intero o una camera privata. Due strutture con vista mare, stesso stabile, esperienze diverse.</p>
+    <p class="hero-sub" data-lang="en">Entire apartment or private room. Two spaces with sea views, same building, different experiences.</p>
     <div class="hero-ctas">
       <a href="https://wa.me/393385037171?text=Ciao!%20Ho%20visto%20il%20vostro%20sito%20e%20vorrei%20informazioni." class="btn-wa" target="_blank" rel="noopener">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         <span data-lang="it">Scrivici su WhatsApp</span><span data-lang="en">Message us on WhatsApp</span>
       </a>
-      <a href="#strutture" class="btn-ghost">
-        <span data-lang="it">Scopri le strutture ↓</span>
-        <span data-lang="en">Explore the properties ↓</span>
+      <a href="#contatti" class="btn-ghost">
+        <span data-lang="it">Prenota ora ↓</span>
+        <span data-lang="en">Book now ↓</span>
       </a>
     </div>
   </div>
@@ -1148,16 +1224,15 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
         <span data-lang="en">Two spaces, one soul</span>
       </h2>
       <p style="margin-top:10px;">
-        <span data-lang="it">Stesso stabile, stessa vista — scegli la tua.</span>
-        <span data-lang="en">Same building, same view — choose yours.</span>
+        <span data-lang="it">Stesso stabile, stessa vista. Scegli la tua.</span>
+        <span data-lang="en">Same building, same view. Choose yours.</span>
       </p>
     </div>
     <div class="properties-grid">
       <!-- LIHELE CARD -->
       <div class="prop-card prop-card--lihele fade-up">
         <div class="prop-card-img">
-          <div class="prop-card-img-placeholder">LIHELE<br>Photo</div>
-          <!-- Replace with: <img src="images/lihele-card.jpg" alt="Lihele - appartamento vista mare Castelsardo"> -->
+          <img src="/assets/images/lihele-website/selezione/entrata.jpg" alt="Lihele - appartamento vista mare Castelsardo" style="width:100%; height:100%; object-fit:cover; display:block;">
           <div class="prop-award-badge">
             <span class="star">★</span>
             <span class="score">9.8</span>
@@ -1169,8 +1244,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
             <span class="prop-tag" data-lang="en">Entire Apartment</span>
           </div>
           <div class="prop-name"><img src="/assets/Lihele.svg" alt="Lihele" style="height: 1.9rem; width: auto; display: block;"></div>
-          <p class="prop-pitch" data-lang="it">Luce, spazio e mare — tutta per voi.</p>
-          <p class="prop-pitch" data-lang="en">Light, space and sea — all yours.</p>
+          <p class="prop-pitch" data-lang="it">Luce, spazio e mare. Tutta per voi.</p>
+          <p class="prop-pitch" data-lang="en">Light, space and sea. All yours.</p>
           <div class="prop-facts">
             <span class="prop-fact">👥 <span data-lang="it">Fino a 5 ospiti</span><span data-lang="en">Up to 5 guests</span></span>
             <span class="prop-fact">🛏 <span data-lang="it">3 camere</span><span data-lang="en">3 bedrooms</span></span>
@@ -1193,8 +1268,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
       <!-- LIKELE CARD -->
       <div class="prop-card prop-card--likele fade-up">
         <div class="prop-card-img">
-          <div class="prop-card-img-placeholder" style="background:linear-gradient(135deg,#354387,#222d5c)">LIKELE<br>Photo</div>
-          <!-- Replace with: <img src="images/likele-card.jpg" alt="Likele - camera vista mare Castelsardo"> -->
+          <img src="/assets/images/likele-website/entrata.jpg" alt="Likele - camera vista mare Castelsardo" style="width:100%; height:100%; object-fit:cover; display:block;">
           <div class="prop-award-badge">
             <span class="star">★</span>
             <span class="score">9.7</span>
@@ -1239,7 +1313,17 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
     <div class="detail-grid">
       <div class="detail-visual fade-up">
         <div class="detail-main-img">
-          <img src="/assets/hero.svg" alt="Lihele — Terrazza / Soggiorno" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div class="detail-gallery-scroll" id="liheleGallery" role="region" aria-label="Lihele — foto">
+            <div class="detail-gallery-scroll-inner">
+              <img src="/assets/images/lihele-website/selezione/insegna.jpg" alt="Lihele — Camera vista mare" class="active">
+              <img src="/assets/images/lihele-website/selezione/entrata.jpg" alt="Lihele — Entrata">
+              <img src="/assets/images/lihele-website/selezione/stanza-doppia.jpg" alt="Lihele — Camera doppia">
+              <img src="/assets/images/lihele-website/selezione/stanza-twin.jpg" alt="Lihele — Camera twin">
+              <img src="/assets/images/lihele-website/selezione/bagno.jpg" alt="Lihele — Bagno">
+            </div>
+          </div>
+          <div class="detail-gallery-gradient" aria-hidden="true"></div>
+          <div class="detail-gallery-dots" id="liheleGalleryDots" aria-hidden="true"></div>
         </div>
         <div class="detail-award-pill">
           <span class="star" style="color:var(--gold)">★</span>
@@ -1328,7 +1412,17 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
     <div class="detail-grid reverse">
       <div class="detail-visual fade-up">
         <div class="detail-main-img">
-          <div class="detail-main-img-placeholder">LIKELE<br>Main Photo<br>Room / Terrace</div>
+          <div class="detail-gallery-scroll" id="likeleGallery" role="region" aria-label="Likele — foto">
+            <div class="detail-gallery-scroll-inner">
+              <img src="/assets/images/likele-website/letto.jpg" alt="Likele — Camera" class="active">
+              <img src="/assets/images/likele-website/entrata.jpg" alt="Likele — Entrata">
+              <img src="/assets/images/likele-website/bagno.jpg" alt="Likele — Bagno">
+              <img src="/assets/images/likele-website/colazione.jpg" alt="Likele — Colazione">
+              <img src="/assets/images/likele-website/tavolo.jpg" alt="Likele — Tavolo">
+            </div>
+          </div>
+          <div class="detail-gallery-gradient" aria-hidden="true"></div>
+          <div class="detail-gallery-dots" id="likeleGalleryDots" aria-hidden="true"></div>
         </div>
         <div class="detail-award-pill">
           <span class="star" style="color:var(--gold)">★</span>
@@ -1426,21 +1520,27 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
       </h2>
     </div>
     <div class="gallery-grid">
-      <div class="gallery-item">
-        <div class="gallery-placeholder tall" style="position:relative; overflow:hidden;">
-          <img src="/assets/hero.svg" alt="Lihele — Terrazza" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter: brightness(0.8);">
-          <img src="/assets/Lihele-wh.svg" class="gallery-placeholder-logo" alt="" role="presentation">
-          <span style="position:relative; z-index:1;">Lihele — Terrazza</span>
-        </div>
-      </div>
-      <div class="gallery-item"><div class="gallery-placeholder med" style="background:linear-gradient(160deg,#354387,#222d5c)">Likele — Camera</div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short" style="background:linear-gradient(160deg,#1aabbf,#0e7a88)">Castelsardo — Vista</div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med" style="background:linear-gradient(160deg,#1494A3,#0E7A87)">Lihele — Soggiorno</div></div>
-      <div class="gallery-item"><div class="gallery-placeholder tall" style="background:linear-gradient(160deg,#4a5aa0,#2d3870)">Likele — Terrazza</div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short" style="background:linear-gradient(160deg,#10808e,#084a55)">Lihele — Cucina</div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med" style="background:linear-gradient(160deg,#3d5078,#263458)">Likele — Bagno</div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short" style="background:linear-gradient(160deg,#1494A3,#0c6d78)">Lihele — Camera</div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med" style="background:linear-gradient(160deg,#2a7a8a,#1a5a66)">Castelsardo — Borgo</div></div>
+      <div class="gallery-item"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/stanza-singola-vista.jpg" alt="Lihele, camera vista mare" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/likele-website/letto.jpg" alt="Likele, camera" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/ancora.jpg" alt="Lihele, dettaglio" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/stanza-doppia.jpg" alt="Lihele, camera doppia" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder tall"><img src="/assets/images/likele-website/entrata2.jpg" alt="Likele, entrata" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/tavolo.jpg" alt="Lihele, tavolo" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/likele-website/bagno.jpg" alt="Likele, bagno" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/selezione/stanza-twin.jpg" alt="Lihele, camera twin" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/entrata4.jpg" alt="Lihele, vista" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/stanza-doppia2.jpg" alt="Lihele, camera doppia" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/likele-website/colazione.jpg" alt="Likele, colazione" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/dettagli/letto.jpg" alt="Lihele, dettaglio letto" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/entrata.jpg" alt="Lihele, entrata" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/likele-website/dettaglio.jpg" alt="Likele, dettaglio" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/asciugamani.jpg" alt="Lihele, asciugamani" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/stanza-singola.jpg" alt="Lihele, camera singola" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/likele-website/tavolo.jpg" alt="Likele, tavolo" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/bagno.jpg" alt="Lihele, bagno" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/dettagli/insegna.jpg" alt="Lihele, insegna" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/likele-website/entrata.jpg" alt="Likele, entrata" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/doccia.jpg" alt="Lihele, doccia" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
     </div>
     <!-- Replace placeholders with real images. Each .gallery-item should contain:
          <img src="images/gallery-01.jpg" alt="descrizione" loading="lazy"> -->
@@ -1489,132 +1589,74 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
       <div class="reviews-carousel" id="reviewsCarousel">
         <a class="review-card" href="https://share.google/PHwmJrSrwGIiTIjRR" target="_blank" rel="noopener">
   <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-  <p class="review-quote" data-lang="it">"Una settimana in questa residenza è come essere stati da un familiare caro, che ci ha ospitato a casa sua nel migliore dei modi con attenzioni, premure, consigli e un garbo infinito. Luciano è un host straordinario, che con discrezione e disponibilità ti fa vivere una vacanza indimenticabile nella sua bella casa sarda, posta nella meravigliosa Castelsardo, un gioiello tutto da scoprire sia per il borgo incantato che per il bellissimo mare a metà strada fra Stintino e Santa Teresa di Gallura. Siamo stati davvero bene in questo luogo e in questa comodissima casa su due livelli, fornita di tutto, anche di tanti prodotti e vari e di buona qualità per la colazione. Siamo andati via solo da pochi giorni e già sentiamo la nostalgia di questa vacanza, che ci è rimasta nel cuore. Grazie infinite. In tutti noi rimane il bel ricordo e la speranza di essere di nuovo a Castelsardo in questo buen retiro."</p>
-  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+  <p class="review-quote" data-lang="it">"Luciano è un host straordinario. Casa sarda bellissima, comodissima su due livelli, fornita di tutto, anche di tanti prodotti per la colazione. Siamo andati via da pochi giorni e già sentiamo la nostalgia di questa vacanza, che ci è rimasta nel cuore."</p>
+  <p class="review-quote" data-lang="en">"Luciano is an extraordinary host. Beautiful, comfortable Sardinian house on two levels, equipped with everything. We left just days ago and already feel nostalgic about this holiday."</p>
   <div class="review-author">
     <span class="review-author-name">Margherita I. 🇮🇹</span>
     <span class="review-prop review-prop--lihele">Lihele</span>
   </div>
   <div class="review-source">via Google</div>
 </a>
-        <a class="review-card"
-        href="https://share.google/qmX1OqVisJENs9UJI"
-        target="_blank"
-        rel="noopener">
-       <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-       <p class="review-quote" data-lang="it">"Castelsardo è un luogo incantevole per posizione e storia e questa casa, molto comoda e super accessoriata, permette di vivere pienamente il posto e il mare vicinissimo. Si sta proprio bene perché gli ambienti, ampi, pulitissimi e ben arredati, ti fanno sentire a casa. Un valore aggiunto è dato dall'ospitalità garbata, disponibile e discreta di Luciano, un super host che fa di tutto per rendere il soggiorno dei clienti un momento da ricordare."</p>
-       <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
-       <div class="review-author">
-         <span class="review-author-name">Mara L. 🇮🇹</span>
-         <span class="review-prop review-prop--lihele">Lihele</span>
-       </div>
-       <div class="review-source">via Booking.com</div>
-     </a>
-    </a>
-    <a class="review-card"
-    href="https://www.booking.com/hotel/it/affittacamere-likele.it.html?chal_t=1772211859557&force_referer=https%3A%2F%2Fwww.google.com%2F"
-    target="_blank"
-    rel="noopener">
-   <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-   <p class="review-quote" data-lang="it">"La camera è esattamente come si vede nella foto: nuova, pulita, decorata con gusto e nei dettagli. Così pure il bagno. Luciano, il proprietario, è una persona gentilissima e disponibile. La casa è in una zona molto tranquilla. Se dovessi tornare a Castelsardo non esiterei a tornare direttamente qui! Assolutame te consigliatissimo!"</p>
-   <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
-   <div class="review-author">
-     <span class="review-author-name">Marina 🇩🇪</span>
-     <span class="review-prop review-prop--likele">Likele</span>
-   </div>
-   <div class="review-source">via Booking.com</div>
- </a>
-  <a class="review-card"
-   href="https://www.booking.com/your-real-review-url-1"
-   target="_blank"
-   rel="noopener">
+<a class="review-card" href="https://share.google/qmX1OqVisJENs9UJI" target="_blank" rel="noopener">
   <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-  <p class="review-quote" data-lang="it">"Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente."</p>
-  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+  <p class="review-quote" data-lang="it">"Castelsardo è un luogo incantevole e questa casa, molto comoda e super accessoriata, permette di vivere pienamente il posto e il mare vicinissimo. Gli ambienti, ampi, pulitissimi e ben arredati, ti fanno sentire a casa. Un valore aggiunto è l'ospitalità garbata e disponibile di Luciano, un super host."</p>
+  <p class="review-quote" data-lang="en">"Castelsardo is enchanting and this super comfortable, well-equipped house lets you fully experience the place and the sea nearby. The spacious, spotless rooms make you feel at home. Luciano's gracious hospitality is a wonderful added value."</p>
   <div class="review-author">
-    <span class="review-author-name">Marco R. 🇮🇹</span>
+    <span class="review-author-name">Mara L. 🇮🇹</span>
     <span class="review-prop review-prop--lihele">Lihele</span>
   </div>
   <div class="review-source">via Booking.com</div>
 </a>
-<a class="review-card"
-   href="https://www.booking.com/your-real-review-url-1"
-   target="_blank"
-   rel="noopener">
+<a class="review-card" href="https://www.booking.com/hotel/it/affittacamere-likele.it.html" target="_blank" rel="noopener">
   <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-  <p class="review-quote" data-lang="it">"Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente."</p>
-  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+  <p class="review-quote" data-lang="it">"La camera è esattamente come si vede nella foto: nuova, pulita, decorata con gusto e nei dettagli. Così pure il bagno. Luciano è una persona gentilissima e disponibile. La casa è in una zona molto tranquilla. Se dovessi tornare a Castelsardo non esiterei a tornare qui! Assolutamente consigliatissimo!"</p>
+  <p class="review-quote" data-lang="en">"The room is exactly as pictured: new, clean, tastefully decorated down to every detail. Same for the bathroom. Luciano is very kind and helpful. If I return to Castelsardo, I'd come straight back here! Absolutely recommended!"</p>
   <div class="review-author">
-    <span class="review-author-name">Marco R. 🇮🇹</span>
-    <span class="review-prop review-prop--lihele">Lihele</span>
+    <span class="review-author-name">Marina 🇩🇪</span>
+    <span class="review-prop review-prop--likele">Likele</span>
   </div>
   <div class="review-source">via Booking.com</div>
 </a>
-<a class="review-card"
-   href="https://www.booking.com/your-real-review-url-1"
-   target="_blank"
-   rel="noopener">
+<div class="review-card">
   <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-  <p class="review-quote" data-lang="it">"Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente."</p>
-  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+  <p class="review-quote" data-lang="it">"Camera bellissima, moderna, pulita e comoda! Terrazzino dove poter stendere i costumi a fine giornata. Posizione perfetta, non distante dal centro e la spiaggia ma silenziosa e tranquilla. Proprietario molto gentile e disponibile."</p>
+  <p class="review-quote" data-lang="en">"Beautiful, modern, clean and comfortable room! Small terrace to hang swimsuits at the end of the day. Perfect location, not far from the centre and beach but quiet and peaceful. Very kind and helpful host."</p>
   <div class="review-author">
-    <span class="review-author-name">Marco R. 🇮🇹</span>
+    <span class="review-author-name">Sofia 🇮🇹</span>
+    <span class="review-prop review-prop--likele">Likele</span>
+  </div>
+  <div class="review-source">via Booking.com</div>
+</div>
+<div class="review-card">
+  <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+  <p class="review-quote" data-lang="it">"Tutto perfetto in questo posto, camera molto pulita e ben attrezzata. Ottima posizione in città. L'host è stato davvero disponibile. Torneremmo sicuramente."</p>
+  <p class="review-quote" data-lang="en">"Everything was perfect in this place, very clean and well equipped room. Great location in the city. Host was really helpful. We would definitely come back again."</p>
+  <div class="review-author">
+    <span class="review-author-name">Ondřej 🇨🇿</span>
+    <span class="review-prop review-prop--likele">Likele</span>
+  </div>
+  <div class="review-source">via Booking.com</div>
+</div>
+<div class="review-card">
+  <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+  <p class="review-quote" data-lang="it">"Struttura molto accogliente, dotata di tutti i comfort. Cucina attrezzata con tutto il necessario, aria condizionata in tutte le stanze, bagno spazioso. Tutti i balconi e le finestre sono vista mare. Il proprietario è una persona fantastica, accogliente, disponibile e attenta a ogni dettaglio."</p>
+  <p class="review-quote" data-lang="en">"Very welcoming property with all comforts. Fully equipped kitchen, A/C in every room, spacious bathroom. All balconies and windows with sea view. The owner is fantastic, welcoming, helpful and attentive to every detail."</p>
+  <div class="review-author">
+    <span class="review-author-name">Arianna 🇮🇹</span>
     <span class="review-prop review-prop--lihele">Lihele</span>
   </div>
   <div class="review-source">via Booking.com</div>
-</a>
-<a class="review-card"
-   href="https://www.booking.com/your-real-review-url-1"
-   target="_blank"
-   rel="noopener">
+</div>
+<div class="review-card">
   <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-  <p class="review-quote" data-lang="it">"Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente."</p>
-  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
+  <p class="review-quote" data-lang="it">"Una delle rare occasioni in cui si è completamente soddisfatti dell'alloggio. Luciano fa del suo meglio per offrire un servizio eccellente. L'interno è moderno, accogliente e pulito. C'era anche una macchina Nespresso e la colazione inclusa. La posizione non potrebbe essere migliore: il centro storico e la spiaggia sono a pochi passi. Ci siamo pentiti di aver trascorso solo due notti!"</p>
+  <p class="review-quote" data-lang="en">"One of those rare occasions to be fully satisfied with the accommodation. Luciano does his best to offer excellent service. The interior is modern, cozy and clean. Nespresso machine and breakfast basics at no extra cost. The location couldn't be better: old town and beach a short walk away. We regret only spending two nights!"</p>
   <div class="review-author">
-    <span class="review-author-name">Marco R. 🇮🇹</span>
+    <span class="review-author-name">Petra 🇨🇿</span>
     <span class="review-prop review-prop--lihele">Lihele</span>
   </div>
   <div class="review-source">via Booking.com</div>
-</a>
-<a class="review-card"
-   href="https://www.booking.com/your-real-review-url-1"
-   target="_blank"
-   rel="noopener">
-  <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-  <p class="review-quote" data-lang="it">"Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente."</p>
-  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
-  <div class="review-author">
-    <span class="review-author-name">Marco R. 🇮🇹</span>
-    <span class="review-prop review-prop--lihele">Lihele</span>
-  </div>
-  <div class="review-source">via Booking.com</div>
-</a>
-<a class="review-card"
-   href="https://www.booking.com/your-real-review-url-1"
-   target="_blank"
-   rel="noopener">
-  <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-  <p class="review-quote" data-lang="it">"Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente."</p>
-  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
-  <div class="review-author">
-    <span class="review-author-name">Marco R. 🇮🇹</span>
-    <span class="review-prop review-prop--lihele">Lihele</span>
-  </div>
-  <div class="review-source">via Booking.com</div>
-</a>
-<a class="review-card"
-   href="https://www.booking.com/your-real-review-url-1"
-   target="_blank"
-   rel="noopener">
-  <div class="review-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-  <p class="review-quote" data-lang="it">"Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente."</p>
-  <p class="review-quote" data-lang="en">"Breathtaking view, every detail taken care of. We'll definitely be back."</p>
-  <div class="review-author">
-    <span class="review-author-name">Marco R. 🇮🇹</span>
-    <span class="review-prop review-prop--lihele">Lihele</span>
-  </div>
-  <div class="review-source">via Booking.com</div>
-</a>
+</div>
       </div>
       <div class="carousel-nav">
         <button class="carousel-btn" id="carPrev" aria-label="Recensione precedente">←</button>
@@ -1677,10 +1719,10 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
           </div>
         </div>
         <div class="parking-note">
-          🅿️ <span data-lang="it"><strong>Parcheggio</strong> — disponibile in strada nelle vicinanze, solitamente libero.</span>
-          <span data-lang="en"><strong>Parking</strong> — available on the street nearby, usually free.</span>
+          🅿️ <span data-lang="it"><strong>Parcheggio</strong> disponibile in strada nelle vicinanze, solitamente libero.</span>
+          <span data-lang="en"><strong>Parking</strong> available on the street nearby, usually free.</span>
         </div>
-        <a href="https://maps.google.com/?q=4+Via+Tibula,+Castelsardo" class="btn-directions" target="_blank" rel="noopener">
+        <a href="https://maps.app.goo.gl/FrdGZkK6qn4kzcn77" class="btn-directions" target="_blank" rel="noopener">
           <span data-lang="it">Ottieni indicazioni →</span>
           <span data-lang="en">Get directions →</span>
         </a>
@@ -1722,8 +1764,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
               <i class="faq-q-icon">+</i>
             </button>
             <div class="faq-a">
-              <span data-lang="it">Scrivici su WhatsApp — è il modo più rapido. Rispondiamo entro poche ore, confermiamo disponibilità e prezzi e organizziamo tutto direttamente con voi.</span>
-              <span data-lang="en">Message us on WhatsApp — it's the fastest way. We reply within a few hours, confirm availability and rates, and arrange everything directly with you.</span>
+              <span data-lang="it">Scrivici su WhatsApp, è il modo più rapido. Rispondiamo entro poche ore, confermiamo disponibilità e prezzi e organizziamo tutto direttamente con voi.</span>
+              <span data-lang="en">Message us on WhatsApp, it's the fastest way. We reply within a few hours, confirm availability and rates, and arrange everything directly with you.</span>
             </div>
           </div>
           <div class="faq-item">
@@ -1733,8 +1775,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
               <i class="faq-q-icon">+</i>
             </button>
             <div class="faq-a">
-              <span data-lang="it">Sì — prenotando direttamente evitate le commissioni delle piattaforme, avete comunicazione diretta con noi e possiamo essere più flessibili su richieste particolari.</span>
-              <span data-lang="en">Yes — by booking direct you avoid platform fees, have direct communication with us, and we can be more flexible with special requests.</span>
+              <span data-lang="it">Sì, prenotando direttamente evitate le commissioni delle piattaforme, avete comunicazione diretta con noi e possiamo essere più flessibili su richieste particolari.</span>
+              <span data-lang="en">Yes, by booking direct you avoid platform fees, have direct communication with us, and we can be more flexible with special requests.</span>
             </div>
           </div>
           <div class="faq-item">
@@ -1744,8 +1786,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
               <i class="faq-q-icon">+</i>
             </button>
             <div class="faq-a">
-              <span data-lang="it">Da definire — vi informiamo al momento della prenotazione.</span>
-              <span data-lang="en">To be confirmed — we'll let you know at time of booking.</span>
+              <span data-lang="it">Da definire. Vi informiamo al momento della prenotazione.</span>
+              <span data-lang="en">To be confirmed. We'll let you know at time of booking.</span>
             </div>
           </div>
           <div class="faq-item">
@@ -1755,8 +1797,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
               <i class="faq-q-icon">+</i>
             </button>
             <div class="faq-a">
-              <span data-lang="it">Da definire — vi comunichiamo le condizioni complete al momento della prenotazione.</span>
-              <span data-lang="en">To be confirmed — we'll share full terms at time of booking.</span>
+              <span data-lang="it">Da definire. Vi comunichiamo le condizioni complete al momento della prenotazione.</span>
+              <span data-lang="en">To be confirmed. We'll share full terms at time of booking.</span>
             </div>
           </div>
         </div>
@@ -1771,8 +1813,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
               <i class="faq-q-icon">+</i>
             </button>
             <div class="faq-a">
-              <span data-lang="it">Lihele è l'appartamento intero: 3 camere, fino a 5 ospiti, cucina completa, balcone vista mare — ideale per famiglie e gruppi. Likele è una camera privata con bagno privato, terrazza vista mare e colazione — perfetta per 1 o 2 persone. Sono nello stesso stabile, con ingressi su strade diverse.</span>
-              <span data-lang="en">Lihele is the entire apartment: 3 bedrooms, up to 5 guests, full kitchen, sea-view balcony — ideal for families and groups. Likele is a private room with en-suite bathroom, sea-view terrace and breakfast — perfect for 1 or 2 people. They're in the same building, with entrances on different streets.</span>
+              <span data-lang="it">Lihele è l'appartamento intero: 3 camere, fino a 5 ospiti, cucina completa, balcone vista mare, ideale per famiglie e gruppi. Likele è una camera privata con bagno privato, terrazza vista mare e colazione, perfetta per 1 o 2 persone. Sono nello stesso stabile, con ingressi su strade diverse.</span>
+              <span data-lang="en">Lihele is the entire apartment: 3 bedrooms, up to 5 guests, full kitchen, sea-view balcony, ideal for families and groups. Likele is a private room with en-suite bathroom, sea-view terrace and breakfast, perfect for 1 or 2 people. They're in the same building, with entrances on different streets.</span>
             </div>
           </div>
           <div class="faq-item">
@@ -1804,8 +1846,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
               <i class="faq-q-icon">+</i>
             </button>
             <div class="faq-a">
-              <span data-lang="it">Da definire — contattateci direttamente per verificare.</span>
-              <span data-lang="en">To be confirmed — please contact us directly to check.</span>
+              <span data-lang="it">Da definire. Contattateci direttamente per verificare.</span>
+              <span data-lang="en">To be confirmed. Please contact us directly to check.</span>
             </div>
           </div>
           <div class="faq-item">
@@ -1815,8 +1857,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
               <i class="faq-q-icon">+</i>
             </button>
             <div class="faq-a">
-              <span data-lang="it">Sì — in camera troverete una colazione italiana autogestita: macchina Dolce Gusto, tè e tisane, brioche confezionate, biscotti, yogurt e succhi di frutta.</span>
-              <span data-lang="en">Yes — you'll find a self-serve Italian breakfast in your room: Dolce Gusto machine, teas, packaged brioches, biscuits, yogurt and fruit juices.</span>
+              <span data-lang="it">Sì, in camera troverete una colazione italiana autogestita: macchina Dolce Gusto, tè e tisane, brioche confezionate, biscotti, yogurt e succhi di frutta.</span>
+              <span data-lang="en">Yes, you'll find a self-serve Italian breakfast in your room: Dolce Gusto machine, teas, packaged brioches, biscuits, yogurt and fruit juices.</span>
             </div>
           </div>
         </div>
@@ -1831,8 +1873,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
               <i class="faq-q-icon">+</i>
             </button>
             <div class="faq-a">
-              <span data-lang="it">Da definire — vi comunichiamo gli orari alla conferma della prenotazione.</span>
-              <span data-lang="en">To be confirmed — we'll let you know at time of booking confirmation.</span>
+              <span data-lang="it">Da definire. Vi comunichiamo gli orari alla conferma della prenotazione.</span>
+              <span data-lang="en">To be confirmed. We'll let you know at time of booking confirmation.</span>
             </div>
           </div>
           <div class="faq-item">
@@ -1880,8 +1922,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
               <i class="faq-q-icon">+</i>
             </button>
             <div class="faq-a">
-              <span data-lang="it">Sì — Lihele dispone di un'area giochi per bambini ed è ideale per famiglie con figli.</span>
-              <span data-lang="en">Yes — Lihele has a children's play area and is ideal for families with kids.</span>
+              <span data-lang="it">Sì, Lihele dispone di un'area giochi per bambini ed è ideale per famiglie con figli.</span>
+              <span data-lang="en">Yes, Lihele has a children's play area and is ideal for families with kids.</span>
             </div>
           </div>
           <div class="faq-item">
@@ -1891,8 +1933,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
               <i class="faq-q-icon">+</i>
             </button>
             <div class="faq-a">
-              <span data-lang="it">Sì — sono nello stesso stabile ma con ingressi su strade diverse. Lihele è in Via Colle di Frigiano 35, Likele in Via Tibula 4.</span>
-              <span data-lang="en">Yes — same building, different street entrances. Lihele is at Via Colle di Frigiano 35, Likele at Via Tibula 4.</span>
+              <span data-lang="it">Sì, sono nello stesso stabile ma con ingressi su strade diverse. Lihele è in Via Colle di Frigiano 35, Likele in Via Tibula 4.</span>
+              <span data-lang="en">Yes, same building, different street entrances. Lihele is at Via Colle di Frigiano 35, Likele at Via Tibula 4.</span>
             </div>
           </div>
         </div>
@@ -1957,9 +1999,9 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
           <label for="f-property" data-lang="it">Struttura</label>
           <label for="f-property" data-lang="en">Property</label>
           <select name="property" id="f-property">
-            <option value="">—</option>
-            <option value="lihele">Lihele — Casa Vacanze</option>
-            <option value="likele">Likele — Camera Privata</option>
+            <option value=""></option>
+            <option value="lihele">Lihele · Casa Vacanze</option>
+            <option value="likele">Likele · Camera Privata</option>
             <option value="entrambe">Entrambe / Both</option>
           </select>
         </div>
@@ -1982,8 +2024,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
           </span>
         </button>
         <p class="form-privacy">
-          <span data-lang="it">I tuoi dati sono usati solo per rispondere alla tua richiesta. <a href="#">Privacy Policy</a>.</span>
-          <span data-lang="en">Your data is only used to respond to your enquiry. <a href="#">Privacy Policy</a>.</span>
+          <span data-lang="it">I tuoi dati sono usati solo per rispondere alla tua richiesta. <a href="/privacy.html">Privacy Policy</a>.</span>
+          <span data-lang="en">Your data is only used to respond to your enquiry. <a href="/privacy.html">Privacy Policy</a>.</span>
         </p>
       </form>
     </div>
@@ -1995,19 +2037,52 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
      ============================================================ -->
 <footer>
   <div class="container">
-    <div class="footer-inner">
-      <div class="footer-logo">
-        <img src="/assets/Lihele-wh.svg" alt="Lihele">
-        <img src="/assets/Likele-wh.svg" alt="Likele">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+          <img src="/assets/Lihele-wh.svg" alt="Lihele">
+          <img src="/assets/Likele-wh.svg" alt="Likele">
+        </div>
+        <p data-lang="it">Due strutture affacciate sul mare di Castelsardo, Sardegna. Stesso stabile, stessa anima.</p>
+        <p data-lang="en">Two properties overlooking the sea at Castelsardo, Sardinia. Same building, same soul.</p>
       </div>
-      <div class="footer-links">
-        <a href="#" data-lang="it">Privacy Policy</a>
-        <a href="#" data-lang="en">Privacy Policy</a>
-        <a href="#" data-lang="it">Cookie Policy</a>
-        <a href="#" data-lang="en">Cookie Policy</a>
+      <div class="footer-col">
+        <div class="footer-col-title" data-lang="it">Esplora</div>
+        <div class="footer-col-title" data-lang="en">Explore</div>
+        <ul>
+          <li><a href="#strutture" data-lang="it">Le Strutture</a><a href="#strutture" data-lang="en">Properties</a></li>
+          <li><a href="#gallery" data-lang="it">Galleria</a><a href="#gallery" data-lang="en">Gallery</a></li>
+          <li><a href="#reviews" data-lang="it">Recensioni</a><a href="#reviews" data-lang="en">Reviews</a></li>
+          <li><a href="#location" data-lang="it">Dove Siamo</a><a href="#location" data-lang="en">Location</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
       </div>
-      <div class="footer-copy">
-        Castelsardo, Sardegna · © 2026
+      <div class="footer-col">
+        <div class="footer-col-title" data-lang="it">Contatti</div>
+        <div class="footer-col-title" data-lang="en">Contact</div>
+        <ul>
+          <li><a href="mailto:info.bblihele@gmail.com">info.bblihele@gmail.com</a></li>
+          <li><a href="tel:+393385037171">+39 338 503 7171</a></li>
+          <li><a href="https://wa.me/393385037171" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title" data-lang="it">Indirizzi</div>
+        <div class="footer-col-title" data-lang="en">Addresses</div>
+        <ul>
+          <li><span>Via Colle di Frigiano 35</span></li>
+          <li><span style="font-size:0.72rem;color:rgba(248,245,240,0.3)">(Lihele)</span></li>
+          <li style="margin-top:6px"><span>Via Tibula 4</span></li>
+          <li><span style="font-size:0.72rem;color:rgba(248,245,240,0.3)">(Likele)</span></li>
+          <li style="margin-top:6px"><span>07031 Castelsardo (SS)</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Lihele · Likele · Castelsardo, Sardegna</div>
+      <div class="footer-legal">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/privacy.html">Cookie Policy</a>
       </div>
     </div>
   </div>
@@ -2039,6 +2114,69 @@ const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 40);
 }, { passive: true });
+
+// ---- DETAIL GALLERIES: crossfade + drag/touch/dot navigation ----
+function initGallery(galleryId, dotsId) {
+  const gallery = document.getElementById(galleryId);
+  const dotsWrap = document.getElementById(dotsId);
+  if (!gallery || !dotsWrap) return;
+  const slides = gallery.querySelectorAll('.detail-gallery-scroll-inner img');
+  const n = slides.length;
+  if (n === 0) return;
+  let current = 0;
+
+  // Build dots
+  dotsWrap.innerHTML = '';
+  for (let i = 0; i < n; i++) {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'detail-gallery-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Foto ' + (i + 1));
+    dotsWrap.appendChild(dot);
+  }
+  const dots = dotsWrap.querySelectorAll('.detail-gallery-dot');
+
+  function goTo(idx) {
+    idx = Math.max(0, Math.min(idx, n - 1));
+    if (idx === current) return;
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = idx;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  dots.forEach(function(dot, i) {
+    dot.addEventListener('click', function() { goTo(i); });
+  });
+
+  // Pointer drag (mouse)
+  let startX = 0, dragging = false;
+  gallery.addEventListener('pointerdown', function(e) {
+    dragging = true;
+    startX = e.clientX;
+    gallery.setPointerCapture(e.pointerId);
+  });
+  gallery.addEventListener('pointerup', function(e) {
+    if (!dragging) return;
+    dragging = false;
+    var dx = e.clientX - startX;
+    if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
+  });
+  gallery.addEventListener('pointercancel', function() { dragging = false; });
+
+  // Touch swipe
+  let touchStartX = 0;
+  gallery.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  gallery.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
+  });
+}
+initGallery('liheleGallery', 'liheleGalleryDots');
+initGallery('likeleGallery', 'likeleGalleryDots');
 
 // ---- HAMBURGER MENU ----
 const hamburger = document.getElementById('hamburger');
@@ -2118,10 +2256,10 @@ const mapObserver = new IntersectionObserver((entries) => {
     const mapEmbed = document.getElementById('mapEmbed');
     const mapLoading = document.getElementById('mapLoading');
     const iframe = document.createElement('iframe');
-    iframe.src = 'https://maps.google.com/maps?q=4+Via+Tibula,+07031+Castelsardo&z=15&output=embed';
+    iframe.src = 'https://maps.google.com/maps?q=40.9130903,8.7050544&z=17&output=embed';
     iframe.style.cssText = 'width:100%;height:100%;border:none;';
     iframe.loading = 'lazy';
-    iframe.title = 'Mappa — Via Tibula 4, Castelsardo';
+    iframe.title = 'Mappa, Via Tibula 4, Castelsardo';
     mapEmbed.appendChild(iframe);
     mapEmbed.style.display = 'block';
     if (mapLoading) mapLoading.style.display = 'none';
@@ -2133,38 +2271,71 @@ if (mapSection) mapObserver.observe(mapSection);
 // ---- REVIEWS CAROUSEL ----
 (function() {
   const carousel = document.getElementById('reviewsCarousel');
-  if (!carousel) return;
-  const cards = carousel.querySelectorAll('.review-card');
-const dotsWrap = document.getElementById('carouselDots');
-const prevBtn = document.getElementById('carPrev');
-const nextBtn = document.getElementById('carNext');
-const visiblePerView = 3; // you show 3 cards at once
-const maxIdx = Math.max(0, cards.length - visiblePerView);
-let currentIdx = 0;
+  const dotsWrap = document.getElementById('carouselDots');
+  const prevBtn = document.getElementById('carPrev');
+  const nextBtn = document.getElementById('carNext');
+  if (!carousel || !dotsWrap || !prevBtn || !nextBtn) return;
+  let currentIdx = 0;
 
-  // Create dots
-  for (let i = 0; i <= maxIdx; i++) {
-  const dot = document.createElement('div');
-  dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-  dot.addEventListener('click', () => scrollToIdx(i));
-  dotsWrap.appendChild(dot);
-}
-const dots = dotsWrap.querySelectorAll('.carousel-dot');
+  function getCards() { return carousel.querySelectorAll('.review-card'); }
+
+  function getVisibleCount() {
+    const cards = getCards();
+    if (cards.length === 0) return 1;
+    const cardW = cards[0].offsetWidth + 20; // 20 = gap
+    return Math.max(1, Math.round(carousel.offsetWidth / cardW));
+  }
+
+  function getMaxIdx() {
+    return Math.max(0, getCards().length - getVisibleCount());
+  }
+
+  function buildDots() {
+    dotsWrap.innerHTML = '';
+    const max = getMaxIdx();
+    for (let i = 0; i <= max; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => scrollToIdx(i));
+      dotsWrap.appendChild(dot);
+    }
+  }
 
   function updateDots() {
-    dots.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
+    const max = getMaxIdx();
+    const clamped = Math.min(currentIdx, max);
+    dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === clamped));
   }
 
   function scrollToIdx(idx) {
-  idx = Math.max(0, Math.min(idx, maxIdx));
-  currentIdx = idx;
-  const card = cards[idx];
-  carousel.scrollTo({ left: card.offsetLeft - carousel.offsetLeft, behavior: 'smooth' });
-  updateDots();
-}
+    const cards = getCards();
+    const max = getMaxIdx();
+    idx = Math.max(0, Math.min(idx, max));
+    currentIdx = idx;
+    const card = cards[idx];
+    if (card) carousel.scrollTo({ left: card.offsetLeft - carousel.offsetLeft, behavior: 'smooth' });
+    updateDots();
+  }
 
   prevBtn.addEventListener('click', () => scrollToIdx(currentIdx - 1));
   nextBtn.addEventListener('click', () => scrollToIdx(currentIdx + 1));
+
+  // Sync dots on scroll
+  let scrollTimer;
+  carousel.addEventListener('scroll', function() {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function() {
+      const cards = getCards();
+      const max = getMaxIdx();
+      let closest = 0, minDist = Infinity;
+      cards.forEach(function(card, j) {
+        const dist = Math.abs(card.offsetLeft - carousel.offsetLeft - carousel.scrollLeft);
+        if (dist < minDist) { minDist = dist; closest = j; }
+      });
+      currentIdx = Math.min(closest, max);
+      updateDots();
+    }, 80);
+  }, { passive: true });
 
   // Drag to scroll
   let isDown = false, startX, scrollLeft;
@@ -2179,20 +2350,9 @@ const dots = dotsWrap.querySelectorAll('.carousel-dot');
     carousel.scrollLeft = scrollLeft - (e.pageX - carousel.offsetLeft - startX) * 1.3;
   });
 
-  // Sync dots on scroll
-  let scrollTimer;
-  carousel.addEventListener('scroll', () => {
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => {
-      let closest = 0, minDist = Infinity;
-      cards.forEach((card, i) => {
-        const dist = Math.abs(card.offsetLeft - carousel.offsetLeft - carousel.scrollLeft);
-        if (dist < minDist) { minDist = dist; closest = i; }
-      });
-      currentIdx = closest;
-      updateDots();
-    }, 80);
-  }, { passive: true });
+  // Expose rebuild for CMS
+  window._rebuildCarouselDots = function() { currentIdx = 0; buildDots(); };
+  buildDots();
 
   // Keyboard nav
   carousel.setAttribute('tabindex', '0');
@@ -2379,38 +2539,7 @@ const dots = dotsWrap.querySelectorAll('.carousel-dot');
             '</' + tag + '>';
         }).join('');
         carousel.innerHTML = html;
-
-        // Re-init carousel dots
-        var dotsWrap = document.getElementById('carouselDots');
-        if (dotsWrap) {
-          dotsWrap.innerHTML = '';
-          var cards = carousel.querySelectorAll('.review-card');
-          var maxI = Math.max(0, cards.length - 1);
-          for (var i = 0; i <= maxI; i++) {
-            var dot = document.createElement('div');
-            dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-            (function(idx) { dot.addEventListener('click', function() {
-              var c = cards[idx];
-              if (c) carousel.scrollTo({ left: c.offsetLeft - carousel.offsetLeft, behavior: 'smooth' });
-            }); })(i);
-            dotsWrap.appendChild(dot);
-          }
-          // Re-sync dots on scroll
-          var timer;
-          carousel.addEventListener('scroll', function() {
-            clearTimeout(timer);
-            timer = setTimeout(function() {
-              var dots = dotsWrap.querySelectorAll('.carousel-dot');
-              var scrollLeft = carousel.scrollLeft;
-              var closest = 0, minDist = Infinity;
-              cards.forEach(function(card, j) {
-                var dist = Math.abs(card.offsetLeft - carousel.offsetLeft - scrollLeft);
-                if (dist < minDist) { minDist = dist; closest = j; }
-              });
-              dots.forEach(function(d, j) { d.classList.toggle('active', j === closest); });
-            }, 80);
-          }, { passive: true });
-        }
+        if (window._rebuildCarouselDots) window._rebuildCarouselDots();
       }
     }
 

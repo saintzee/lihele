@@ -15,8 +15,8 @@
   "reviews": [
     {
       "quote": {
-        "it": "Una settimana in questa residenza è come essere stati da un familiare caro, che ci ha ospitato a casa sua nel migliore dei modi con attenzioni, premure, consigli e un garbo infinito. Luciano è un host straordinario, che con discrezione e disponibilità ti fa vivere una vacanza indimenticabile nella sua bella casa sarda, posta nella meravigliosa Castelsardo, un gioiello tutto da scoprire sia per il borgo incantato che per il bellissimo mare a metà strada fra Stintino e Santa Teresa di Gallura. Siamo stati davvero bene in questo luogo e in questa comodissima casa su due livelli, fornita di tutto, anche di tanti prodotti e vari e di buona qualità per la colazione. Siamo andati via solo da pochi giorni e già sentiamo la nostalgia di questa vacanza, che ci è rimasta nel cuore. Grazie infinite. In tutti noi rimane il bel ricordo e la speranza di essere di nuovo a Castelsardo in questo buen retiro.",
-        "en": "A week in this residence was like staying with a dear relative who hosted us in the best possible way — with care, thoughtfulness, advice and infinite grace. Luciano is an extraordinary host who makes your holiday unforgettable."
+        "it": "Luciano è un host straordinario. Casa sarda bellissima, comodissima su due livelli, fornita di tutto, anche di tanti prodotti per la colazione. Siamo andati via da pochi giorni e già sentiamo la nostalgia di questa vacanza, che ci è rimasta nel cuore.",
+        "en": "Luciano is an extraordinary host. Beautiful, comfortable Sardinian house on two levels, equipped with everything. We left just days ago and already feel nostalgic about this holiday."
       },
       "author": "Margherita I. 🇮🇹",
       "property": "lihele",
@@ -25,8 +25,8 @@
     },
     {
       "quote": {
-        "it": "Castelsardo è un luogo incantevole per posizione e storia e questa casa, molto comoda e super accessoriata, permette di vivere pienamente il posto e il mare vicinissimo. Si sta proprio bene perché gli ambienti, ampi, pulitissimi e ben arredati, ti fanno sentire a casa. Un valore aggiunto è dato dall'ospitalità garbata, disponibile e discreta di Luciano, un super host che fa di tutto per rendere il soggiorno dei clienti un momento da ricordare.",
-        "en": "Castelsardo is an enchanting place and this house — comfortable and superbly equipped — lets you fully experience the area and the nearby sea. The gracious, discreet hospitality of Luciano is a wonderful added value."
+        "it": "Castelsardo è un luogo incantevole e questa casa, molto comoda e super accessoriata, permette di vivere pienamente il posto e il mare vicinissimo. Gli ambienti, ampi, pulitissimi e ben arredati, ti fanno sentire a casa. Un valore aggiunto è l'ospitalità garbata e disponibile di Luciano, un super host.",
+        "en": "Castelsardo is enchanting and this super comfortable, well-equipped house lets you fully experience the place and the sea nearby. The spacious, spotless rooms make you feel at home. Luciano's gracious hospitality is a wonderful added value."
       },
       "author": "Mara L. 🇮🇹",
       "property": "lihele",
@@ -35,8 +35,8 @@
     },
     {
       "quote": {
-        "it": "La camera è esattamente come si vede nella foto: nuova, pulita, decorata con gusto e nei dettagli. Così pure il bagno. Luciano, il proprietario, è una persona gentilissima e disponibile. La casa è in una zona molto tranquilla. Se dovessi tornare a Castelsardo non esiterei a tornare direttamente qui! Assolutamente consigliatissimo!",
-        "en": "The room is exactly as pictured: new, clean, tastefully decorated down to every detail. Luciano is extremely kind and helpful. If I return to Castelsardo I wouldn't hesitate to come straight back here!"
+        "it": "La camera è esattamente come si vede nella foto: nuova, pulita, decorata con gusto e nei dettagli. Così pure il bagno. Luciano è una persona gentilissima e disponibile. La casa è in una zona molto tranquilla. Se dovessi tornare a Castelsardo non esiterei a tornare qui! Assolutamente consigliatissimo!",
+        "en": "The room is exactly as pictured: new, clean, tastefully decorated down to every detail. Same for the bathroom. Luciano is very kind and helpful. If I return to Castelsardo, I'd come straight back here! Absolutely recommended!"
       },
       "author": "Marina 🇩🇪",
       "property": "likele",
@@ -45,33 +45,43 @@
     },
     {
       "quote": {
-        "it": "Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente.",
-        "en": "Breathtaking view, every detail taken care of. We'll definitely be back."
+        "it": "Camera bellissima, moderna, pulita e comoda! Terrazzino dove poter stendere i costumi a fine giornata. Posizione perfetta, non distante dal centro e la spiaggia ma silenziosa e tranquilla. Proprietario molto gentile e disponibile.",
+        "en": "Beautiful, modern, clean and comfortable room! Small terrace to hang swimsuits at the end of the day. Perfect location, not far from the centre and beach but quiet and peaceful. Very kind and helpful host."
       },
-      "author": "Marco R. 🇮🇹",
-      "property": "lihele",
-      "source": "via Booking.com",
-      "url": ""
-    },
-    {
-      "quote": {
-        "it": "Camera deliziosa con terrazza privata sul mare. Colazione ottima, host disponibilissimi.",
-        "en": "Lovely room with a private sea terrace. Great breakfast, extremely helpful hosts."
-      },
-      "author": "Sophie L. 🇫🇷",
+      "author": "Sofia 🇮🇹",
       "property": "likele",
       "source": "via Booking.com",
-      "url": ""
+      "url": "https://www.booking.com/hotel/it/affittacamere-likele.it.html#tab-reviews"
     },
     {
       "quote": {
-        "it": "Appartamento spazioso, luminoso, perfetto per la famiglia. Posizione straordinaria.",
-        "en": "Spacious, bright apartment, perfect for families. An extraordinary position."
+        "it": "Tutto perfetto in questo posto, camera molto pulita e ben attrezzata. Ottima posizione in città. L'host è stato davvero disponibile. Torneremmo sicuramente.",
+        "en": "Everything was perfect in this place, very clean and well equipped room. Great location in the city. Host was really helpful. We would definitely come back again."
       },
-      "author": "Thomas K. 🇩🇪",
+      "author": "Ondřej 🇨🇿",
+      "property": "likele",
+      "source": "via Booking.com",
+      "url": "https://www.booking.com/hotel/it/affittacamere-likele.it.html#tab-reviews"
+    },
+    {
+      "quote": {
+        "it": "Struttura molto accogliente, dotata di tutti i comfort. Cucina attrezzata con tutto il necessario, aria condizionata in tutte le stanze, bagno spazioso. Tutti i balconi e le finestre sono vista mare. Il proprietario è una persona fantastica, accogliente, disponibile e attenta a ogni dettaglio.",
+        "en": "Very welcoming property with all comforts. Fully equipped kitchen, A/C in every room, spacious bathroom. All balconies and windows with sea view. The owner is fantastic, welcoming, helpful and attentive to every detail."
+      },
+      "author": "Arianna 🇮🇹",
       "property": "lihele",
       "source": "via Booking.com",
-      "url": ""
+      "url": "https://www.booking.com/hotel/it/casa-vacanza-lihele-locazione-turistica-castelsardo.it.html#tab-reviews"
+    },
+    {
+      "quote": {
+        "it": "Una delle rare occasioni in cui si è completamente soddisfatti dell'alloggio. Luciano fa del suo meglio per offrire un servizio eccellente. L'interno è moderno, accogliente e pulito. C'era anche una macchina Nespresso e la colazione inclusa. La posizione non potrebbe essere migliore: il centro storico e la spiaggia sono a pochi passi. Ci siamo pentiti di aver trascorso solo due notti!",
+        "en": "One of those rare occasions to be fully satisfied with the accommodation. Luciano does his best to offer excellent service. The interior is modern, cozy and clean. Nespresso machine and breakfast basics at no extra cost. The location couldn't be better: old town and beach a short walk away. We regret only spending two nights!"
+      },
+      "author": "Petra 🇨🇿",
+      "property": "lihele",
+      "source": "via Booking.com",
+      "url": "https://www.booking.com/hotel/it/casa-vacanza-lihele-locazione-turistica-castelsardo.it.html#tab-reviews"
     }
   ],
 
@@ -79,18 +89,18 @@
     {
       "title": { "it": "Prenotazione", "en": "Booking" },
       "items": [
-        { "q": { "it": "Come si prenota direttamente?", "en": "How do I book directly?" }, "a": { "it": "Scrivici su WhatsApp — è il modo più rapido. Rispondiamo entro poche ore, confermiamo disponibilità e prezzi e organizziamo tutto direttamente con voi.", "en": "Message us on WhatsApp — it's the fastest way. We reply within a few hours, confirm availability and rates, and arrange everything directly with you." } },
-        { "q": { "it": "Conviene prenotare direttamente?", "en": "Is it better to book direct?" }, "a": { "it": "Sì — prenotando direttamente evitate le commissioni delle piattaforme, avete comunicazione diretta con noi e possiamo essere più flessibili su richieste particolari.", "en": "Yes — by booking direct you avoid platform fees, have direct communication with us, and we can be more flexible with special requests." } },
-        { "q": { "it": "Quali metodi di pagamento accettate?", "en": "What payment methods do you accept?" }, "a": { "it": "Da definire — vi informiamo al momento della prenotazione.", "en": "To be confirmed — we'll let you know at time of booking." } },
-        { "q": { "it": "Qual è la politica di cancellazione?", "en": "What is the cancellation policy?" }, "a": { "it": "Da definire — vi comunichiamo le condizioni complete al momento della prenotazione.", "en": "To be confirmed — we'll share full terms at time of booking." } }
+        { "q": { "it": "Come si prenota direttamente?", "en": "How do I book directly?" }, "a": { "it": "Scrivici su WhatsApp, è il modo più rapido. Rispondiamo entro poche ore, confermiamo disponibilità e prezzi e organizziamo tutto direttamente con voi.", "en": "Message us on WhatsApp, it's the fastest way. We reply within a few hours, confirm availability and rates, and arrange everything directly with you." } },
+        { "q": { "it": "Conviene prenotare direttamente?", "en": "Is it better to book direct?" }, "a": { "it": "Sì, prenotando direttamente evitate le commissioni delle piattaforme, avete comunicazione diretta con noi e possiamo essere più flessibili su richieste particolari.", "en": "Yes, by booking direct you avoid platform fees, have direct communication with us, and we can be more flexible with special requests." } },
+        { "q": { "it": "Quali metodi di pagamento accettate?", "en": "What payment methods do you accept?" }, "a": { "it": "Da definire. Vi informiamo al momento della prenotazione.", "en": "To be confirmed. We'll let you know at time of booking." } },
+        { "q": { "it": "Qual è la politica di cancellazione?", "en": "What is the cancellation policy?" }, "a": { "it": "Da definire. Vi comunichiamo le condizioni complete al momento della prenotazione.", "en": "To be confirmed. We'll share full terms at time of booking." } }
       ]
     },
     {
       "title": { "it": "Le Strutture", "en": "The Properties" },
       "items": [
         { "q": { "it": "Qual è la differenza tra Lihele e Likele?", "en": "What's the difference between Lihele and Likele?" }, "a": { "it": "Lihele è l'appartamento intero: 3 camere, fino a 5 ospiti, cucina completa, balcone vista mare. Likele è una camera privata con bagno privato, terrazza vista mare e colazione. Sono nello stesso stabile, con ingressi su strade diverse.", "en": "Lihele is the entire apartment: 3 bedrooms, up to 5 guests, full kitchen, sea-view balcony. Likele is a private room with en-suite bathroom, sea-view terrace and breakfast. Same building, different street entrances." } },
-        { "q": { "it": "La colazione è inclusa a Likele?", "en": "Is breakfast included at Likele?" }, "a": { "it": "Sì — macchina Dolce Gusto, tè e tisane, brioche confezionate, biscotti, yogurt e succhi di frutta.", "en": "Yes — Dolce Gusto machine, teas, packaged brioches, biscuits, yogurt and fruit juices." } },
-        { "q": { "it": "Sono ammessi animali?", "en": "Are pets allowed?" }, "a": { "it": "Da definire — contattateci direttamente.", "en": "To be confirmed — please contact us directly." } }
+        { "q": { "it": "La colazione è inclusa a Likele?", "en": "Is breakfast included at Likele?" }, "a": { "it": "Sì, macchina Dolce Gusto, tè e tisane, brioche confezionate, biscotti, yogurt e succhi di frutta.", "en": "Yes, Dolce Gusto machine, teas, packaged brioches, biscuits, yogurt and fruit juices." } },
+        { "q": { "it": "Sono ammessi animali?", "en": "Are pets allowed?" }, "a": { "it": "Da definire. Contattateci direttamente.", "en": "To be confirmed. Please contact us directly." } }
       ]
     },
     {
@@ -104,8 +114,8 @@
       "title": { "it": "Posizione", "en": "Location" },
       "items": [
         { "q": { "it": "È necessaria la macchina?", "en": "Do I need a car?" }, "a": { "it": "Per raggiungere la struttura sì, ma una volta a Castelsardo la spiaggia e il centro storico sono a piedi.", "en": "To reach the property yes, but once in Castelsardo the beach and old town are walkable." } },
-        { "q": { "it": "È adatta per i bambini?", "en": "Is it suitable for children?" }, "a": { "it": "Sì — Lihele dispone di un'area giochi per bambini.", "en": "Yes — Lihele has a children's play area." } },
-        { "q": { "it": "Lihele e Likele sono nello stesso posto?", "en": "Are Lihele and Likele in the same place?" }, "a": { "it": "Sì — stesso stabile, ingressi su strade diverse. Lihele: Via Colle di Frigiano 35. Likele: Via Tibula 4.", "en": "Yes — same building, different entrances. Lihele: Via Colle di Frigiano 35. Likele: Via Tibula 4." } }
+        { "q": { "it": "È adatta per i bambini?", "en": "Is it suitable for children?" }, "a": { "it": "Sì, Lihele dispone di un'area giochi per bambini.", "en": "Yes, Lihele has a children's play area." } },
+        { "q": { "it": "Lihele e Likele sono nello stesso posto?", "en": "Are Lihele and Likele in the same place?" }, "a": { "it": "Sì, stesso stabile, ingressi su strade diverse. Lihele: Via Colle di Frigiano 35. Likele: Via Tibula 4.", "en": "Yes, same building, different entrances. Lihele: Via Colle di Frigiano 35. Likele: Via Tibula 4." } }
       ]
     }
   ]

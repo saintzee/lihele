@@ -234,10 +234,8 @@ function Hero() {
   return (
     <section id="hero" ref={heroRef} className="relative flex items-end overflow-hidden" style={{ minHeight: "100svh" }}>
       <div className="absolute inset-0" style={{ background: "linear-gradient(160deg, #1494A3 0%, #0e6872 35%, #162838 65%, #0d1218 100%)" }} />
-      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" src="/assets/hero.mp4" />
+      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" src="public/assets/hero-reduced2.mp4" />
       <div className="hero-overlay absolute inset-0" style={{ zIndex: 1, background: "linear-gradient(to top, rgba(25,26,30,0.88) 0%, rgba(25,26,30,0) 70%)" }} />
-      <div className="absolute inset-0" style={{ zIndex: 1, backgroundImage: "radial-gradient(ellipse 80% 60% at 70% 40%, rgba(207,166,76,0.08) 0%, transparent 70%), radial-gradient(ellipse 40% 50% at 20% 70%, rgba(20,148,163,0.15) 0%, transparent 60%)" }} />
-
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 pb-16 md:pb-20">
         <div className="hero-tag flex items-center gap-2.5 mb-5 opacity-0">
           <span className="block w-7 h-px" style={{ background: T.gold }} />
@@ -363,9 +361,95 @@ function Properties() {
 }
 
 /* ═══════════════════════════════════════════════════════
+   GALLERY CAROUSEL (Likele detail)
+   ═══════════════════════════════════════════════════════ */
+function GalleryCarousel({ images, imgGrad }) {
+  const scrollRef = useRef(null);
+  const [active, setActive] = useState(0);
+  const drag = useRef({ on: false, startX: 0, startScroll: 0 });
+  const n = images.length;
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    function onScroll() {
+      const w = el.offsetWidth;
+      if (!w) return;
+      setActive(Math.max(0, Math.min(Math.round(el.scrollLeft / w), n - 1)));
+    }
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => el.removeEventListener('scroll', onScroll);
+  }, [n]);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const d = drag.current;
+    function onDown(e) {
+      if (e.pointerType !== 'mouse') return;
+      d.on = true; d.startX = e.clientX; d.startScroll = el.scrollLeft;
+      el.style.scrollBehavior = 'auto';
+      el.setPointerCapture(e.pointerId);
+    }
+    function onMove(e) {
+      if (!d.on) return;
+      el.scrollLeft = d.startScroll - (e.clientX - d.startX);
+    }
+    function onUp() {
+      if (!d.on) return;
+      d.on = false; el.style.scrollBehavior = '';
+      const w = el.offsetWidth;
+      el.scrollTo({ left: Math.round(el.scrollLeft / w) * w, behavior: 'smooth' });
+    }
+    el.addEventListener('pointerdown', onDown);
+    el.addEventListener('pointermove', onMove);
+    el.addEventListener('pointerup', onUp);
+    el.addEventListener('pointercancel', onUp);
+    return () => {
+      el.removeEventListener('pointerdown', onDown);
+      el.removeEventListener('pointermove', onMove);
+      el.removeEventListener('pointerup', onUp);
+      el.removeEventListener('pointercancel', onUp);
+    };
+  }, []);
+
+  function goTo(i) {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTo({ left: i * el.offsetWidth, behavior: 'smooth' });
+  }
+
+  return (
+    <>
+      <div
+        ref={scrollRef}
+        className="scrollbar-hide absolute inset-0 overflow-x-auto overflow-y-hidden cursor-grab active:cursor-grabbing"
+        style={{ display: 'flex', scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}
+      >
+        {images.map((img, i) => (
+          <div key={i} style={{ minWidth: '100%', flexShrink: 0, scrollSnapAlign: 'start', scrollSnapStop: 'always', background: imgGrad }}>
+            {img.imgSrc
+              ? <img src={img.imgSrc} alt={img.alt || ''} draggable={false} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', pointerEvents: 'none', userSelect: 'none' }} />
+              : <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', fontFamily: 'DM Mono, monospace', fontSize: '0.65rem', letterSpacing: '0.12em', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', textAlign: 'center' }}>{img.alt}</span>}
+          </div>
+        ))}
+      </div>
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to top right, rgba(0,0,0,0.78) 0%, transparent 55%)', zIndex: 1 }} />
+      {n > 1 && (
+        <div className="absolute left-0 right-0 flex justify-center gap-2" style={{ bottom: 18, zIndex: 2 }}>
+          {images.map((_, i) => (
+            <button key={i} onClick={() => goTo(i)} aria-label={`Foto ${i + 1}`} className="rounded-full border-0 p-0 transition-all duration-200" style={{ width: 6, height: 6, background: active === i ? '#fff' : 'rgba(255,255,255,0.45)', transform: active === i ? 'scale(1.35)' : 'scale(1)', cursor: 'pointer' }} />
+          ))}
+        </div>
+      )}
+    </>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════
    DETAIL SECTION
    ═══════════════════════════════════════════════════════ */
-function DetailSection({ id, name, color, pale, score, typeIt, typeEn, descIt, descEn, note, facts, reverse, imgGrad, imgSrc, waMsg, bookingUrl, logoSrc }) {
+function DetailSection({ id, name, color, pale, score, typeIt, typeEn, descIt, descEn, note, facts, reverse, imgGrad, imgSrc, gallery, waMsg, bookingUrl, logoSrc }) {
   const { lang } = useLang();
   return (
     <section id={id} className="py-24 px-6" style={{ background: pale }}>
@@ -373,7 +457,8 @@ function DetailSection({ id, name, color, pale, score, typeIt, typeEn, descIt, d
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-center ${reverse ? "lg:[&>*:first-child]:order-2" : ""}`}>
           <Reveal className="relative">
             <div className="aspect-[4/5] rounded-xl overflow-hidden relative" style={{ background: imgGrad }}>
-              {imgSrc ? <img src={imgSrc} alt={`${name} — Castelsardo`} className="w-full h-full object-cover" /> :
+              {gallery ? <GalleryCarousel images={gallery} imgGrad={imgGrad} /> :
+                imgSrc ? <img src={imgSrc} alt={`${name} — Castelsardo`} className="w-full h-full object-cover" /> :
                 <span className="absolute inset-0 flex items-center justify-center font-mono text-xs tracking-[0.12em] text-white/30 uppercase text-center">{name}<br/>Main Photo</span>}
             </div>
             <div className="absolute -bottom-4 right-5 flex items-center gap-2 px-4 py-2.5 rounded-full shadow-xl" style={{ background: T.dark, color: T.gold }}>
@@ -409,15 +494,15 @@ function Gallery() {
   const { lang } = useLang();
   const [lb, setLb] = useState(null);
   const items = [
-    { label: "Lihele — Terrazza", grad: "linear-gradient(160deg,#1494A3,#0c6d78)", tall: true, imgSrc: "/assets/images/lihele2.jpeg" },
-    { label: "Likele — Camera", grad: "linear-gradient(160deg,#1E5AA8,#164280)" },
-    { label: "Castelsardo — Vista", grad: "linear-gradient(160deg,#1aabbf,#0e7a88)", short: true },
-    { label: "Lihele — Soggiorno", grad: "linear-gradient(160deg,#1494A3,#0E7A87)" },
-    { label: "Likele — Terrazza", grad: "linear-gradient(160deg,#2B6DB5,#1a4a80)", tall: true },
-    { label: "Lihele — Cucina", grad: "linear-gradient(160deg,#10808e,#084a55)", short: true },
-    { label: "Likele — Bagno", grad: "linear-gradient(160deg,#2468A0,#1a4a78)" },
-    { label: "Lihele — Camera", grad: "linear-gradient(160deg,#1494A3,#0c6d78)", short: true },
-    { label: "Castelsardo — Borgo", grad: "linear-gradient(160deg,#2a7a8a,#1a5a66)" },
+    { label: "Lihele — Insegna", grad: "linear-gradient(160deg,#1494A3,#0c6d78)", tall: true, imgSrc: "/assets/images/lihele-website/dettagli/insegna.jpg" },
+    { label: "Likele — Camera", grad: "linear-gradient(160deg,#1E5AA8,#164280)", imgSrc: "/assets/images/likele-website/letto.jpg" },
+    { label: "Lihele — Tavolo", grad: "linear-gradient(160deg,#1aabbf,#0e7a88)", short: true, imgSrc: "/assets/images/lihele-website/dettagli/tavolo.jpg" },
+    { label: "Lihele — Letto", grad: "linear-gradient(160deg,#1494A3,#0E7A87)", imgSrc: "/assets/images/lihele-website/dettagli/letto.jpg" },
+    { label: "Likele — Terrazza", grad: "linear-gradient(160deg,#2B6DB5,#1a4a80)", tall: true, imgSrc: "/assets/images/likele-website/entrata2.jpg" },
+    { label: "Lihele — Parete", grad: "linear-gradient(160deg,#10808e,#084a55)", short: true, imgSrc: "/assets/images/lihele-website/dettagli/parete.jpg" },
+    { label: "Likele — Bagno", grad: "linear-gradient(160deg,#2468A0,#1a4a78)", imgSrc: "/assets/images/likele-website/bagno.jpg" },
+    { label: "Lihele — Comodin", grad: "linear-gradient(160deg,#1494A3,#0c6d78)", short: true, imgSrc: "/assets/images/lihele-website/dettagli/comodin.jpg" },
+    { label: "Likele — Colazione", grad: "linear-gradient(160deg,#2a7a8a,#1a5a66)", imgSrc: "/assets/images/likele-website/colazione.jpg" },
   ];
 
   useEffect(() => {
@@ -476,12 +561,13 @@ function Reviews() {
   const [activeIdx, setActiveIdx] = useState(0);
 
   const reviews = [
-    { quoteIt: "Una settimana in questa residenza è come essere stati da un familiare caro, che ci ha ospitato a casa sua nel migliore dei modi. Luciano è un host straordinario, che con discrezione e disponibilità ti fa vivere una vacanza indimenticabile.", quoteEn: "A week in this residence was like staying with a dear relative. Luciano is an extraordinary host who makes your holiday unforgettable.", author: "Margherita I. 🇮🇹", prop: "lihele", source: "via Google", href: "https://share.google/PHwmJrSrwGIiTIjRR" },
-    { quoteIt: "Castelsardo è un luogo incantevole e questa casa, molto comoda e super accessoriata, permette di vivere pienamente il posto e il mare vicinissimo. Un valore aggiunto è dato dall'ospitalità garbata e disponibile di Luciano.", quoteEn: "Castelsardo is enchanting and this house lets you fully experience the place. Luciano's gracious hospitality is a wonderful added value.", author: "Mara L. 🇮🇹", prop: "lihele", source: "via Booking.com", href: "https://share.google/qmX1OqVisJENs9UJI" },
-    { quoteIt: "La camera è esattamente come si vede nella foto: nuova, pulita, decorata con gusto e nei dettagli. Luciano è una persona gentilissima e disponibile. Se dovessi tornare a Castelsardo non esiterei a tornare qui! Assolutamente consigliatissimo!", quoteEn: "The room is exactly as pictured: new, clean, tastefully decorated. If I return to Castelsardo, I'd come straight back here!", author: "Marina 🇩🇪", prop: "likele", source: "via Booking.com", href: "https://www.booking.com/hotel/it/affittacamere-likele.it.html" },
-    { quoteIt: "Vista mozzafiato, struttura curata in ogni dettaglio. Torneremo sicuramente.", quoteEn: "Breathtaking view, every detail taken care of. We'll definitely be back.", author: "Marco R. 🇮🇹", prop: "lihele", source: "via Booking.com" },
-    { quoteIt: "Camera deliziosa con terrazza privata sul mare. Colazione ottima, host disponibilissimi.", quoteEn: "Lovely room with a private sea terrace. Great breakfast, extremely helpful hosts.", author: "Sophie L. 🇫🇷", prop: "likele", source: "via Booking.com" },
-    { quoteIt: "Appartamento spazioso, luminoso, perfetto per la famiglia. Posizione straordinaria.", quoteEn: "Spacious, bright apartment, perfect for families. An extraordinary position.", author: "Thomas K. 🇩🇪", prop: "lihele", source: "via Booking.com" },
+    { quoteIt: "Luciano è un host straordinario. Casa sarda bellissima, comodissima su due livelli, fornita di tutto. Siamo andati via da pochi giorni e già sentiamo la nostalgia.", quoteEn: "Luciano is an extraordinary host. Beautiful, comfortable Sardinian house on two levels, equipped with everything. We left just days ago and already feel nostalgic.", author: "Margherita I. 🇮🇹", prop: "lihele", source: "via Google", href: "https://share.google/PHwmJrSrwGIiTIjRR" },
+    { quoteIt: "Castelsardo è un luogo incantevole e questa casa, molto comoda e super accessoriata, permette di vivere pienamente il posto e il mare vicinissimo. Gli ambienti, ampi, pulitissimi e ben arredati, ti fanno sentire a casa. Un valore aggiunto è dato dall'ospitalità garbata e disponibile di Luciano, un super host.", quoteEn: "Castelsardo is enchanting and this super comfortable, well-equipped house lets you fully experience the place and the sea nearby. The spacious, spotless and well-furnished rooms make you feel at home. Luciano's gracious hospitality is a wonderful added value.", author: "Mara L. 🇮🇹", prop: "lihele", source: "via Booking.com", href: "https://share.google/qmX1OqVisJENs9UJI" },
+    { quoteIt: "La camera è esattamente come si vede nella foto: nuova, pulita, decorata con gusto e nei dettagli. Così pure il bagno. Luciano è una persona gentilissima e disponibile. La casa è in una zona molto tranquilla. Se dovessi tornare a Castelsardo non esiterei a tornare qui! Assolutamente consigliatissimo!", quoteEn: "The room is exactly as pictured: new, clean, tastefully decorated down to every detail. Same for the bathroom. Luciano is very kind and helpful. The house is in a very quiet area. If I return to Castelsardo, I'd come straight back here! Absolutely recommended!", author: "Marina 🇩🇪", prop: "likele", source: "via Booking.com", href: "https://www.booking.com/hotel/it/affittacamere-likele.it.html" },
+    { quoteIt: "Camera bellissima, moderna, pulita e comoda! Terrazzino dove poter stendere i costumi a fine giornata. Posizione perfetta, non distante dal centro e la spiaggia ma silenziosa e tranquilla. Proprietario molto gentile e disponibile.", quoteEn: "Beautiful, modern, clean and comfortable room! Small terrace to hang swimsuits at the end of the day. Perfect location, not far from the centre and beach but quiet and peaceful. Very kind and helpful host.", author: "Sofia 🇮🇹", prop: "likele", source: "via Booking.com" },
+    { quoteIt: "Tutto perfetto in questo posto, camera molto pulita e ben attrezzata. Ottima posizione in città. L'host è stato davvero disponibile. Torneremmo sicuramente.", quoteEn: "Everything was perfect in this place, very clean and well equipped room. Great location in the city. Host was really helpful. We would definitely come back again.", author: "Ondřej 🇨🇿", prop: "likele", source: "via Booking.com" },
+    { quoteIt: "Struttura molto accogliente, dotata di tutti i comfort. Cucina attrezzata con tutto il necessario, aria condizionata in tutte le stanze, bagno spazioso. Tutti i balconi e le finestre sono vista mare. Il proprietario è una persona fantastica, accogliente, disponibile e attenta a ogni dettaglio.", quoteEn: "Very welcoming property with all comforts. Fully equipped kitchen, A/C in every room, spacious bathroom. All balconies and windows with sea view. The owner is fantastic, welcoming, helpful and attentive to every detail.", author: "Arianna 🇮🇹", prop: "lihele", source: "via Booking.com" },
+    { quoteIt: "Una delle rare occasioni in cui si è completamente soddisfatti dell'alloggio. Luciano fa del suo meglio per offrire un servizio eccellente. L'interno è moderno, accogliente e pulito. C'era anche una macchina Nespresso e la colazione inclusa. La posizione non potrebbe essere migliore — il centro storico e la spiaggia sono a pochi passi. Ci siamo pentiti di aver trascorso solo due notti!", quoteEn: "One of those rare occasions to be fully satisfied with the accommodation. Luciano does his best to offer excellent service. The interior is modern, cozy and clean. There was a Nespresso machine and breakfast basics at no extra cost. The location couldn't be better — old town and beach just a short walk away. We regret only spending two nights here!", author: "Petra 🇨🇿", prop: "lihele", source: "via Booking.com" },
   ];
 
   const scroll = (dir) => { const el = scrollRef.current; if (!el) return; const w = el.querySelector(".rev-card")?.offsetWidth || 360; el.scrollBy({ left: dir * (w + 20), behavior: "smooth" }); };
@@ -507,10 +593,10 @@ function Reviews() {
           <div ref={scrollRef} className="flex gap-5 overflow-x-auto pb-4 cursor-grab snap-x snap-mandatory scrollbar-hide">
             {reviews.map((r, i) => { const isL = r.prop === "lihele"; const pc = isL ? "#48D4E0" : "#5B9BD5"; return (
               <a key={i} href={r.href || "#reviews"} target={r.href ? "_blank" : undefined} rel="noopener"
-                className="rev-card flex-shrink-0 w-80 md:w-96 snap-start rounded-xl p-6 border transition-all duration-300 hover:border-white/15"
-                style={{ background: `rgba(${isL ? "20,148,163" : "30,90,168"},0.06)`, borderColor: "rgba(255,255,255,0.06)" }}>
+                className="rev-card flex-shrink-0 snap-start rounded-xl p-6 border transition-all duration-300 hover:border-white/15 flex flex-col"
+                style={{ background: `rgba(${isL ? "20,148,163" : "30,90,168"},0.06)`, borderColor: "rgba(255,255,255,0.06)", height: 346, width: 340 }}>
                 <div className="flex gap-0.5 mb-3">{[...Array(5)].map((_, j) => <Star key={j} size={13} fill={T.gold} color={T.gold} />)}</div>
-                <p className="font-serif text-sm italic leading-relaxed mb-4" style={{ color: "rgba(255,255,255,0.8)" }}>"{t(r.quoteIt, r.quoteEn, lang)}"</p>
+                <p className="font-serif text-sm italic leading-relaxed mb-4 flex-1 overflow-hidden" style={{ color: "rgba(255,255,255,0.8)", display: "-webkit-box", WebkitLineClamp: 9, WebkitBoxOrient: "vertical" }}>"{t(r.quoteIt, r.quoteEn, lang)}"</p>
                 <div className="flex items-center justify-between"><span className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{r.author}</span><span className="font-mono text-[0.5rem] tracking-[0.08em] uppercase px-2 py-0.5 rounded-full" style={{ color: pc, background: `${pc}18` }}>{isL ? "Lihele" : "Likele"}</span></div>
                 <div className="font-mono text-[0.55rem] tracking-wide mt-2" style={{ color: "rgba(248,245,240,0.2)" }}>{r.source}</div>
               </a>
@@ -667,6 +753,49 @@ function FAQ() {
    ═══════════════════════════════════════════════════════ */
 function Contact() {
   const { lang } = useLang();
+  const [contactFormLoading, setContactFormLoading] = useState(false);
+  const [contactFormMessage, setContactFormMessage] = useState("");
+  const [contactFormSuccess, setContactFormSuccess] = useState(false);
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      property: formData.get("property"),
+      dates: formData.get("dates"),
+      message: formData.get("message"),
+    };
+
+    setContactFormLoading(true);
+    setContactFormMessage("");
+    try {
+      const res = await fetch("/.netlify/functions/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+      if (res.ok) {
+        setContactFormSuccess(true);
+        setContactFormMessage(lang === "en" ? "Thank you! We'll get back to you soon." : "Grazie! Ti contatteremo a breve.");
+        form.reset();
+        setTimeout(() => setContactFormMessage(""), 5000);
+      } else {
+        setContactFormSuccess(false);
+        setContactFormMessage(result.error || (lang === "en" ? "Something went wrong. Please try again." : "Qualcosa è andato storto. Riprova."));
+      }
+    } catch (err) {
+      setContactFormSuccess(false);
+      setContactFormMessage(lang === "en" ? "Network error. Please try again." : "Errore di rete. Riprova.");
+    } finally {
+      setContactFormLoading(false);
+    }
+  };
+
   return (
     <section id="contatti" className="py-24 px-6" style={{ background: T.dark }}>
       <div className="max-w-xl mx-auto text-center">
@@ -680,15 +809,18 @@ function Contact() {
         </Reveal>
         <Reveal delay={0.2}>
           <div className="flex items-center gap-4 my-8" style={{ color: "rgba(248,245,240,0.2)" }}><span className="flex-1 h-px" style={{ background: "rgba(248,245,240,0.08)" }} /><span className="font-mono text-xs tracking-[0.1em] uppercase">{t("oppure usa il modulo","or use the form",lang)}</span><span className="flex-1 h-px" style={{ background: "rgba(248,245,240,0.08)" }} /></div>
-          <form className="flex flex-col gap-3 text-left" action="https://formspree.io/f/YOUR_ID" method="POST">
+          <form className="flex flex-col gap-3 text-left" onSubmit={handleContactSubmit}>
             <div className="grid grid-cols-2 gap-3">
-              <div className="flex flex-col gap-1.5"><label className="font-mono text-[0.6rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.4)" }}>{t("Nome","Name",lang)}</label><input type="text" name="name" required className="bg-white/5 border border-white/10 rounded-lg px-3.5 py-3 text-sm text-white/90 outline-none focus:border-white/30 transition-colors" placeholder={t("Il tuo nome","Your name",lang)} /></div>
-              <div className="flex flex-col gap-1.5"><label className="font-mono text-[0.6rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.4)" }}>Email</label><input type="email" name="email" required className="bg-white/5 border border-white/10 rounded-lg px-3.5 py-3 text-sm text-white/90 outline-none focus:border-white/30 transition-colors" placeholder="la@tua.email" /></div>
+              <div className="flex flex-col gap-1.5"><label className="font-mono text-[0.6rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.4)" }}>{t("Nome","Name",lang)}</label><input type="text" name="name" required className="bg-white/5 border border-white/10 rounded-lg px-3.5 py-3 text-sm text-white/90 outline-none focus:border-white/30 transition-colors" placeholder={t("Il tuo nome","Your name",lang)} disabled={contactFormLoading} /></div>
+              <div className="flex flex-col gap-1.5"><label className="font-mono text-[0.6rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.4)" }}>Email</label><input type="email" name="email" required className="bg-white/5 border border-white/10 rounded-lg px-3.5 py-3 text-sm text-white/90 outline-none focus:border-white/30 transition-colors" placeholder="la@tua.email" disabled={contactFormLoading} /></div>
             </div>
-            <div className="flex flex-col gap-1.5"><label className="font-mono text-[0.6rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.4)" }}>{t("Struttura","Property",lang)}</label><select name="property" className="bg-white/5 border border-white/10 rounded-lg px-3.5 py-3 text-sm text-white/90 outline-none focus:border-white/30"><option value="">—</option><option value="lihele">Lihele — Casa Vacanze</option><option value="likele">Likele — Camera Privata</option><option value="entrambe">{t("Entrambe","Both",lang)}</option></select></div>
-            <div className="flex flex-col gap-1.5"><label className="font-mono text-[0.6rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.4)" }}>{t("Date","Dates",lang)}</label><input type="text" name="dates" className="bg-white/5 border border-white/10 rounded-lg px-3.5 py-3 text-sm text-white/90 outline-none focus:border-white/30 transition-colors" placeholder={t("es. 10 luglio – 17 luglio 2026","e.g. 10 July – 17 July 2026",lang)} /></div>
-            <div className="flex flex-col gap-1.5"><label className="font-mono text-[0.6rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.4)" }}>{t("Messaggio","Message",lang)}</label><textarea name="message" rows={3} className="bg-white/5 border border-white/10 rounded-lg px-3.5 py-3 text-sm text-white/90 outline-none focus:border-white/30 transition-colors resize-y" placeholder={t("Numero di ospiti, richieste particolari…","Number of guests, special requests…",lang)} /></div>
-            <MagneticBtn className="text-sm font-medium py-3.5 rounded-full mt-1" style={{ background: T.gold, color: T.dark }} onClick={(e) => { /* form submit handled by action */ }}><span className="relative z-10">{t("Invia richiesta","Send enquiry",lang)}</span></MagneticBtn>
+            <div className="flex flex-col gap-1.5"><label className="font-mono text-[0.6rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.4)" }}>{t("Struttura","Property",lang)}</label><select name="property" className="bg-white/5 border border-white/10 rounded-lg px-3.5 py-3 text-sm text-white/90 outline-none focus:border-white/30" disabled={contactFormLoading}><option value="">—</option><option value="lihele">Lihele — Casa Vacanze</option><option value="likele">Likele — Camera Privata</option><option value="entrambe">{t("Entrambe","Both",lang)}</option></select></div>
+            <div className="flex flex-col gap-1.5"><label className="font-mono text-[0.6rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.4)" }}>{t("Date","Dates",lang)}</label><input type="text" name="dates" className="bg-white/5 border border-white/10 rounded-lg px-3.5 py-3 text-sm text-white/90 outline-none focus:border-white/30 transition-colors" placeholder={t("es. 10 luglio – 17 luglio 2026","e.g. 10 July – 17 July 2026",lang)} disabled={contactFormLoading} /></div>
+            <div className="flex flex-col gap-1.5"><label className="font-mono text-[0.6rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.4)" }}>{t("Messaggio","Message",lang)}</label><textarea name="message" rows={3} className="bg-white/5 border border-white/10 rounded-lg px-3.5 py-3 text-sm text-white/90 outline-none focus:border-white/30 transition-colors resize-y" placeholder={t("Numero di ospiti, richieste particolari…","Number of guests, special requests…",lang)} disabled={contactFormLoading} /></div>
+            {contactFormMessage && (
+              <p className={`text-xs text-center p-2 rounded ${contactFormSuccess ? 'bg-green-900/30 text-green-200' : 'bg-red-900/30 text-red-200'}`}>{contactFormMessage}</p>
+            )}
+            <MagneticBtn type="submit" className="text-sm font-medium py-3.5 rounded-full mt-1" style={{ background: T.gold, color: T.dark }} disabled={contactFormLoading}><span className="relative z-10">{contactFormLoading ? (lang === "en" ? "Sending..." : "Invio...") : t("Invia richiesta","Send enquiry",lang)}</span></MagneticBtn>
             <p className="text-xs text-center mt-2" style={{ color: "rgba(248,245,240,0.25)" }}>{t("I tuoi dati sono usati solo per rispondere alla tua richiesta.","Your data is only used to respond to your enquiry.",lang)} <a href="#" className="underline" style={{ color: "rgba(248,245,240,0.4)" }}>Privacy Policy</a></p>
           </form>
         </Reveal>
@@ -790,7 +922,14 @@ export default function App() {
       <Hero />
       <Awards />
       <Properties />
-      <DetailSection id="lihele" name="Lihele" color={T.lihele} pale={T.lihelePale} score="9.8" typeIt="Casa Vacanze Intera" typeEn="Entire Holiday Apartment" logoSrc="/assets/Lihele.svg" descIt="Un appartamento luminoso affacciato sul mare di Castelsardo. Tre camere da letto per un massimo di cinque ospiti, balcone con vista diretta, cucina attrezzata, area giochi per i bambini. La luce del mattino qui è qualcosa di speciale." descEn="A bright apartment overlooking the sea at Castelsardo. Three bedrooms for up to five guests, a balcony with direct sea views, fully equipped kitchen, and a children's play area. The morning light here is something special." note={breakfastNote} imgGrad="linear-gradient(160deg, #1494A3, #0c6d78)" imgSrc="/assets/images/lihele2.jpeg" waMsg="Ciao! Vorrei informazioni su Lihele (appartamento)." bookingUrl="https://www.booking.com/hotel/it/casa-vacanza-lihele-locazione-turistica-castelsardo.it.html"
+      <DetailSection id="lihele" name="Lihele" color={T.lihele} pale={T.lihelePale} score="9.8" typeIt="Casa Vacanze Intera" typeEn="Entire Holiday Apartment" logoSrc="/assets/Lihele.svg" descIt="Un appartamento luminoso affacciato sul mare di Castelsardo. Tre camere da letto per un massimo di cinque ospiti, balcone con vista diretta, cucina attrezzata, area giochi per i bambini. La luce del mattino qui è qualcosa di speciale." descEn="A bright apartment overlooking the sea at Castelsardo. Three bedrooms for up to five guests, a balcony with direct sea views, fully equipped kitchen, and a children's play area. The morning light here is something special." note={breakfastNote} imgGrad="linear-gradient(160deg, #1494A3, #0c6d78)" waMsg="Ciao! Vorrei informazioni su Lihele (appartamento)."
+        gallery={[
+          { imgSrc: "/assets/images/lihele-website/dettagli/insegna.jpg", alt: "Lihele — Insegna" },
+          { imgSrc: "/assets/images/lihele-website/dettagli/letto.jpg", alt: "Lihele — Letto" },
+          { imgSrc: "/assets/images/lihele-website/dettagli/tavolo-alto.jpg", alt: "Lihele — Tavolo alto" },
+          { imgSrc: "/assets/images/lihele-website/dettagli/parete.jpg", alt: "Lihele — Parete" },
+          { imgSrc: "/assets/images/lihele-website/dettagli/ancora.jpg", alt: "Lihele — Ancora" },
+        ]} bookingUrl="https://www.booking.com/hotel/it/casa-vacanza-lihele-locazione-turistica-castelsardo.it.html"
         facts={[
           { icon: "👥", labelIt: "Ospiti", labelEn: "Guests", valIt: "Fino a 5", valEn: "Up to 5" },
           { icon: "🛏", labelIt: "Camere", labelEn: "Bedrooms", valIt: "3", valEn: "3" },
@@ -802,6 +941,12 @@ export default function App() {
           { icon: "📶", labelIt: "WiFi", labelEn: "WiFi", valIt: "Incluso", valEn: "Free" },
         ]} />
       <DetailSection id="likele" name="Likele" color={T.likele} pale={T.likelePale} score="9.7" reverse typeIt="Camera con Bagno Privato" typeEn="Private Room & Bathroom" logoSrc="/assets/Likele.svg" descIt="Una camera intima con terrazza affacciata sul mare, bagno privato, aria condizionata e colazione servita in camera. A cinquecento metri dalla spiaggia, nel cuore di Castelsardo." descEn="An intimate room with a private sea-view terrace, en-suite bathroom, air conditioning and breakfast in-room. Five hundred metres from the beach, in the heart of Castelsardo." note={breakfastNote} imgGrad="linear-gradient(160deg, #1E5AA8, #164280)" waMsg="Ciao! Vorrei informazioni su Likele (camera)." bookingUrl="https://www.booking.com/hotel/it/affittacamere-likele.it.html"
+        gallery={[
+          { imgSrc: "/assets/images/likele-website/letto.jpg", alt: "Likele — Camera" },
+          { imgSrc: "/assets/images/likele-website/entrata2.jpg", alt: "Likele — Terrazza vista mare" },
+          { imgSrc: "/assets/images/likele-website/bagno.jpg", alt: "Likele — Bagno" },
+          { imgSrc: "/assets/images/likele-website/colazione.jpg", alt: "Likele — Colazione" },
+        ]}
         facts={[
           { icon: "👥", labelIt: "Ospiti", labelEn: "Guests", valIt: "1–2", valEn: "1–2" },
           { icon: "🛁", labelIt: "Bagno", labelEn: "Bathroom", valIt: "Privato", valEn: "Private" },
