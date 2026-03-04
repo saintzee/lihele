@@ -464,6 +464,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 #likele .detail-gallery-scroll {
   position: absolute; inset: 0;
   cursor: grab;
+  touch-action: pan-y;
 }
 #lihele .detail-gallery-scroll:active,
 #likele .detail-gallery-scroll:active { cursor: grabbing; }
@@ -2166,10 +2167,17 @@ function initGallery(galleryId, dotsId) {
   gallery.addEventListener('pointercancel', function() { dragging = false; });
 
   // Touch swipe
-  let touchStartX = 0;
+  let touchStartX = 0, touchStartY = 0, swiping = false;
   gallery.addEventListener('touchstart', function(e) {
     touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    swiping = false;
   }, { passive: true });
+  gallery.addEventListener('touchmove', function(e) {
+    var dx = Math.abs(e.touches[0].clientX - touchStartX);
+    var dy = Math.abs(e.touches[0].clientY - touchStartY);
+    if (dx > dy && dx > 10) { swiping = true; e.preventDefault(); }
+  }, { passive: false });
   gallery.addEventListener('touchend', function(e) {
     var dx = e.changedTouches[0].clientX - touchStartX;
     if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
@@ -2256,7 +2264,7 @@ const mapObserver = new IntersectionObserver((entries) => {
     const mapEmbed = document.getElementById('mapEmbed');
     const mapLoading = document.getElementById('mapLoading');
     const iframe = document.createElement('iframe');
-    iframe.src = 'https://maps.google.com/maps?q=40.9130903,8.7050544&z=17&output=embed';
+    iframe.src = 'https://maps.google.com/maps?q=Casa+Vacanza+Locazione+Turistica+LiHele,+Castelsardo&z=17&output=embed';
     iframe.style.cssText = 'width:100%;height:100%;border:none;';
     iframe.loading = 'lazy';
     iframe.title = 'Mappa, Via Tibula 4, Castelsardo';
