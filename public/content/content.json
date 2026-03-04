@@ -91,8 +91,8 @@
       "items": [
         { "q": { "it": "Come si prenota direttamente?", "en": "How do I book directly?" }, "a": { "it": "Scrivici su WhatsApp, è il modo più rapido. Rispondiamo entro poche ore, confermiamo disponibilità e prezzi e organizziamo tutto direttamente con voi.", "en": "Message us on WhatsApp, it's the fastest way. We reply within a few hours, confirm availability and rates, and arrange everything directly with you." } },
         { "q": { "it": "Conviene prenotare direttamente?", "en": "Is it better to book direct?" }, "a": { "it": "Sì, prenotando direttamente evitate le commissioni delle piattaforme, avete comunicazione diretta con noi e possiamo essere più flessibili su richieste particolari.", "en": "Yes, by booking direct you avoid platform fees, have direct communication with us, and we can be more flexible with special requests." } },
-        { "q": { "it": "Quali metodi di pagamento accettate?", "en": "What payment methods do you accept?" }, "a": { "it": "Da definire. Vi informiamo al momento della prenotazione.", "en": "To be confirmed. We'll let you know at time of booking." } },
-        { "q": { "it": "Qual è la politica di cancellazione?", "en": "What is the cancellation policy?" }, "a": { "it": "Da definire. Vi comunichiamo le condizioni complete al momento della prenotazione.", "en": "To be confirmed. We'll share full terms at time of booking." } }
+        { "q": { "it": "Quali metodi di pagamento accettate?", "en": "What payment methods do you accept?" }, "a": { "it": "È richiesto un anticipo del 20% al momento della prenotazione.", "en": "A 20% deposit is required at time of booking." } },
+        { "q": { "it": "Qual è la politica di cancellazione?", "en": "What is the cancellation policy?" }, "a": { "it": "Cancellazione gratuita fino a 5 giorni prima dell'arrivo.", "en": "Free cancellation up to 5 days before arrival." } }
       ]
     },
     {
@@ -100,7 +100,7 @@
       "items": [
         { "q": { "it": "Qual è la differenza tra Lihele e Likele?", "en": "What's the difference between Lihele and Likele?" }, "a": { "it": "Lihele è l'appartamento intero: 3 camere, 2 bagni, fino a 5 ospiti, cucina attrezzata, TV, aria condizionata, balcone vista mare, biancheria e asciugamani inclusi, area giochi per bambini. Likele è una camera privata con bagno privato, terrazza vista mare e colazione inclusa, perfetta per 1 o 2 persone. Sono nello stesso stabile, con ingressi su strade diverse.", "en": "Lihele is the entire apartment: 3 bedrooms, 2 bathrooms, up to 5 guests, fully equipped kitchen, TV, A/C, sea-view balcony, linen and towels included, children's play area. Likele is a private room with en-suite bathroom, sea-view terrace and breakfast included, perfect for 1 or 2 people. Same building, different street entrances." } },
         { "q": { "it": "La colazione è inclusa a Likele?", "en": "Is breakfast included at Likele?" }, "a": { "it": "Sì, macchina Dolce Gusto, tè e tisane, brioche confezionate, biscotti, yogurt e succhi di frutta.", "en": "Yes, Dolce Gusto machine, teas, packaged brioches, biscuits, yogurt and fruit juices." } },
-        { "q": { "it": "Sono ammessi animali?", "en": "Are pets allowed?" }, "a": { "it": "Da definire. Contattateci direttamente.", "en": "To be confirmed. Please contact us directly." } }
+        { "q": { "it": "Sono ammessi animali?", "en": "Are pets allowed?" }, "a": { "it": "No, purtroppo non sono ammessi animali.", "en": "No, unfortunately pets are not allowed." } }
       ]
     },
     {
