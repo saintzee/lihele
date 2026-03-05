@@ -59,7 +59,7 @@ function MagneticBtn({ children, className = "", href, onClick, target, rel, sty
     if (!ref.current) return;
     const r = ref.current.getBoundingClientRect();
     setPos({
-
+      x: ((e.clientX - r.left) / r.width - 0.5) * 8,
       y: ((e.clientY - r.top) / r.height - 0.5) * 4,
     });
   }, []);
@@ -109,13 +109,39 @@ function Reveal({ children, className = "", delay = 0, y = 40 }) {
 }
 
 /* ═══════════════════════════════════════════════════════
+   ANIMATED SCORE — GSAP count-up from 0 to target
+   ═══════════════════════════════════════════════════════ */
+function AnimatedScore({ score, className = "", style = {} }) {
+  const ref = useRef(null);
+  useGSAP((gsap) => {
+    if (!ref.current) return;
+    const num = parseFloat(score);
+    const decimals = score.includes(".") ? score.split(".")[1].length : 0;
+    const obj = { val: 0 };
+    gsap.to(obj, {
+      val: num,
+      duration: 1.8,
+      ease: "power3.out",
+      onUpdate() { if (ref.current) ref.current.textContent = obj.val.toFixed(decimals); },
+      scrollTrigger: { trigger: ref.current, start: "top 92%", once: true },
+    });
+  }, []);
+  return <span ref={ref} className={className} style={style}>0.0</span>;
+}
+
+/* ═══════════════════════════════════════════════════════
    SECTION HEADING
    ═══════════════════════════════════════════════════════ */
 function SectionHead({ label, titleIt, titleEn, subIt, subEn, light = false }) {
   const { lang } = useLang();
   return (
     <Reveal className="text-center mb-14">
-      {label && <p className="font-mono text-xs tracking-widest uppercase mb-3" style={{ color: light ? "rgba(248,245,240,0.4)" : T.textLight }}>{label}</p>}
+      {label && (
+        <>
+          <p className="font-mono text-xs tracking-widest uppercase mb-3" style={{ color: light ? "rgba(248,245,240,0.4)" : T.textLight }}>{label}</p>
+          <span className="block mx-auto mb-4 h-px" style={{ width: 32, background: light ? "rgba(255,255,255,0.18)" : T.border, transformOrigin: "center", animation: "lineGrow 0.7s ease-out 0.4s both" }} />
+        </>
+      )}
       <h2 className="font-serif text-3xl md:text-5xl font-light leading-tight" style={{ color: light ? "#fff" : T.dark }}>{t(titleIt, titleEn, lang)}</h2>
       {subIt && <p className="mt-3 text-base font-light" style={{ color: light ? "rgba(248,245,240,0.55)" : T.textMid }}>{t(subIt, subEn, lang)}</p>}
     </Reveal>
@@ -265,7 +291,8 @@ function Hero() {
           </MagneticBtn>
           <a href="#strutture" className="inline-flex items-center gap-2 text-base font-light py-3.5 px-1 border-b transition-all hover:text-white hover:border-white/70"
             style={{ color: "rgba(255,255,255,0.7)", borderColor: "rgba(255,255,255,0.3)" }}>
-            {t("Scopri le strutture", "Explore properties", lang)} <ChevronDown size={16} />
+            {t("Scopri le strutture", "Explore properties", lang)}
+            <span style={{ animation: "subtleBounce 1.6s ease-in-out infinite" }}><ChevronDown size={16} /></span>
           </a>
         </div>
       </div>
@@ -292,8 +319,8 @@ function Awards() {
   }, []);
 
   const AwardCard = ({ score, name, typeIt, typeEn, reviews, href }) => (
-    <a href={href} target="_blank" rel="noopener" className="award-item flex items-center gap-4 px-7 py-5 rounded-xl transition-all duration-200 hover:bg-white/5">
-      <span className="font-mono text-4xl font-medium leading-none" style={{ color: T.gold }}>{score}</span>
+    <a href={href} target="_blank" rel="noopener" className="award-item flex items-center gap-4 px-7 py-5 rounded-xl transition-all duration-200 hover:bg-white/5 hover:scale-105" style={{ transition: "transform 0.25s cubic-bezier(0.22,1,0.36,1), background 0.2s" }}>
+      <AnimatedScore score={score} className="font-mono text-4xl font-medium leading-none" style={{ color: T.gold }} />
       <div className="flex flex-col gap-0.5">
         <span className="font-serif text-lg text-white tracking-wide">{name}</span>
         <span className="font-mono text-[0.6rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.4)" }}>{t(typeIt, typeEn, lang)}</span>
@@ -451,6 +478,16 @@ function GalleryCarousel({ images, imgGrad }) {
    ═══════════════════════════════════════════════════════ */
 function DetailSection({ id, name, color, pale, score, typeIt, typeEn, descIt, descEn, note, facts, reverse, imgGrad, imgSrc, gallery, waMsg, bookingUrl, logoSrc }) {
   const { lang } = useLang();
+  const factsRef = useRef(null);
+  useGSAP((gsap) => {
+    if (!factsRef.current) return;
+    gsap.fromTo(
+      Array.from(factsRef.current.children),
+      { y: 14, opacity: 0 },
+      { y: 0, opacity: 1, stagger: 0.07, duration: 0.45, ease: "power2.out",
+        scrollTrigger: { trigger: factsRef.current, start: "top 82%", once: true } }
+    );
+  }, []);
   return (
     <section id={id} className="py-24 px-6" style={{ background: pale }}>
       <div className="max-w-5xl mx-auto">
@@ -471,8 +508,8 @@ function DetailSection({ id, name, color, pale, score, typeIt, typeEn, descIt, d
             {logoSrc ? <img src={logoSrc} alt={name} className="mb-3" style={{ height: "2.6rem", width: "auto" }} /> : <h2 className="font-serif text-4xl md:text-5xl font-light mb-2" style={{ color }}>{name}</h2>}
             <p className="text-base font-light leading-relaxed my-5" style={{ color: T.textMid }}>{t(descIt, descEn, lang)}</p>
             {note && <div className="rounded-r-lg p-3.5 mb-6 text-sm leading-relaxed" style={{ background: T.goldPale, borderLeft: `3px solid ${T.gold}`, color: T.textMid }}><strong style={{ color: T.dark }}>{t(note.labelIt, note.labelEn, lang)}</strong> {t(note.textIt, note.textEn, lang)}</div>}
-            <div className="grid grid-cols-2 gap-2 mb-8">
-              {facts.map((f, i) => <div key={i} className="flex items-start gap-2.5 p-3 rounded-lg border" style={{ background: "rgba(255,255,255,0.5)", borderColor: `${color}15` }}><span className="text-base flex-shrink-0 mt-0.5">{f.icon}</span><div><span className="font-mono text-[0.6rem] tracking-wide uppercase block font-medium" style={{ color: T.dark }}>{t(f.labelIt, f.labelEn, lang)}</span><span className="text-xs" style={{ color: T.textMid }}>{t(f.valIt, f.valEn, lang)}</span></div></div>)}
+            <div ref={factsRef} className="grid grid-cols-2 gap-2 mb-8">
+              {facts.map((f, i) => <div key={i} className="flex items-start gap-2.5 p-3 rounded-lg border transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm" style={{ background: "rgba(255,255,255,0.5)", borderColor: `${color}15` }}><span className="text-base flex-shrink-0 mt-0.5">{f.icon}</span><div><span className="font-mono text-[0.6rem] tracking-wide uppercase block font-medium" style={{ color: T.dark }}>{t(f.labelIt, f.labelEn, lang)}</span><span className="text-xs" style={{ color: T.textMid }}>{t(f.valIt, f.valEn, lang)}</span></div></div>)}
             </div>
             <div className="flex flex-col gap-2.5">
               <MagneticBtn href={waLink(waMsg)} target="_blank" rel="noopener" className="flex items-center justify-center gap-2.5 text-white text-base font-medium py-4 rounded-full" style={{ background: T.wa }}>
@@ -538,14 +575,14 @@ function Gallery() {
         </Reveal>
       </div>
       {lb !== null && (
-        <div className="fixed inset-0 z-[500] flex items-center justify-center" style={{ background: "rgba(10,12,14,0.92)", backdropFilter: "blur(16px)" }} onClick={() => setLb(null)}>
-          <button className="absolute top-5 right-5 w-11 h-11 rounded-full flex items-center justify-center text-white bg-white/10 hover:bg-white/20 transition-colors z-10" onClick={() => setLb(null)}><X size={20} /></button>
-          <button className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white bg-white/10 hover:bg-white/20" onClick={(e) => { e.stopPropagation(); setLb((lb - 1 + items.length) % items.length); }}><ChevronLeft size={24} /></button>
-          <div className="flex flex-col items-center gap-4 max-w-[90vw]" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-[500] flex items-center justify-center" style={{ background: "rgba(10,12,14,0.92)", backdropFilter: "blur(16px)", animation: "lbFadeIn 0.2s ease-out" }} onClick={() => setLb(null)}>
+          <button className="absolute top-5 right-5 w-11 h-11 rounded-full flex items-center justify-center text-white bg-white/10 hover:bg-white/20 transition-all duration-200 hover:rotate-90 z-10" onClick={() => setLb(null)}><X size={20} /></button>
+          <button className="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white bg-white/10 hover:bg-white/20 transition-all duration-200 hover:scale-110" onClick={(e) => { e.stopPropagation(); setLb((lb - 1 + items.length) % items.length); }}><ChevronLeft size={24} /></button>
+          <div className="flex flex-col items-center gap-4 max-w-[90vw]" style={{ animation: "lbContentIn 0.3s cubic-bezier(0.22,1,0.36,1)" }} onClick={(e) => e.stopPropagation()}>
             <div className="w-[70vw] max-w-[600px] aspect-[3/4] rounded-xl overflow-hidden" style={{ background: items[lb].grad }}>{items[lb].imgSrc && <img src={items[lb].imgSrc} alt={items[lb].label} className="w-full h-full object-cover" />}</div>
             <span className="font-mono text-xs tracking-[0.12em] uppercase text-white/60">{items[lb].label}</span>
           </div>
-          <button className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white bg-white/10 hover:bg-white/20" onClick={(e) => { e.stopPropagation(); setLb((lb + 1) % items.length); }}><ChevronRight size={24} /></button>
+          <button className="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center text-white bg-white/10 hover:bg-white/20 transition-all duration-200 hover:scale-110" onClick={(e) => { e.stopPropagation(); setLb((lb + 1) % items.length); }}><ChevronRight size={24} /></button>
         </div>
       )}
     </section>
@@ -585,16 +622,18 @@ function Reviews() {
       <div className="max-w-5xl mx-auto px-6">
         <SectionHead light titleIt="Cosa dicono i nostri ospiti" titleEn="What our guests say" />
         <Reveal className="flex items-center justify-center gap-6 md:gap-10 mb-10 flex-wrap">
-          <div className="text-center"><div className="font-mono text-3xl font-medium" style={{ color: "#48D4E0" }}>9.8</div><div className="font-mono text-[0.55rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.3)" }}>Lihele</div></div>
+          <div className="text-center"><AnimatedScore score="9.8" className="font-mono text-3xl font-medium" style={{ color: "#48D4E0" }} /><div className="font-mono text-[0.55rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.3)" }}>Lihele</div></div>
           <div className="text-center font-mono text-[0.55rem] tracking-[0.08em] uppercase" style={{ color: "rgba(248,245,240,0.2)" }}>Booking.com<br/>Awards 2026</div>
-          <div className="text-center"><div className="font-mono text-3xl font-medium" style={{ color: "#5B9BD5" }}>9.7</div><div className="font-mono text-[0.55rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.3)" }}>Likele</div></div>
+          <div className="text-center"><AnimatedScore score="9.7" className="font-mono text-3xl font-medium" style={{ color: "#5B9BD5" }} /><div className="font-mono text-[0.55rem] tracking-[0.1em] uppercase" style={{ color: "rgba(248,245,240,0.3)" }}>Likele</div></div>
         </Reveal>
         <div className="relative overflow-hidden">
           <div ref={scrollRef} className="flex gap-5 overflow-x-auto pb-4 cursor-grab snap-x snap-mandatory scrollbar-hide">
             {reviews.map((r, i) => { const isL = r.prop === "lihele"; const pc = isL ? "#48D4E0" : "#5B9BD5"; return (
               <a key={i} href={r.href || "#reviews"} target={r.href ? "_blank" : undefined} rel="noopener"
-                className="rev-card flex-shrink-0 snap-start rounded-xl p-6 border transition-all duration-300 hover:border-white/15 flex flex-col"
-                style={{ background: `rgba(${isL ? "20,148,163" : "30,90,168"},0.06)`, borderColor: "rgba(255,255,255,0.06)", height: 346, width: 340 }}>
+                className="rev-card flex-shrink-0 snap-start rounded-xl p-6 border flex flex-col"
+                style={{ background: `rgba(${isL ? "20,148,163" : "30,90,168"},0.06)`, borderColor: "rgba(255,255,255,0.06)", height: 346, width: 340, transition: "transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.2s" }}
+                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = "0 20px 50px rgba(0,0,0,0.35)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.14)"; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = ""; e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; }}>
                 <div className="flex gap-0.5 mb-3">{[...Array(5)].map((_, j) => <Star key={j} size={13} fill={T.gold} color={T.gold} />)}</div>
                 <p className="font-serif text-sm italic leading-relaxed mb-4 flex-1 overflow-hidden" style={{ color: "rgba(255,255,255,0.8)", display: "-webkit-box", WebkitLineClamp: 9, WebkitBoxOrient: "vertical" }}>"{t(r.quoteIt, r.quoteEn, lang)}"</p>
                 <div className="flex items-center justify-between"><span className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{r.author}</span><span className="font-mono text-[0.5rem] tracking-[0.08em] uppercase px-2 py-0.5 rounded-full" style={{ color: pc, background: `${pc}18` }}>{isL ? "Lihele" : "Likele"}</span></div>
@@ -620,6 +659,16 @@ function Location() {
   const { lang } = useLang();
   const [mapLoaded, setMapLoaded] = useState(false);
   const mapRef = useRef(null);
+  const distsRef = useRef(null);
+  useGSAP((gsap) => {
+    if (!distsRef.current) return;
+    gsap.fromTo(
+      Array.from(distsRef.current.children),
+      { x: -16, opacity: 0 },
+      { x: 0, opacity: 1, stagger: 0.08, duration: 0.5, ease: "power2.out",
+        scrollTrigger: { trigger: distsRef.current, start: "top 85%", once: true } }
+    );
+  }, []);
   useEffect(() => {
     const obs = new IntersectionObserver(
       ([e]) => {
@@ -676,8 +725,8 @@ function Location() {
           <h2 className="font-serif text-4xl font-light mb-1.5">Castelsardo</h2>
           <p className="font-mono text-xs tracking-[0.12em] uppercase mb-5" style={{ color: T.textLight }}>{t("Sardegna, Italia","Sardinia, Italy",lang)}</p>
           <p className="text-base font-light leading-relaxed mb-8" style={{ color: T.textMid }}>{t("Uno dei borghi medievali più belli d'Italia, arroccato su una roccia a picco sul mar Mediterraneo. Vicoli in pietra, panorami infiniti, spiagge raggiungibili a piedi.","One of Italy's most beautiful medieval villages, perched on a cliff over the Mediterranean. Stone alleyways, endless views, beaches you can walk to.",lang)}</p>
-          <div className="rounded-xl overflow-hidden border mb-6" style={{ borderColor: T.border }}>
-            {dists.map((d, i) => <div key={i} className="flex items-center gap-3.5 px-4 py-3 bg-white border-b" style={{ borderColor: T.border }}><span className="text-lg">{d.icon}</span><span className="flex-1 text-sm" style={{ color: T.dark }}>{t(d.lIt, d.lEn, lang)}</span><span className="font-mono text-xs" style={{ color: T.textLight }}>{d.v || t(d.vIt, d.vEn, lang)}</span></div>)}
+          <div ref={distsRef} className="rounded-xl overflow-hidden border mb-6" style={{ borderColor: T.border }}>
+            {dists.map((d, i) => <div key={i} className="flex items-center gap-3.5 px-4 py-3 bg-white border-b transition-colors duration-150 hover:bg-gray-50/80" style={{ borderColor: T.border }}><span className="text-lg">{d.icon}</span><span className="flex-1 text-sm" style={{ color: T.dark }}>{t(d.lIt, d.lEn, lang)}</span><span className="font-mono text-xs" style={{ color: T.textLight }}>{d.v || t(d.vIt, d.vEn, lang)}</span></div>)}
           </div>
           <div className="flex items-start gap-2.5 p-3.5 rounded-lg mb-6 text-sm" style={{ background: T.lihelePale, border: `1px solid rgba(20,148,163,0.12)`, color: T.textMid }}>🅿️ <span><strong style={{ color: T.dark }}>{t("Parcheggio","Parking",lang)}</strong> — {t("disponibile in strada nelle vicinanze, solitamente libero.","available on the street nearby, usually free.",lang)}</span></div>
           <MagneticBtn href="https://maps.google.com/maps?q=Via+Tibula+4,+07031+Castelsardo" target="_blank" rel="noopener" className="inline-flex items-center gap-2 text-sm font-medium px-6 py-3 rounded-full" style={{ background: T.dark, color: T.base }}>
@@ -897,11 +946,15 @@ function Footer() {
    ═══════════════════════════════════════════════════════ */
 function FloatingWA() {
   return (
-    <a href={waLink("Ciao!")} target="_blank" rel="noopener" aria-label="WhatsApp"
-      className="fixed bottom-7 right-7 z-[200] w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg transition-all duration-300 hover:scale-110"
-      style={{ background: T.wa, boxShadow: "0 4px 20px rgba(37,211,102,0.4)", animation: "waBounce 0.6s cubic-bezier(0.34,1.56,0.64,1) 1s both" }}>
-      <WAIcon size={26} />
-    </a>
+    <div className="fixed bottom-7 right-7 z-[200]" style={{ animation: "waBounce 0.6s cubic-bezier(0.34,1.56,0.64,1) 1s both" }}>
+      <span className="absolute inset-0 rounded-full pointer-events-none" style={{ background: T.wa, animation: "ringPulse 2.2s ease-out 1.8s infinite" }} />
+      <span className="absolute inset-0 rounded-full pointer-events-none" style={{ background: T.wa, animation: "ringPulse 2.2s ease-out 2.9s infinite" }} />
+      <a href={waLink("Ciao!")} target="_blank" rel="noopener" aria-label="WhatsApp"
+        className="relative w-14 h-14 rounded-full flex items-center justify-center text-white shadow-lg transition-all duration-300 hover:scale-110"
+        style={{ background: T.wa, boxShadow: "0 4px 20px rgba(37,211,102,0.4)" }}>
+        <WAIcon size={26} />
+      </a>
+    </div>
   );
 }
 
@@ -924,9 +977,9 @@ export default function App() {
       <Properties />
       <DetailSection id="lihele" name="Lihele" color={T.lihele} pale={T.lihelePale} score="9.8" typeIt="Casa Vacanze Intera" typeEn="Entire Holiday Apartment" logoSrc="/assets/Lihele.svg" descIt="Un appartamento luminoso affacciato sul mare di Castelsardo. Tre camere da letto per un massimo di cinque ospiti, balcone con vista diretta, cucina attrezzata, area giochi per i bambini. La luce del mattino qui è qualcosa di speciale." descEn="A bright apartment overlooking the sea at Castelsardo. Three bedrooms for up to five guests, a balcony with direct sea views, fully equipped kitchen, and a children's play area. The morning light here is something special." note={breakfastNote} imgGrad="linear-gradient(160deg, #1494A3, #0c6d78)" waMsg="Ciao! Vorrei informazioni su Lihele (appartamento)."
         gallery={[
-          { imgSrc: "/assets/images/lihele-website/dettagli/insegna.jpg", alt: "Lihele — Insegna" },
-          { imgSrc: "/assets/images/lihele-website/dettagli/letto.jpg", alt: "Lihele — Letto" },
-          { imgSrc: "/assets/images/lihele-website/dettagli/tavolo-alto.jpg", alt: "Lihele — Tavolo alto" },
+          { imgSrc: "/assets/images/lihele-website/selezione/entrata2.jpg", alt: "Lihele — Entrata" },
+          { imgSrc: "public/assets/images/lihele-website/selezione/stanza-doppia.jpg", alt: "Lihele — Stanza Doppia" },
+          { imgSrc: "/assets/images/lihele-website/dettagli/tavolo-alto.jpg", alt: "Lihele — Tavolo" },
           { imgSrc: "/assets/images/lihele-website/dettagli/parete.jpg", alt: "Lihele — Parete" },
           { imgSrc: "/assets/images/lihele-website/dettagli/ancora.jpg", alt: "Lihele — Ancora" },
         ]} bookingUrl="https://www.booking.com/hotel/it/casa-vacanza-lihele-locazione-turistica-castelsardo.it.html"
