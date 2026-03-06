@@ -95,14 +95,14 @@ const waLink = (msg) => `https://wa.me/393385037171?text=${encodeURIComponent(ms
 /* ═══════════════════════════════════════════════════════
    REVEAL — GSAP scroll-triggered fade-up
    ═══════════════════════════════════════════════════════ */
-function Reveal({ children, className = "", delay = 0, y = 40 }) {
+function Reveal({ children, className = "", delay = 0, y = 40, start = "top 88%" }) {
   const ref = useRef(null);
   useGSAP((gsap) => {
     if (!ref.current) return;
     gsap.fromTo(ref.current,
       { y, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.9, delay, ease: "power3.out",
-        scrollTrigger: { trigger: ref.current, start: "top 88%", once: true } }
+        scrollTrigger: { trigger: ref.current, start, once: true } }
     );
   }, []);
   return <div ref={ref} className={className} style={{ opacity: 0 }}>{children}</div>;
@@ -580,7 +580,7 @@ function Gallery() {
         <SectionHead label={t("Galleria","Gallery",lang)} titleIt="Lihele · Likele · Castelsardo" titleEn="Lihele · Likele · Castelsardo" />
         <div className="columns-2 md:columns-3 gap-4">
           {items.map((item, i) => (
-            <Reveal key={i} delay={i * 0.05} className="mb-4 break-inside-avoid cursor-pointer group">
+            <Reveal key={i} delay={Math.min(i * 0.04, 0.3)} start="top bottom" className="mb-4 break-inside-avoid cursor-pointer group">
               <div className={`rounded-xl overflow-hidden relative ${item.tall ? "aspect-[3/5]" : item.short ? "aspect-[4/3]" : "aspect-[3/4]"}`}
                 style={{ background: item.grad }} onClick={() => setLb(i)} role="button" tabIndex={0} aria-label={item.label} onKeyDown={(e) => e.key === "Enter" && setLb(i)}>
                 {item.imgSrc && <img src={item.imgSrc} alt={item.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" style={{ filter: "brightness(0.85)" }} />}
