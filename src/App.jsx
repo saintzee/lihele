@@ -530,26 +530,19 @@ function DetailSection({ id, name, color, pale, score, typeIt, typeEn, descIt, d
 function Gallery() {
   const { lang } = useLang();
   const [lb, setLb] = useState(null);
-  const gridRef = useRef(null);
+  const sectionRef = useRef(null);
 
-  useEffect(() => {
-    const el = gridRef.current;
-    if (!el) return;
-    const cards = el.querySelectorAll(".gc");
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = "1";
-          entry.target.style.transform = "translateY(0)";
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.05 });
-    cards.forEach((card, i) => {
-      card.style.transitionDelay = `${Math.min(i * 0.04, 0.25)}s`;
-      obs.observe(card);
+  useGSAP((gsap) => {
+    if (!sectionRef.current) return;
+    const cards = sectionRef.current.querySelectorAll(".gc");
+    gsap.to(cards, {
+      opacity: 1,
+      y: 0,
+      stagger: 0.035,
+      duration: 0.65,
+      ease: "power2.out",
+      scrollTrigger: { trigger: sectionRef.current, start: "top 80%", once: true },
     });
-    return () => obs.disconnect();
   }, []);
 
   const items = [
@@ -597,12 +590,12 @@ function Gallery() {
   }, [lb]);
 
   return (
-    <section id="gallery" className="py-24 px-6" style={{ background: T.base }}>
+    <section id="gallery" ref={sectionRef} className="py-24 px-6" style={{ background: T.base }}>
       <div className="max-w-5xl mx-auto">
         <SectionHead label={t("Galleria","Gallery",lang)} titleIt="Lihele · Likele · Castelsardo" titleEn="Lihele · Likele · Castelsardo" />
-        <div ref={gridRef} className="columns-2 md:columns-3 gap-4">
+        <div className="columns-2 md:columns-3 gap-4">
           {items.map((item, i) => (
-            <div key={i} className="gc mb-4 break-inside-avoid cursor-pointer group" style={{ opacity: 0, transform: "translateY(20px)", transition: "opacity 0.6s ease, transform 0.6s ease" }}>
+            <div key={i} className="gc mb-4 break-inside-avoid cursor-pointer group">
               <div className={`rounded-xl overflow-hidden relative ${item.tall ? "aspect-[3/5]" : item.short ? "aspect-[4/3]" : "aspect-[3/4]"}`}
                 style={{ background: item.grad }} onClick={() => setLb(i)} role="button" tabIndex={0} aria-label={item.label} onKeyDown={(e) => e.key === "Enter" && setLb(i)}>
                 {item.imgSrc && <img src={item.imgSrc} alt={item.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" style={{ filter: "brightness(0.85)" }} />}
