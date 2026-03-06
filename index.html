@@ -510,6 +510,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: 10px 18px; border-radius: 50px;
   display: flex; align-items: center; gap: 8px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  z-index: 3;
 }
 .detail-award-pill .score {
   font-family: var(--font-display);
@@ -999,9 +1000,17 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
   .gallery-grid { columns: 2; }
   .form-row { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .footer-bottom { flex-direction: column; text-align: center; }
+  .footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 12px; }
   .footer-legal { justify-content: center; }
   #float-wa { bottom: 20px; right: 20px; width: 50px; height: 50px; }
+  /* Reviews aggregate: scores left/right, no dots */
+  .reviews-aggregate { justify-content: space-between; gap: 0; }
+  .rev-dot { display: none; }
+  .rev-award-center { order: -1; width: 100%; text-align: center; margin-bottom: 16px; }
+}
+@media (max-width: 480px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer-brand p { max-width: 100%; }
 }
 </style>
 <script type="application/ld+json">
@@ -1316,7 +1325,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
 <section id="lihele" class="section section--lihele">
   <div class="container">
     <div class="detail-grid">
-      <div class="detail-visual fade-up">S
+      <div class="detail-visual fade-up">
         <div class="detail-main-img">
           <div class="detail-gallery-scroll" id="liheleGallery" role="region" aria-label="Lihele — foto">
             <div class="detail-gallery-scroll-inner">
@@ -1589,14 +1598,14 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
         <div class="rev-score-num rev-score-num--lihele">9.8</div>
         <div class="rev-score-label">Lihele</div>
       </div>
-      <div style="color:rgba(248,245,240,0.15);font-size:2rem">·</div>
-      <div style="text-align:center">
+      <div class="rev-dot" style="color:rgba(248,245,240,0.15);font-size:2rem">·</div>
+      <div class="rev-award-center" style="text-align:center">
         <div class="rev-award-text" data-lang="it">Booking.com Traveller Review Awards 2026</div>
         <div class="rev-award-text" data-lang="en">Booking.com Traveller Review Awards 2026</div>
         <div class="rev-award-text" style="margin-top:4px;" data-lang="it">53 + 66 recensioni verificate</div>
         <div class="rev-award-text" style="margin-top:4px;" data-lang="en">53 + 66 verified reviews</div>
       </div>
-      <div style="color:rgba(248,245,240,0.15);font-size:2rem">·</div>
+      <div class="rev-dot" style="color:rgba(248,245,240,0.15);font-size:2rem">·</div>
       <div class="rev-score-block">
         <div class="rev-score-num rev-score-num--likele">9.7</div>
         <div class="rev-score-label">Likele</div>
