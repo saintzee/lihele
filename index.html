@@ -36,6 +36,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Lihele · Likele · Casa Vacanze e Affittacamere a Castelsardo, Sardegna</title>
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+<link rel="apple-touch-icon" href="/assets/favicon.svg" />
 <meta name="description" content="Due strutture a Castelsardo con vista mare. Lihele: appartamento intero fino a 5 ospiti. Likele: camera privata con colazione. Booking.com Award 9.8 e 9.7. Prenota direttamente su WhatsApp." />
 <meta property="og:title" content="Lihele · Likele · Casa Vacanze e Affittacamere a Castelsardo" />
 <meta property="og:description" content="Due strutture con vista mare a Castelsardo, Sardegna. Appartamento intero o camera privata. Booking.com Award 9.8 e 9.7." />
@@ -151,6 +153,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   display: flex; align-items: center;
   transition: background 0.35s ease, box-shadow 0.35s ease;
   padding: 0 24px;
+  /* visible at load: dark gradient fades into hero */
+  background: linear-gradient(to bottom, rgba(10,16,22,0.72) 0%, rgba(10,16,22,0) 100%);
+  backdrop-filter: blur(0px);
 }
 #navbar.scrolled {
   background: rgba(248, 245, 240, 0.97);
@@ -708,7 +713,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   transition: all 0.2s; border-left: 2px solid transparent;
 }
 .faq-nav-item a:hover, .faq-nav-item a.active { color: var(--text); border-left-color: var(--lihele); background: var(--lihele-pale); }
-.faq-group { margin-bottom: 40px; }
+.faq-group { margin-bottom: 40px; scroll-margin-top: calc(var(--nav-h) + 24px); }
 .faq-group-title { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-light); margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
 .faq-item { border-bottom: 1px solid var(--border); }
 .faq-q {
@@ -1012,6 +1017,60 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
   .footer-grid { grid-template-columns: 1fr; gap: 28px; }
   .footer-brand p { max-width: 100%; }
 }
+
+/* ============================================================
+   GALLERY FILTER
+   ============================================================ */
+.gallery-filter {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; flex-wrap: wrap; margin-bottom: 36px;
+}
+.gallery-filter-btn {
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em;
+  text-transform: uppercase; padding: 8px 18px; border-radius: 50px;
+  border: 1px solid var(--border); background: #fff; color: var(--text-light);
+  cursor: pointer; transition: all 0.2s;
+}
+.gallery-filter-btn:hover { border-color: var(--text-mid); color: var(--text); }
+.gallery-filter-btn.active { background: var(--text); color: var(--base); border-color: var(--text); }
+.gallery-item[hidden] { display: none !important; }
+
+/* ============================================================
+   CAROUSEL ARROW BUTTONS (detail galleries)
+   ============================================================ */
+.gallery-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(0,0,0,0.45); color: #fff; border: none; cursor: pointer;
+  font-size: 1.4rem; display: flex; align-items: center; justify-content: center;
+  z-index: 4; transition: background 0.2s, opacity 0.2s;
+  line-height: 1; padding: 0;
+}
+.gallery-arrow:hover { background: rgba(0,0,0,0.72); }
+.gallery-arrow:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.gallery-arrow--prev { left: 10px; }
+.gallery-arrow--next { right: 10px; }
+
+/* ============================================================
+   SOCIAL ICONS (footer)
+   ============================================================ */
+.footer-social {
+  display: flex; gap: 12px; margin-top: 16px; align-items: center;
+}
+.footer-social-icon {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(248,245,240,0.06); border: 1px solid rgba(248,245,240,0.12);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(248,245,240,0.5); transition: background 0.2s, color 0.2s;
+}
+.footer-social-icon:hover { background: rgba(248,245,240,0.12); color: rgba(248,245,240,0.85); }
+.footer-save-contact {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(248,245,240,0.4); padding: 6px 0; transition: color 0.2s;
+  text-decoration: none; margin-top: 12px;
+}
+.footer-save-contact:hover { color: rgba(248,245,240,0.7); }
 </style>
 <script type="application/ld+json">
 [
@@ -1044,7 +1103,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
     },
     "numberOfRooms": 3,
     "petsAllowed": false,
-    "checkinTime": "15:00",
+    "checkinTime": "10:00",
     "checkoutTime": "10:00"
   },
   {
@@ -1264,7 +1323,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
             <span class="prop-fact">👥 <span data-lang="it">Fino a 5 ospiti</span><span data-lang="en">Up to 5 guests</span></span>
             <span class="prop-fact">🛏 <span data-lang="it">3 camere</span><span data-lang="en">3 bedrooms</span></span>
             <span class="prop-fact">🌊 <span data-lang="it">Vista mare</span><span data-lang="en">Sea view</span></span>
-            <span class="prop-fact">🍳 <span data-lang="it">Cucina</span><span data-lang="en">Kitchen</span></span>
+            <span class="prop-fact">❄️ <span data-lang="it">Tutto climatizzato</span><span data-lang="en">Fully A/C</span></span>
           </div>
           <div class="prop-card-ctas">
             <a href="https://wa.me/393385037171?text=Ciao!%20Vorrei%20informazioni%20su%20Lihele." class="btn-primary btn-primary--lihele" target="_blank" rel="noopener">
@@ -1331,12 +1390,15 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
             <div class="detail-gallery-scroll-inner">
               <img src="/assets/images/lihele-website/selezione/entrata.jpg" alt="Lihele — Entrata" class="active">
               <img src="/assets/images/lihele-website/selezione/stanza-singola-vista.jpg" alt="Lihele — Singola vista">
+              <img src="/assets/images/lihele-website/selezione/letto-matrimoniale.jpg" alt="Lihele — Camera matrimoniale">
               <img src="/assets/images/lihele-website/selezione/stanza-doppia.jpg" alt="Lihele — Camera doppia">
               <img src="/assets/images/lihele-website/selezione/stanza-twin.jpg" alt="Lihele — Camera twin">
               <img src="/assets/images/lihele-website/selezione/bagno.jpg" alt="Lihele — Bagno">
             </div>
           </div>
           <div class="detail-gallery-gradient" aria-hidden="true"></div>
+          <button class="gallery-arrow gallery-arrow--prev" aria-label="Foto precedente" data-gallery="liheleGallery">‹</button>
+          <button class="gallery-arrow gallery-arrow--next" aria-label="Foto successiva" data-gallery="liheleGallery">›</button>
           <div class="detail-gallery-dots" id="liheleGalleryDots" aria-hidden="true"></div>
         </div>
         <div class="detail-award-pill">
@@ -1360,14 +1422,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
           <span data-lang="en">Entire Holiday Apartment</span>
         </div>
         <h2 class="detail-name"><img src="/assets/Lihele.svg" alt="Lihele" style="height: 2.4rem; width: auto; display: block;"></h2>
-        <p class="detail-desc" data-lang="it">Un appartamento luminoso affacciato sul mare di Castelsardo. Tre camere da letto per un massimo di cinque ospiti, balcone con vista diretta, cucina attrezzata, area giochi per i bambini. La luce del mattino qui è qualcosa di speciale.</p>
-        <p class="detail-desc" data-lang="en">A bright apartment overlooking the sea at Castelsardo. Three bedrooms for up to five guests, a balcony with direct sea views, fully equipped kitchen, and a children's play area. The morning light here is something special.</p>
-        <div class="detail-note">
-          <strong data-lang="it">☕ Colazione italiana in camera —</strong>
-          <strong data-lang="en">☕ Italian breakfast in-room —</strong>
-          <span data-lang="it"> macchina Dolce Gusto, tè e tisane, brioche, biscotti, yogurt e succhi di frutta.</span>
-          <span data-lang="en"> Dolce Gusto machine, teas, brioches, biscuits, yogurt and fruit juices.</span>
-        </div>
+        <p class="detail-desc" data-lang="it">A 200 mt dalla spiaggia della Marina di Castelsardo. Un appartamento intero, luminoso e completamente attrezzato: 3 camere per un massimo di 5 ospiti, balcone con vista mare, cucina con macchina del caffè, bollitore, lavatrice, lavastoviglie e microonde. Selezione di vini locali a disposizione. Tutto climatizzato. Ideale per famiglie.</p>
+        <p class="detail-desc" data-lang="en">Just 200 m from Marina di Castelsardo beach. A bright, fully-equipped entire apartment: 3 bedrooms for up to 5 guests, sea-view balcony, kitchen with coffee machine, kettle, washing machine, dishwasher and microwave. Local wines available. Fully air-conditioned. Ideal for families.</p>
         <div class="detail-facts-grid">
           <div class="detail-fact">
             <span class="detail-fact-icon">👥</span>
@@ -1382,16 +1438,24 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
             <div class="detail-fact-text"><strong data-lang="it">Vista</strong><strong data-lang="en">View</strong><span data-lang="it">Balcone mare</span><span data-lang="en">Sea balcony</span></div>
           </div>
           <div class="detail-fact">
-            <span class="detail-fact-icon">🍳</span>
-            <div class="detail-fact-text"><strong data-lang="it">Cucina</strong><strong data-lang="en">Kitchen</strong><span data-lang="it">Attrezzata</span><span data-lang="en">Fully equipped</span></div>
+            <span class="detail-fact-icon">☕</span>
+            <div class="detail-fact-text"><strong data-lang="it">Caffè</strong><strong data-lang="en">Coffee</strong><span data-lang="it">Macchina caffè + bollitore</span><span data-lang="en">Coffee machine + kettle</span></div>
           </div>
           <div class="detail-fact">
-            <span class="detail-fact-icon">📺</span>
-            <div class="detail-fact-text"><strong>TV</strong><span data-lang="it">Satellitare</span><span data-lang="en">Satellite</span></div>
+            <span class="detail-fact-icon">🍽</span>
+            <div class="detail-fact-text"><strong data-lang="it">Cucina</strong><strong data-lang="en">Kitchen</strong><span data-lang="it">Lavatrice · Lavastoviglie · Microonde</span><span data-lang="en">Washing machine · Dishwasher · Microwave</span></div>
           </div>
           <div class="detail-fact">
-            <span class="detail-fact-icon">🎠</span>
-            <div class="detail-fact-text"><strong data-lang="it">Per famiglie</strong><strong data-lang="en">Families</strong><span data-lang="it">Area giochi</span><span data-lang="en">Play area</span></div>
+            <span class="detail-fact-icon">🍷</span>
+            <div class="detail-fact-text"><strong data-lang="it">Vini</strong><strong data-lang="en">Wines</strong><span data-lang="it">Selezione locale disponibile</span><span data-lang="en">Local selection available</span></div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">❄️</span>
+            <div class="detail-fact-text"><strong data-lang="it">Clima</strong><strong data-lang="en">A/C</strong><span data-lang="it">Tutto climatizzato</span><span data-lang="en">Fully air-conditioned</span></div>
+          </div>
+          <div class="detail-fact">
+            <span class="detail-fact-icon">👨‍👩‍👧</span>
+            <div class="detail-fact-text"><strong data-lang="it">Famiglie</strong><strong data-lang="en">Families</strong><span data-lang="it">Adatta per bambini</span><span data-lang="en">Child-friendly</span></div>
           </div>
           <div class="detail-fact">
             <span class="detail-fact-icon">🛁</span>
@@ -1408,7 +1472,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
             <span data-lang="it">Contattaci su WhatsApp</span>
             <span data-lang="en">Message us on WhatsApp</span>
           </a>
-          <a href="https://www.booking.com" class="detail-booking-link" target="_blank" rel="noopener">
+          <a href="https://www.booking.com/hotel/it/casa-vacanza-lihele-locazione-turistica-castelsardo.it.html" class="detail-booking-link" target="_blank" rel="noopener">
             <span data-lang="it">Oppure prenota su Booking.com →</span>
             <span data-lang="en">Or book on Booking.com →</span>
           </a>
@@ -1429,13 +1493,17 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
           <div class="detail-gallery-scroll" id="likeleGallery" role="region" aria-label="Likele — foto">
             <div class="detail-gallery-scroll-inner">
               <img src="/assets/images/likele-website/letto.jpg" alt="Likele — Camera" class="active">
+              <img src="/assets/images/likele-website/letto2.jpg" alt="Likele — Camera dettaglio">
               <img src="/assets/images/likele-website/entrata.jpg" alt="Likele — Entrata">
+              <img src="/assets/images/likele-website/facciata.jpg" alt="Likele — Facciata">
               <img src="/assets/images/likele-website/bagno.jpg" alt="Likele — Bagno">
               <img src="/assets/images/likele-website/colazione.jpg" alt="Likele — Colazione">
               <img src="/assets/images/likele-website/tavolo.jpg" alt="Likele — Tavolo">
             </div>
           </div>
           <div class="detail-gallery-gradient" aria-hidden="true"></div>
+          <button class="gallery-arrow gallery-arrow--prev" aria-label="Foto precedente" data-gallery="likeleGallery">‹</button>
+          <button class="gallery-arrow gallery-arrow--next" aria-label="Foto successiva" data-gallery="likeleGallery">›</button>
           <div class="detail-gallery-dots" id="likeleGalleryDots" aria-hidden="true"></div>
         </div>
         <div class="detail-award-pill">
@@ -1461,13 +1529,13 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
           <span data-lang="en">Private Room & Bathroom</span>
         </div>
         <h2 class="detail-name"><img src="/assets/Likele.svg" alt="Likele" style="height: 2.4rem; width: auto; display: block;"></h2>
-        <p class="detail-desc" data-lang="it">Una camera intima con terrazza affacciata sul mare, bagno privato, aria condizionata e colazione servita in camera. A cinquecento metri dalla spiaggia, nel cuore di Castelsardo.</p>
-        <p class="detail-desc" data-lang="en">An intimate room with a private sea-view terrace, en-suite bathroom, air conditioning and breakfast in-room. Five hundred metres from the beach, in the heart of Castelsardo.</p>
+        <p class="detail-desc" data-lang="it">Una camera intima con terrazza affacciata sul mare, bagno privato en-suite e aria condizionata. A cinquecento metri dalla spiaggia, nel cuore di Castelsardo.</p>
+        <p class="detail-desc" data-lang="en">An intimate room with a private sea-view terrace, en-suite bathroom and air conditioning. Five hundred metres from the beach, in the heart of Castelsardo.</p>
         <div class="detail-note">
-          <strong data-lang="it">☕ Colazione italiana in camera —</strong>
-          <strong data-lang="en">☕ Italian breakfast in-room —</strong>
-          <span data-lang="it"> macchina Dolce Gusto, tè e tisane, brioche, biscotti, yogurt e succhi di frutta.</span>
-          <span data-lang="en"> Dolce Gusto machine, teas, brioches, biscuits, yogurt and fruit juices.</span>
+          <strong data-lang="it">☕ Colazione italiana in camera AUTOGESTITA —</strong>
+          <strong data-lang="en">☕ Self-serve Italian breakfast in-room —</strong>
+          <span data-lang="it"> macchina Dolce Gusto, tè e tisane, brioche, biscotti, yogurt, succhi di frutta e acqua.</span>
+          <span data-lang="en"> Dolce Gusto machine, teas, brioches, biscuits, yogurt, fruit juices and water.</span>
         </div>
         <div class="detail-facts-grid">
           <div class="detail-fact">
@@ -1509,7 +1577,7 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
             <span data-lang="it">Contattaci su WhatsApp</span>
             <span data-lang="en">Message us on WhatsApp</span>
           </a>
-          <a href="https://www.booking.com" class="detail-booking-link" target="_blank" rel="noopener">
+          <a href="https://www.booking.com/hotel/it/affittacamere-likele.it.html" class="detail-booking-link" target="_blank" rel="noopener">
             <span data-lang="it">Oppure prenota su Booking.com →</span>
             <span data-lang="en">Or book on Booking.com →</span>
           </a>
@@ -1533,40 +1601,60 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
         <span data-lang="en">Lihele · Likele · Castelsardo</span>
       </h2>
     </div>
-    <div class="gallery-grid">
-      <div class="gallery-item"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/stanza-singola-vista.jpg" alt="Lihele, camera vista mare" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/likele-website/letto.jpg" alt="Likele, camera" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/ancora.jpg" alt="Lihele, dettaglio" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/stanza-doppia.jpg" alt="Lihele, camera doppia" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder tall"><img src="/assets/images/likele-website/entrata2.jpg" alt="Likele, entrata" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/tavolo.jpg" alt="Lihele, tavolo" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/likele-website/bagno.jpg" alt="Likele, bagno" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/selezione/stanza-twin.jpg" alt="Lihele, camera twin" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/entrata4.jpg" alt="Lihele, vista" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/stanza-doppia2.jpg" alt="Lihele, camera doppia" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/likele-website/colazione.jpg" alt="Likele, colazione" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/dettagli/letto.jpg" alt="Lihele, dettaglio letto" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/entrata.jpg" alt="Lihele, entrata" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/likele-website/dettaglio.jpg" alt="Likele, dettaglio" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/asciugamani.jpg" alt="Lihele, asciugamani" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/stanza-singola.jpg" alt="Lihele, camera singola" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/likele-website/tavolo.jpg" alt="Likele, tavolo" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/bagno.jpg" alt="Lihele, bagno" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/dettagli/insegna.jpg" alt="Lihele, insegna" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/likele-website/entrata.jpg" alt="Likele, entrata" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/doccia.jpg" alt="Lihele, doccia" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/entrata2.jpg" alt="Lihele, soggiorno" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/comodin.jpg" alt="Lihele, comodino" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/entrata3.jpg" alt="Lihele, area comune" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/parete.jpg" alt="Lihele, dettaglio parete" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/stanza-doppia3.jpg" alt="Lihele, camera matrimoniale" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/tavolo-alto.jpg" alt="Lihele, bancone" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/stanza-singola2.jpg" alt="Lihele, camera singola" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/insegnafull.jpg" alt="Lihele, insegna esterna" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/stanza-twin2.jpg" alt="Lihele, camera twin" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/selezione/insegna.jpg" alt="Lihele, insegna" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/tavolo2.jpg" alt="Lihele, tavolo" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
-      <div class="gallery-item"><div class="gallery-placeholder med"><img src="/assets/images/lihele2.jpeg" alt="Lihele, vista" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+    <!-- Gallery Filter -->
+    <div class="gallery-filter fade-up">
+      <button class="gallery-filter-btn active" data-filter="all">
+        <span data-lang="it">Tutte</span><span data-lang="en">All</span>
+      </button>
+      <button class="gallery-filter-btn" data-filter="lihele">Lihele</button>
+      <button class="gallery-filter-btn" data-filter="likele">Likele</button>
+      <button class="gallery-filter-btn" data-filter="castelsardo">
+        <span data-lang="it">Castelsardo</span><span data-lang="en">Castelsardo</span>
+      </button>
+    </div>
+    <div class="gallery-grid" id="galleryGrid">
+      <!-- ── LIHELE ───────────────────────────────────────── -->
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/stanza-singola-vista.jpg" alt="Lihele, camera vista mare" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/entrata.jpg" alt="Lihele, entrata" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/ancora.jpg" alt="Lihele, dettaglio" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/letto-matrimoniale.jpg" alt="Lihele, camera matrimoniale" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/stanza-doppia.jpg" alt="Lihele, camera doppia" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/tavolo.jpg" alt="Lihele, tavolo" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/stanza-twin.jpg" alt="Lihele, camera twin" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/entrata4.jpg" alt="Lihele, ingresso" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/stanza-doppia2.jpg" alt="Lihele, camera doppia" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/dettagli/letto.jpg" alt="Lihele, dettaglio letto" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/asciugamani.jpg" alt="Lihele, asciugamani" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/stanza-singola.jpg" alt="Lihele, camera singola" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/bagno.jpg" alt="Lihele, bagno" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/dettagli/insegna.jpg" alt="Lihele, insegna" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/doccia.jpg" alt="Lihele, doccia" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/entrata2.jpg" alt="Lihele, soggiorno" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/comodin.jpg" alt="Lihele, comodino" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/entrata3.jpg" alt="Lihele, area comune" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/parete.jpg" alt="Lihele, dettaglio parete" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/stanza-doppia3.jpg" alt="Lihele, camera matrimoniale" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/tavolo-alto.jpg" alt="Lihele, bancone" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder tall"><img src="/assets/images/lihele-website/selezione/stanza-singola2.jpg" alt="Lihele, camera singola" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/insegnafull.jpg" alt="Lihele, insegna esterna" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder med"><img src="/assets/images/lihele-website/selezione/stanza-twin2.jpg" alt="Lihele, camera twin" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/selezione/insegna.jpg" alt="Lihele, insegna" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="lihele"><div class="gallery-placeholder short"><img src="/assets/images/lihele-website/dettagli/tavolo2.jpg" alt="Lihele, tavolo" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Lihele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <!-- ── LIKELE ───────────────────────────────────────── -->
+      <div class="gallery-item" data-category="likele"><div class="gallery-placeholder tall"><img src="/assets/images/likele-website/letto.jpg" alt="Likele, camera" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="likele"><div class="gallery-placeholder med"><img src="/assets/images/likele-website/letto2.jpg" alt="Likele, camera dettaglio" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="likele"><div class="gallery-placeholder short"><img src="/assets/images/likele-website/entrata2.jpg" alt="Likele, entrata" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="likele"><div class="gallery-placeholder med"><img src="/assets/images/likele-website/bagno.jpg" alt="Likele, bagno" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="likele"><div class="gallery-placeholder short"><img src="/assets/images/likele-website/colazione.jpg" alt="Likele, colazione" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="likele"><div class="gallery-placeholder med"><img src="/assets/images/likele-website/dettaglio.jpg" alt="Likele, dettaglio" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="likele"><div class="gallery-placeholder short"><img src="/assets/images/likele-website/tavolo.jpg" alt="Likele, tavolo" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="likele"><div class="gallery-placeholder tall"><img src="/assets/images/likele-website/entrata.jpg" alt="Likele, facciata" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <div class="gallery-item" data-category="likele"><div class="gallery-placeholder med"><img src="/assets/images/likele-website/facciata.jpg" alt="Likele, esterno" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><img src="/assets/Likele-wh.svg" alt="" class="gallery-logo"></div></div>
+      <!-- ── CASTELSARDO (placeholders — TODO: replace with real photos) ── -->
+      <div class="gallery-item" data-category="castelsardo"><div class="gallery-placeholder tall" style="background:linear-gradient(160deg,#1a3a5c 0%,#0d2035 100%);"><span data-lang="it">Castelsardo — Borgo medievale</span><span data-lang="en">Castelsardo — Medieval village</span></div></div>
+      <div class="gallery-item" data-category="castelsardo"><div class="gallery-placeholder med" style="background:linear-gradient(160deg,#1a3a5c 0%,#0d2035 100%);"><span data-lang="it">Castelsardo — Vista sul mare</span><span data-lang="en">Castelsardo — Sea view</span></div></div>
+      <div class="gallery-item" data-category="castelsardo"><div class="gallery-placeholder short" style="background:linear-gradient(160deg,#1a3a5c 0%,#0d2035 100%);"><span data-lang="it">Castelsardo — Spiaggia Marina</span><span data-lang="en">Castelsardo — Marina beach</span></div></div>
+      <div class="gallery-item" data-category="castelsardo"><div class="gallery-placeholder med" style="background:linear-gradient(160deg,#1a3a5c 0%,#0d2035 100%);"><span data-lang="it">Castelsardo — Centro storico</span><span data-lang="en">Castelsardo — Old town</span></div></div>
     </div>
     <!-- Replace placeholders with real images. Each .gallery-item should contain:
          <img src="images/gallery-01.jpg" alt="descrizione" loading="lazy"> -->
@@ -1743,6 +1831,30 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
             <span class="distance-text" data-lang="en">Olbia Airport</span>
             <span class="distance-val">~90 km</span>
           </div>
+          <div class="distance-item">
+            <span class="distance-icon">🏖</span>
+            <span class="distance-text">Spiaggia di Lu Bagnu</span>
+            <span class="distance-val" data-lang="it">entro ~10 km</span>
+            <span class="distance-val" data-lang="en">~10 km</span>
+          </div>
+          <div class="distance-item">
+            <span class="distance-icon">🏝</span>
+            <span class="distance-text">Isola Rossa</span>
+            <span class="distance-val" data-lang="it">entro ~30 km</span>
+            <span class="distance-val" data-lang="en">~30 km</span>
+          </div>
+          <div class="distance-item">
+            <span class="distance-icon">🏝</span>
+            <span class="distance-text">Costa Paradiso</span>
+            <span class="distance-val" data-lang="it">entro ~60 km</span>
+            <span class="distance-val" data-lang="en">~60 km</span>
+          </div>
+          <div class="distance-item">
+            <span class="distance-icon">🏖</span>
+            <span class="distance-text">Stintino</span>
+            <span class="distance-val" data-lang="it">entro ~60 km</span>
+            <span class="distance-val" data-lang="en">~60 km</span>
+          </div>
         </div>
         <div class="parking-note">
           🅿️ <span data-lang="it"><strong>Parcheggio</strong> disponibile in strada nelle vicinanze, solitamente libero.</span>
@@ -1839,8 +1951,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
               <i class="faq-q-icon">+</i>
             </button>
             <div class="faq-a">
-              <span data-lang="it">Lihele è l'appartamento intero: 3 camere, 2 bagni, fino a 5 ospiti, cucina attrezzata, TV, aria condizionata, balcone vista mare, biancheria e asciugamani inclusi, area giochi per bambini. Likele è una camera privata con bagno privato, terrazza vista mare e colazione inclusa, perfetta per 1 o 2 persone. Sono nello stesso stabile, con ingressi su strade diverse.</span>
-              <span data-lang="en">Lihele is the entire apartment: 3 bedrooms, 2 bathrooms, up to 5 guests, fully equipped kitchen, TV, A/C, sea-view balcony, linen and towels included, children's play area. Likele is a private room with en-suite bathroom, sea-view terrace and breakfast included, perfect for 1 or 2 people. Same building, different street entrances.</span>
+              <span data-lang="it">Lihele è l'appartamento intero: 3 camere, fino a 5 ospiti, cucina attrezzata (lavatrice, lavastoviglie, microonde, macchina caffè, bollitore), TV, tutto climatizzato, balcone vista mare, vini locali disponibili. Adatto per famiglie. Likele è una camera privata con bagno en-suite, terrazza vista mare e colazione italiana autogestita inclusa, perfetta per 1 o 2 persone. Sono nello stesso stabile, con ingressi su strade diverse.</span>
+              <span data-lang="en">Lihele is the entire apartment: 3 bedrooms, up to 5 guests, fully equipped kitchen (washing machine, dishwasher, microwave, coffee machine, kettle), TV, fully air-conditioned, sea-view balcony, local wines available. Child-friendly. Likele is a private room with en-suite bathroom, sea-view terrace and self-serve Italian breakfast included, perfect for 1 or 2 people. Same building, different street entrances.</span>
             </div>
           </div>
           <div class="faq-item">
@@ -1899,8 +2011,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
               <i class="faq-q-icon">+</i>
             </button>
             <div class="faq-a">
-              <span data-lang="it">Check-in dalle 17:00 alle 22:00. Check-out dalle 08:30 alle 09:30.</span>
-              <span data-lang="en">Check-in from 5:00 PM to 10:00 PM. Check-out from 8:30 AM to 9:30 AM.</span>
+              <span data-lang="it">Check-in dalle 10:00. Check-out entro le 10:00. Per orari diversi, scriveteci.</span>
+              <span data-lang="en">Check-in from 10:00 AM. Check-out by 10:00 AM. For different times, just message us.</span>
             </div>
           </div>
           <div class="faq-item">
@@ -1948,8 +2060,8 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
               <i class="faq-q-icon">+</i>
             </button>
             <div class="faq-a">
-              <span data-lang="it">Sì, Lihele dispone di un'area giochi per bambini ed è ideale per famiglie con figli.</span>
-              <span data-lang="en">Yes, Lihele has a children's play area and is ideal for families with kids.</span>
+              <span data-lang="it">Sì, Lihele è ideale per famiglie con bambini: appartamento spazioso, cucina attrezzata e tutto climatizzato.</span>
+              <span data-lang="en">Yes, Lihele is ideal for families with children: spacious apartment, fully equipped kitchen and full air conditioning.</span>
             </div>
           </div>
           <div class="faq-item">
@@ -2071,6 +2183,19 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
         </div>
         <p data-lang="it">Due strutture affacciate sul mare di Castelsardo, Sardegna. Stesso stabile, stessa anima.</p>
         <p data-lang="en">Two properties overlooking the sea at Castelsardo, Sardinia. Same building, same soul.</p>
+        <!-- Social icons — TODO: replace # with actual Instagram/Facebook URLs -->
+        <div class="footer-social">
+          <a href="#" class="footer-social-icon" target="_blank" rel="noopener" aria-label="Instagram"><!-- TODO: add Instagram URL -->
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.facebook.com/share/185iQ6PRkX/?mibextid=wwXIfr" class="footer-social-icon" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+        </div>
+        <a href="/assets/lihele-likele.vcf" download class="footer-save-contact">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+          <span data-lang="it">Salva il contatto</span><span data-lang="en">Save contact</span>
+        </a>
       </div>
       <div class="footer-col">
         <div class="footer-col-title" data-lang="it">Esplora</div>
@@ -2105,7 +2230,10 @@ a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-copy">© 2026 Lihele · Likele · Castelsardo, Sardegna</div>
+      <div>
+        <div class="footer-copy">© 2026 Lihele · Likele · Castelsardo, Sardegna</div>
+        <div class="footer-copy" style="margin-top:4px;">P.IVA 02907960906 · CIN IT090023B4000F0902</div>
+      </div>
       <div class="footer-legal">
         <a href="/privacy.html">Privacy Policy</a>
         <a href="/privacy.html">Cookie Policy</a>
@@ -2142,7 +2270,7 @@ window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 40);
 }, { passive: true });
 
-// ---- DETAIL GALLERIES: crossfade + drag/touch/dot navigation ----
+// ---- DETAIL GALLERIES: crossfade + drag/touch/dot/arrow/keyboard navigation ----
 function initGallery(galleryId, dotsId) {
   const gallery = document.getElementById(galleryId);
   const dotsWrap = document.getElementById(dotsId);
@@ -2164,7 +2292,7 @@ function initGallery(galleryId, dotsId) {
   const dots = dotsWrap.querySelectorAll('.detail-gallery-dot');
 
   function goTo(idx) {
-    idx = Math.max(0, Math.min(idx, n - 1));
+    idx = ((idx % n) + n) % n; // wrap-around
     if (idx === current) return;
     slides[current].classList.remove('active');
     dots[current].classList.remove('active');
@@ -2175,6 +2303,22 @@ function initGallery(galleryId, dotsId) {
 
   dots.forEach(function(dot, i) {
     dot.addEventListener('click', function() { goTo(i); });
+  });
+
+  // Arrow buttons (prev/next overlaid on the image)
+  const container = gallery.closest('.detail-main-img');
+  if (container) {
+    const prevBtn = container.querySelector('.gallery-arrow--prev[data-gallery="' + galleryId + '"]');
+    const nextBtn = container.querySelector('.gallery-arrow--next[data-gallery="' + galleryId + '"]');
+    if (prevBtn) prevBtn.addEventListener('click', function(e) { e.stopPropagation(); goTo(current - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function(e) { e.stopPropagation(); goTo(current + 1); });
+  }
+
+  // Keyboard navigation when gallery region is focused
+  gallery.setAttribute('tabindex', '0');
+  gallery.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(current - 1); }
   });
 
   // Pointer drag (mouse)
@@ -2634,7 +2778,8 @@ if (mapSection) mapObserver.observe(mapSection);
                 '<p>' + txt(item.a) + '</p>' +
               '</div></div>';
           }).join('');
-          return '<div class="faq-group">' +
+          var groupId = g.id ? ' id="' + g.id + '"' : '';
+          return '<div class="faq-group"' + groupId + '>' +
             '<h3 class="faq-group-title">' + txt(g.title) + '</h3>' +
             itemsHtml + '</div>';
         }).join('');
@@ -2660,6 +2805,28 @@ if (mapSection) mapObserver.observe(mapSection);
   }).catch(function(e) {
     // Graceful degradation — page uses existing hardcoded content
     console.info('[CMS] content.json not loaded, using hardcoded fallback.', e.message || e);
+  });
+})();
+
+// ---- GALLERY FILTER ----
+(function() {
+  var filterBtns = document.querySelectorAll('.gallery-filter-btn');
+  var items = document.querySelectorAll('#galleryGrid .gallery-item');
+  if (!filterBtns.length || !items.length) return;
+
+  filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var filter = btn.dataset.filter;
+      filterBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      items.forEach(function(item) {
+        if (filter === 'all' || item.dataset.category === filter) {
+          item.removeAttribute('hidden');
+        } else {
+          item.setAttribute('hidden', '');
+        }
+      });
+    });
   });
 })();
 
